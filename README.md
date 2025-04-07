@@ -3,13 +3,14 @@
   <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&width=435&lines=3rd+year+IT+student;Mobile+App+Developer" alt="Typing SVG" /></a>
 </p>
 <hr/>
-<h4 align="center">I am a SDE at JP Morgan Chase & Co. I like to Code, Design, Innovate and Experiment. I am an enthusiastic and a social person who loves to take up new challenges and learn new skills. Passionate developer with a love for problem-solving and creating innovative solutions. Experienced in various programming languages and frameworks. Dedicated to continuous learning and growth in the ever-evolving world of technology. Open to collaboration and exploring new opportunities.</h4>
+<h4 align="center">A passionate mobile app developer with experience in SwiftUI and Android Studio. <br />Open to new
+                        challenges, I learn quickly and am eager to develop my skills. <br />Creative and dedicated to every
+                        project, with a focus on delivering high-quality solutions.</h4>
 <br>
-<p align="center"> <img src="https://komarev.com/ghpvc/?username=candida18&label=Candida's%20Profile%20Views%20&color=dc143c&style=plastic" alt="candida18" /> </p>
 
 ## 🔥 Streak Stats
 
-<p align="center"><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=candida18&theme=algolia" alt="candida18" /></p>
+<p align="center"><img align="center" src="https://github-readme-streak-stats.herokuapp.com?user=AdrRojek&theme=highcontrast" alt="AdrRojek" /></p>
 
 ## 🛠️ My Skills
 
@@ -51,10 +52,6 @@
 &emsp;
   <a href="https://kotlinlang.org">
     <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-%237F52FF.svg?logo=kotlin&logoColor=white"/>
-  </a>
-&emsp;
-  <a href="https://www.php.net/">
-    <img alt="PHP" src="https://img.shields.io/badge/PHP-%23777BB4.svg?logo=php&logoColor=white"/>
   </a>
 &emsp;
   <a href="https://www.tutorialspoint.com/assembly_programming/assembly_introduction.htm">
@@ -125,42 +122,30 @@
 
 <br/>
 
-## 📊 Github Stats (Expand to View)
+## 📊 Github Stats 
 
-<details> 
-  <summary><b>💻 GitHub Profile Stats</b></summary>
   <br/>
   <p align="center">
-    <a href="https://github.com/Candida18"><img align="center" src="https://github-readme-stats.vercel.app/api?username=candida18&show_icons=true&locale=en&theme=algolia" alt="candida18" height="192px"/></a>
+    <a href="https://github.com/Candida18"><img align="center" src="https://github-readme-stats.vercel.app/api?username=AdrRojek&show_icons=true&locale=en&theme=algolia" alt="AdrRojek" height="192px"/></a>
 	</p>
 	<p  align="center">
-	  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=candida18&show_icons=true&locale=en&layout=compact&theme=algolia" alt="candida18" height="192px"/>
+	  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=AdrRojek&show_icons=true&locale=en&layout=compact&theme=algolia" alt="AdrRojek" height="192px"/>
 	</p>
   <br/>
   <b>Note:</b> Top languages is only a metric of the languages my public code consists of and doesn't reflect experience or skill level.
   </p>
-</details>
 
-<details>
-  <summary><b>⚡ Recent GitHub Activity</b></summary>
-  <br/>
-	<a href="https://git.io/streak-stats"><img src="https://github-readme-streak-stats.herokuapp.com?user=AdrRojek&theme=highcontrast&border_radius=3.4" alt="GitHub Streak" /></a>
-  <br/>
 
-</details>
 
 <br/>
 
-## 🙋‍♀️ Let's Connect
+## 🙋‍♂️ Let's Connect
 
 <p align="center">
-  <a href="https://candida18.github.io/"><img src="https://img.icons8.com/bubbles/50/000000/web.png" alt="Website"/></a>
-	<a href="mailto:candida.noronha18@gmail.com"><img src="https://img.icons8.com/bubbles/50/000000/gmail.png" alt="Gmail"/></a>
-	<a href="https://github.com/Candida18"><img src="https://img.icons8.com/bubbles/50/000000/github.png" alt="GitHub"/></a>
-	<a href="https://linkedin.com/in/candida-noronha-b019101ab"><img src="https://img.icons8.com/bubbles/50/000000/linkedin.png" alt="LinkedIn"/></a>
-	<a href="https://www.facebook.com/candida.noronha.77"><img src="https://img.icons8.com/bubbles/50/000000/facebook-new.png" alt="Facebook"/></a>
-	<a href="https://instagram.com/candyyyy__18"><img src="https://img.icons8.com/bubbles/50/000000/instagram.png" alt="Instagram"/></a>
-	<a href="https://www.youtube.com/channel/UC7V1Gm8V0kRLp_EHB8aDj2A"><img src="https://img.icons8.com/bubbles/50/000000/youtube.png" alt="Youtube"/></a>
+  <a href="https://AdrRojek.github.io/"><img src="https://img.icons8.com/?size=30&id=ukIrz72UqICD&format=png&color=000000" alt="Website"/></a>
+	<a href="mailto:adrrojek@gmail.com"><img src="https://img.icons8.com/?size=30&id=5k8WpCQ8U8Vw&format=png&color=000000" alt="Gmail"/></a>
+	<a href="https://github.com/AdrRojek"><img src="https://img.icons8.com/?size=30&id=HGQomTX5FhZx&format=png&color=000000" alt="GitHub"/></a>
+	<a href="www.linkedin.com/in/adrian-rojek-ar"><img src="https://img.icons8.com/?size=30&id=tvG-nQ3s2hZL&format=png&color=000000" alt="LinkedIn"/></a>
 	
 </p>
 
