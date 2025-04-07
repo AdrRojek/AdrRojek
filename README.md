@@ -126,7 +126,7 @@
 
   <br/>
   <p align="center">
-    <a href="https://github.com/Candida18"><img align="center" src="https://github-readme-stats.vercel.app/api?username=AdrRojek&show_icons=true&locale=en&theme=algolia" alt="AdrRojek" height="192px"/></a>
+    <a href="https://github.com/AdrRojek"><img align="center" src="https://github-readme-stats.vercel.app/api?username=AdrRojek&show_icons=true&locale=en&theme=algolia" alt="AdrRojek" height="192px"/></a>
 	</p>
 	<p  align="center">
 	  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=AdrRojek&show_icons=true&locale=en&layout=compact&theme=algolia" alt="AdrRojek" height="192px"/>
