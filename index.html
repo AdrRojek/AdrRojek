@@ -1526,41 +1526,33 @@
         visibility: visible;
         transform: translateY(5px);
     }
-
+    
     .certificate-icon {
     width: 24px;
     height: 24px;
     margin-left: 10px;
     cursor: pointer;
     position: relative;
-    transition: transform 0.3s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-}
-
-.certificate-icon:hover {
-    transform: scale(1.1);
 }
 
 .certificate-preview {
     position: absolute;
     left: 50px;
     top: 50%;
-    transform: translateY(-50%) scale(0);
+    transform: translateY(-50%);
     width: 300px;
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transition: all 0.3s ease;
+    display: none;
     z-index: 1000;
-    pointer-events: none;
 }
 
-.certificate-icon:hover .certificate-preview {
-    transform: translateY(-50%) scale(1);
-    opacity: 1;
+.certificate-preview.visible {
+    display: block;
 }
 
 .diploma-icon {
@@ -1569,34 +1561,26 @@
     margin-left: 10px;
     cursor: pointer;
     position: relative;
-    transition: transform 0.3s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-}
-
-.diploma-icon:hover {
-    transform: scale(1.1);
 }
 
 .diploma-preview {
     position: absolute;
     right: 50px;
     top: 50%;
-    transform: translateY(-50%) scale(0);
+    transform: translateY(-50%);
     width: 300px;
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transition: all 0.3s ease;
+    display: none;
     z-index: 1000;
-    pointer-events: none;
 }
 
-.diploma-icon:hover .diploma-preview {
-    transform: translateY(-50%) scale(1);
-    opacity: 1;
+.diploma-preview.visible {
+    display: block;
 }
 
 @media (max-width: 768px) {
@@ -1615,6 +1599,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        z-index: 500 !important;
+    }
+
+    .info-column:nth-child(4) * {
+        z-index: 500 !important; 
     }
 
     .info-column:nth-child(5) {
@@ -1622,6 +1611,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        z-index: 500 !important;
+    }
+
+    .info-column:nth-child(5) * {
+        z-index: 500 !important; 
     }
 
     .info-column:nth-child(4) ul {
@@ -1648,19 +1642,15 @@
         position: fixed !important;
         left: 50% !important;
         top: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        width: 90vw !important;
-        max-width: 400px !important;
-        z-index: 3000 !important;
+        transform: translate(-103%, -70%) !important;
+        width: 72vw !important;
+        max-width: 320px !important;
+        z-index: 4000 !important;
         display: none !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        transition: none !important;
     }
 
-    .certificate-icon:hover .certificate-preview {
-        transform: translate(-50%, -50%) !important;
-        opacity: 1 !important;
+    .certificate-preview.visible {
+        display: block !important;
     }
 
     .info-column:nth-child(5) > div {
@@ -1680,21 +1670,16 @@
         left: 50% !important;
         top: 50% !important;
         transform: translate(-50%, -50%) !important;
-        width: 90vw !important;
+        width: 53vw !important;
         max-width: 400px !important;
         z-index: 3000 !important;
         display: none !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        transition: none !important;
     }
 
-    .diploma-icon:hover .diploma-preview {
-        transform: translate(-50%, -50%) !important;
-        opacity: 1 !important;
+    .diploma-preview.visible {
+        display: block !important;
     }
 }
-    
 </style>
 </head>
 
@@ -2717,43 +2702,53 @@
                 checkInfoVisibility();
             }, { passive: true });
         });
+
         document.addEventListener('DOMContentLoaded', () => {
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
-    if (mediaQuery.matches) {
-        document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(preview => {
-            preview.style.display = 'none';
-        });
-    }
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+    document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(preview => {
+        preview.classList.remove('visible');
+    });
 
     document.querySelectorAll('.certificate-icon, .diploma-icon').forEach(icon => {
+        const preview = icon.querySelector('.certificate-preview, .diploma-preview');
+
+        icon.addEventListener('mouseenter', () => {
+            if (!isMobile()) {
+                preview.classList.add('visible');
+            }
+        });
+
+        icon.addEventListener('mouseleave', () => {
+            if (!isMobile()) {
+                preview.classList.remove('visible');
+            }
+        });
+
         icon.addEventListener('click', (e) => {
             e.preventDefault();
-            const preview = icon.querySelector('.certificate-preview, .diploma-preview');
-            const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-            if (isMobile) {
-                if (preview.style.display === 'block') {
-                    preview.style.display = 'none';
+            if (isMobile()) {
+                if (preview.classList.contains('visible')) {
+                    preview.classList.remove('visible');
                 } else {
                     document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(p => {
-                        p.style.display = 'none';
+                        p.classList.remove('visible');
                     });
-                    preview.style.display = 'block';
+                    preview.classList.add('visible');
                 }
             }
         });
     });
 
     document.addEventListener('click', (e) => {
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        if (!isMobile) return;
+        if (!isMobile()) return;
 
         const clickedInsideIcon = e.target.closest('.certificate-icon') || e.target.closest('.diploma-icon');
         const clickedInsidePreview = e.target.closest('.certificate-preview') || e.target.closest('.diploma-preview');
 
         if (!clickedInsideIcon && !clickedInsidePreview) {
             document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(preview => {
-                preview.style.display = 'none';
+                preview.classList.remove('visible');
             });
         }
     });
