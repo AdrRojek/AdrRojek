@@ -2762,6 +2762,13 @@
                 }
             });
         });
+
+        const mediaQuery = window.matchMedia('(max-width: 768px)');
+if (mediaQuery.matches) {
+    document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(preview => {
+        preview.style.display = 'none';
+    });
+}
     </script>
 </body>
 
