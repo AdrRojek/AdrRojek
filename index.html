@@ -718,7 +718,7 @@
             }
         }
 
-    .skills {
+        .skills {
             padding: 5rem 2rem;
             background-color: transparent;
         }
@@ -796,50 +796,50 @@
         }
 
         .project-images-horizontal {
-        display: flex;
-        gap: 2px;
-        height: 200px;
-    }
-
-    .project-images-horizontal .project-image {
-        width: 33.33%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    @media (max-width: 768px) {
-        .project-images-horizontal {
-            flex-direction: column;
-            height: auto;
-        }
-        
-        .project-images-horizontal .project-image {
-            width: 100%;
+            display: flex;
+            gap: 2px;
             height: 200px;
         }
-    }
 
-    .info-section {
-        padding: 4rem 2rem;
+        .project-images-horizontal .project-image {
+            width: 33.33%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .project-images-horizontal {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .project-images-horizontal .project-image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        .info-section {
+            padding: 4rem 2rem;
             background: rgba(0, 0, 0, 0.5);
-    }
+        }
 
-    .info-container {
-        max-width: 1200px;
-        margin: 0 auto;
+        .info-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1.5fr 1fr;
             grid-template-rows: auto auto;
-        gap: 2rem;
-    }
+            gap: 2rem;
+        }
 
-    .info-column {
-        padding: 1.5rem;
+        .info-column {
+            padding: 1.5rem;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
+            border-radius: 1rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             opacity: 0;
             transform-origin: center;
@@ -873,116 +873,116 @@
         .info-column.visible {
             opacity: 1;
             transform: rotate(0) translateX(0);
-    }
+        }
 
-    .info-column h3 {
-        margin-bottom: 1.5rem;
+        .info-column h3 {
+            margin-bottom: 1.5rem;
             color: #fff;
-        font-size: 1.3rem;
-    }
+            font-size: 1.3rem;
+        }
 
-    .info-column ul {
-        list-style: none;
-    }
+        .info-column ul {
+            list-style: none;
+        }
 
-    .info-column li {
-        margin-bottom: 1rem;
-        line-height: 1.6;
-        color: rgba(255, 255, 255, 0.8);
-        position: relative;
-        padding-left: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+        .info-column li {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            position: relative;
+            padding-left: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .certificate-icon {
-        width: 24px;
-        height: 24px;
-        margin-left: 10px;
-        cursor: pointer;
-        position: relative;
-        transition: transform 0.3s ease;
-    }
+        .certificate-icon {
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
 
-    .certificate-icon:hover {
-        transform: scale(1.1);
-    }
+        .certificate-icon:hover {
+            transform: scale(1.1);
+        }
 
-    .certificate-preview {
-        position: absolute;
-        left: 50px;
-        top: 50%;
-        transform: translateY(-50%) scale(0);
-        width: 300px;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        opacity: 0;
-        transition: all 0.3s ease;
-        z-index: 1000;
-        pointer-events: none;
-    }
+        .certificate-preview {
+            position: absolute;
+            left: 50px;
+            top: 50%;
+            transform: translateY(-50%) scale(0);
+            width: 300px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
 
-    .certificate-icon:hover .certificate-preview {
-        transform: translateY(-50%) scale(1);
-        opacity: 1;
-    }
+        .certificate-icon:hover .certificate-preview {
+            transform: translateY(-50%) scale(1);
+            opacity: 1;
+        }
 
-    .diploma-icon {
-        width: 24px;
-        height: 24px;
-        margin-left: 10px;
-        cursor: pointer;
-        position: relative;
-        transition: transform 0.3s ease;
-    }
+        .diploma-icon {
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
 
-    .diploma-icon:hover {
-        transform: scale(1.1);
-    }
+        .diploma-icon:hover {
+            transform: scale(1.1);
+        }
 
-    .diploma-preview {
-        position: absolute;
-        right: 50px;
-        top: 50%;
-        transform: translateY(-50%) scale(0);
-        width: 300px;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        opacity: 0;
-        transition: all 0.3s ease;
-        z-index: 1000;
-        pointer-events: none;
-    }
+        .diploma-preview {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%) scale(0);
+            width: 300px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
 
-    .diploma-icon:hover .diploma-preview {
-        transform: translateY(-50%) scale(1);
-        opacity: 1;
-    }
+        .diploma-icon:hover .diploma-preview {
+            transform: translateY(-50%) scale(1);
+            opacity: 1;
+        }
 
-    .info-column li::before {
-        content: "•";
-        color: #0071e3;
-        position: absolute;
-        left: 0;
-    }
+        .info-column li::before {
+            content: "•";
+            color: #0071e3;
+            position: absolute;
+            left: 0;
+        }
 
-    .info-divider {
-        color: #d2d2d7;
-        align-self: center;
-        margin: 0 -1rem;
+        .info-divider {
+            color: #d2d2d7;
+            align-self: center;
+            margin: 0 -1rem;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
 
         .info-divider.visible {
             opacity: 1;
-    }
+        }
 
-    @media (max-width: 768px) {
-        .info-container {
+        @media (max-width: 768px) {
+            .info-container {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto;
             }
@@ -1088,7 +1088,7 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 3rem;
         }
-        
+
         .interests-column {
             padding: 2rem;
             background: rgba(255, 255, 255, 0.1);
@@ -1474,7 +1474,7 @@
             cursor: not-allowed !important;
         }
 
-        .project[data-project-id="3"]~.project-popup .popup-content .github-icon:hover + .github-tooltip {
+        .project[data-project-id="3"]~.project-popup .popup-content .github-icon:hover+.github-tooltip {
             opacity: 1;
             visibility: visible;
         }
@@ -1484,203 +1484,205 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .github-icon2 {
-    display: inline-block; 
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    width: 30px;
-    height: 30px;
-    color: white;
-    z-index: 10;
-    cursor: not-allowed !important;
-}
-    .github-tooltip2 {
-        position: absolute;
-        top: 50px;
-        left: 15px;
-        display: block;
-        opacity: 0;
-        visibility: hidden;
-        background-color: rgba(0, 0, 0, 0.95);
-        color: white;
-        border: 1px solid white;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 0.85rem;
-        font-weight: bold;
-        text-align: center;
-        width: 200px;
-        transition: all 0.3s ease;
-        z-index: 9999;
-        pointer-events: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-    }
+        }
 
-    .github-icon2:hover .github-tooltip2 {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(5px);
-    }
-    
-    .certificate-icon {
-    width: 24px;
-    height: 24px;
-    margin-left: 10px;
-    cursor: pointer;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+        .github-icon2 {
+            display: inline-block;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 30px;
+            height: 30px;
+            color: white;
+            z-index: 10;
+            cursor: not-allowed !important;
+        }
 
-.certificate-preview {
-    position: absolute;
-    left: 50px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 300px;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    display: none;
-    z-index: 1000;
-}
+        .github-tooltip2 {
+            position: absolute;
+            top: 50px;
+            left: 15px;
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: white;
+            border: 1px solid white;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-align: center;
+            width: 200px;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            pointer-events: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
 
-.certificate-preview.visible {
-    display: block;
-}
+        .github-icon2:hover .github-tooltip2 {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
 
-.diploma-icon {
-    width: 24px;
-    height: 24px;
-    margin-left: 10px;
-    cursor: pointer;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+        .certificate-icon {
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+            cursor: pointer;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.diploma-preview {
-    position: absolute;
-    right: 50px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 300px;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    display: none;
-    z-index: 1000;
-}
+        .certificate-preview {
+            position: absolute;
+            left: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+        }
 
-.diploma-preview.visible {
-    display: block;
-}
+        .certificate-preview.visible {
+            display: block;
+        }
 
-@media (max-width: 768px) {
-    .info-container {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-    }
+        .diploma-icon {
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+            cursor: pointer;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .info-column.experience-column {
-        grid-row: auto;
-        grid-column: auto;
-    }
+        .diploma-preview {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+        }
 
-    .info-column:nth-child(4) {
-        order: 4;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        z-index: 500 !important;
-    }
+        .diploma-preview.visible {
+            display: block;
+        }
 
-    .info-column:nth-child(4) * {
-        z-index: 500 !important; 
-    }
+        @media (max-width: 768px) {
+            .info-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
 
-    .info-column:nth-child(5) {
-        order: 5;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        z-index: 500 !important;
-    }
+            .info-column.experience-column {
+                grid-row: auto;
+                grid-column: auto;
+            }
 
-    .info-column:nth-child(5) * {
-        z-index: 500 !important; 
-    }
+            .info-column:nth-child(4) {
+                order: 4;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                z-index: 500 !important;
+            }
 
-    .info-column:nth-child(4) ul {
-        width: 100%;
-        padding: 0;
-    }
+            .info-column:nth-child(4) * {
+                z-index: 500 !important;
+            }
 
-    .info-column:nth-child(4) li {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        padding: 0.5rem 1rem;
-        position: relative;
-    }
+            .info-column:nth-child(5) {
+                order: 5;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                z-index: 500 !important;
+            }
 
-    .certificate-icon {
-        margin-left: 10px;
-        position: relative;
-    }
+            .info-column:nth-child(5) * {
+                z-index: 500 !important;
+            }
 
-    .certificate-preview {
-        position: fixed !important;
-        left: 50% !important;
-        top: 50% !important;
-        transform: translate(-103%, -70%) !important;
-        width: 72vw !important;
-        max-width: 320px !important;
-        z-index: 4000 !important;
-        display: none !important;
-    }
+            .info-column:nth-child(4) ul {
+                width: 100%;
+                padding: 0;
+            }
 
-    .certificate-preview.visible {
-        display: block !important;
-    }
+            .info-column:nth-child(4) li {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                padding: 0.5rem 1rem;
+                position: relative;
+            }
 
-    .info-column:nth-child(5) > div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+            .certificate-icon {
+                margin-left: 10px;
+                position: relative;
+            }
 
-    .diploma-icon {
-        margin: 10px auto;
-        position: relative;
-    }
+            .certificate-preview {
+                position: fixed !important;
+                left: 50% !important;
+                top: 50% !important;
+                transform: translate(-103%, -70%) !important;
+                width: 72vw !important;
+                max-width: 320px !important;
+                z-index: 4000 !important;
+                display: none !important;
+            }
 
-    .diploma-preview {
-        position: fixed !important;
-        left: 50% !important;
-        top: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        width: 53vw !important;
-        max-width: 400px !important;
-        z-index: 3000 !important;
-        display: none !important;
-    }
+            .certificate-preview.visible {
+                display: block !important;
+            }
 
-    .diploma-preview.visible {
-        display: block !important;
-    }
-}
-</style>
+            .info-column:nth-child(5)>div {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .diploma-icon {
+                margin: 10px auto;
+                position: relative;
+            }
+
+            .diploma-preview {
+                position: fixed !important;
+                left: 50% !important;
+                top: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                width: 53vw !important;
+                max-width: 400px !important;
+                z-index: 3000 !important;
+                display: none !important;
+            }
+
+            .diploma-preview.visible {
+                display: block !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -1728,7 +1730,7 @@
                     <li>Electronics Schools Complex in Rzeszów (2018-2022)</li>
                 </ul>
             </div>
-            
+
             <div class="info-column experience-column">
                 <h3>💼 Experience</h3>
                 <ul>
@@ -1741,7 +1743,7 @@
                     <li>Practises - Apollo Sp.Z.o.o (April 2020)</li>
                 </ul>
             </div>
-            
+
             <div class="info-column">
                 <h3>🌍 Languages</h3>
                 <ul>
@@ -1750,7 +1752,7 @@
                     <li>German - B1</li>
                 </ul>
             </div>
-            
+
             <div class="info-column">
                 <h3>🥇 Certificates</h3>
                 <ul>
@@ -1765,7 +1767,8 @@
                         Flutter Masterclass (from Novice to Ninja)
                         <div class="certificate-icon">
                             📜
-                            <img src="./photos/certificate2.jpg" alt="Web Development Certificate" class="certificate-preview">
+                            <img src="./photos/certificate2.jpg" alt="Web Development Certificate"
+                                class="certificate-preview">
                         </div>
                     </li>
                     <li>
@@ -1777,31 +1780,37 @@
                     </li>
                 </ul>
             </div>
-            
+
             <div class="info-column">
                 <h3>🛠️ Professional Exams</h3>
                 <div style=" align-items: center;">
                     <div>
                         <p style="font-weight: bold; margin-bottom: 10px;">EE.08</p>
-                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Installation and operation of computer systems, peripherals and networks</p>
-                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Configuration of operating systems and application software</p>
-                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Design and maintenance of local computer networks</p>
-                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 10px;">Network security and data protection</p>
-                        
+                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Installation and operation of
+                            computer systems, peripherals and networks</p>
+                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Configuration of operating
+                            systems and application software</p>
+                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Design and maintenance of
+                            local computer networks</p>
+                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 10px;">Network security and data
+                            protection</p>
+
                         <p style="font-weight: bold; margin-bottom: 10px;">EE.09</p>
-                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Programming and database design</p>
+                        <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Programming and database
+                            design</p>
                         <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Creating web applications</p>
                         <p style="font-size: 10px; margin-left: 10px; margin-bottom: 2px;">Database administration</p>
                         <p style="font-size: 10px; margin-left: 10px;">Web application testing and deployment</p>
-                        <div class="diploma-icon" style="width: 20px; height: auto; margin: 0 auto; display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                        <div class="diploma-icon"
+                            style="width: 20px; height: auto; margin: 0 auto; display: flex; justify-content: center; align-items: center; margin-top: 10px;">
                             <img src="./photos/dyplom.png" alt="diploma" style="width: 100%; height: auto;">
                             <img src="./photos/dyplom.png" alt="EE.08" class="diploma-preview">
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
-        
+
         </div>
     </section>
 
@@ -1881,7 +1890,7 @@
 
                 </div>
             </div>
-            
+
             <div class="skill-category animate-element">
                 <h3>📚 Learning</h3>
                 <div class="skills-grid">
@@ -1955,7 +1964,7 @@
                     <p class="project-description">Click to see more</p>
                 </div>
             </div>
-    
+
             <div class="project animate-element" data-project-id="2" style="transition-delay: 0.2s;">
                 <div class="project-images">
                     <div class="project-images-column">
@@ -1973,7 +1982,7 @@
                     <p class="project-description">Click to see more</p>
                 </div>
             </div>
-    
+
             <div class="project animate-element" data-project-id="3" style="transition-delay: 0.3s;">
                 <div class="project-images">
                     <div class="project-images-column">
@@ -2321,7 +2330,7 @@
     <span class="github-tooltip2">This project is a school assignment and is not available.</span>
 </a>
 
-        ` :  `
+        ` : `
             <a href="${project.githubUrl}" class="github-icon" target="_blank">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -2472,17 +2481,17 @@
 
         function checkVisibility() {
             const elements = document.querySelectorAll('.animate-element');
-            
+
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
                 const elementBottom = element.getBoundingClientRect().bottom;
-                
+
                 if (elementTop < window.innerHeight - 100 && elementBottom > 0) {
                     element.classList.add('visible');
                 }
             });
         }
-        
+
         window.addEventListener('load', () => {
             checkVisibility();
             window.addEventListener('scroll', checkVisibility);
@@ -2704,55 +2713,55 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+            const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
-    document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(preview => {
-        preview.classList.remove('visible');
-    });
-
-    document.querySelectorAll('.certificate-icon, .diploma-icon').forEach(icon => {
-        const preview = icon.querySelector('.certificate-preview, .diploma-preview');
-
-        icon.addEventListener('mouseenter', () => {
-            if (!isMobile()) {
-                preview.classList.add('visible');
-            }
-        });
-
-        icon.addEventListener('mouseleave', () => {
-            if (!isMobile()) {
-                preview.classList.remove('visible');
-            }
-        });
-
-        icon.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (isMobile()) {
-                if (preview.classList.contains('visible')) {
-                    preview.classList.remove('visible');
-                } else {
-                    document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(p => {
-                        p.classList.remove('visible');
-                    });
-                    preview.classList.add('visible');
-                }
-            }
-        });
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!isMobile()) return;
-
-        const clickedInsideIcon = e.target.closest('.certificate-icon') || e.target.closest('.diploma-icon');
-        const clickedInsidePreview = e.target.closest('.certificate-preview') || e.target.closest('.diploma-preview');
-
-        if (!clickedInsideIcon && !clickedInsidePreview) {
             document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(preview => {
                 preview.classList.remove('visible');
             });
-        }
-    });
-});
+
+            document.querySelectorAll('.certificate-icon, .diploma-icon').forEach(icon => {
+                const preview = icon.querySelector('.certificate-preview, .diploma-preview');
+
+                icon.addEventListener('mouseenter', () => {
+                    if (!isMobile()) {
+                        preview.classList.add('visible');
+                    }
+                });
+
+                icon.addEventListener('mouseleave', () => {
+                    if (!isMobile()) {
+                        preview.classList.remove('visible');
+                    }
+                });
+
+                icon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (isMobile()) {
+                        if (preview.classList.contains('visible')) {
+                            preview.classList.remove('visible');
+                        } else {
+                            document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(p => {
+                                p.classList.remove('visible');
+                            });
+                            preview.classList.add('visible');
+                        }
+                    }
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!isMobile()) return;
+
+                const clickedInsideIcon = e.target.closest('.certificate-icon') || e.target.closest('.diploma-icon');
+                const clickedInsidePreview = e.target.closest('.certificate-preview') || e.target.closest('.diploma-preview');
+
+                if (!clickedInsideIcon && !clickedInsidePreview) {
+                    document.querySelectorAll('.certificate-preview, .diploma-preview').forEach(preview => {
+                        preview.classList.remove('visible');
+                    });
+                }
+            });
+        });
     </script>
 </body>
 
