@@ -145,7 +145,7 @@
   <a href="https://AdrRojek.github.io/"><img src="https://img.icons8.com/?size=30&id=ukIrz72UqICD&format=png&color=000000" alt="Website"/></a>
 	<a href="mailto:adrrojek@gmail.com"><img src="https://img.icons8.com/?size=30&id=5k8WpCQ8U8Vw&format=png&color=000000" alt="Gmail"/></a>
 	<a href="https://github.com/AdrRojek"><img src="https://img.icons8.com/?size=30&id=HGQomTX5FhZx&format=png&color=000000" alt="GitHub"/></a>
-	<a href="www.linkedin.com/in/adrian-rojek-ar"><img src="https://img.icons8.com/?size=30&id=tvG-nQ3s2hZL&format=png&color=000000" alt="LinkedIn"/></a>
+	<a href="https://www.linkedin.com/in/adrian-rojek-ar"><img src="https://img.icons8.com/?size=30&id=tvG-nQ3s2hZL&format=png&color=000000" alt="LinkedIn"/></a>
 	
 </p>
 
