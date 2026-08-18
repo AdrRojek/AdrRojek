@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../data/content.dart';
 import '../state/portfolio_controller.dart';
 import '../theme.dart';
+import '../util/site_actions.dart';
 import '../widgets/effects.dart';
 import '../widgets/hanging_flip_card.dart';
 import '../widgets/project_widgets.dart';
@@ -858,12 +859,14 @@ class ContactSection extends StatelessWidget {
               label: 'Email',
               value: SiteLinks.email,
               url: SiteLinks.mailto,
+              copyValue: SiteLinks.email,
             ),
             const SizedBox(height: 8),
             _ContactLine(
               label: 'Phone',
               value: SiteLinks.phone,
               url: SiteLinks.tel,
+              copyValue: SiteLinks.phone,
             ),
             const SizedBox(height: 20),
             Row(
@@ -887,24 +890,46 @@ class ContactSection extends StatelessWidget {
 }
 
 class _ContactLine extends StatelessWidget {
-  const _ContactLine({required this.label, required this.value, required this.url});
+  const _ContactLine({
+    required this.label,
+    required this.value,
+    required this.url,
+    this.copyValue,
+  });
   final String label;
   final String value;
   final String url;
+  final String? copyValue;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => launchUrl(Uri.parse(url)),
-      child: Text.rich(
-        TextSpan(
-          style: const TextStyle(color: Colors.white, fontSize: 16),
-          children: [
-            TextSpan(text: '$label: '),
-            TextSpan(text: value, style: const TextStyle(decoration: TextDecoration.underline)),
-          ],
+    final c = PortfolioScope.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InkWell(
+          onTap: () => launchUrl(Uri.parse(url)),
+          child: Text.rich(
+            TextSpan(
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+              children: [
+                TextSpan(text: '$label: '),
+                TextSpan(text: value, style: const TextStyle(decoration: TextDecoration.underline)),
+              ],
+            ),
+          ),
         ),
-      ),
+        if (copyValue != null)
+          IconButton(
+            tooltip: c.t('Copy', 'Kopiuj'),
+            onPressed: () => SiteActions.copy(
+              context,
+              copyValue!,
+              c.t('Copied', 'Skopiowano'),
+            ),
+            icon: const Icon(Icons.copy, size: 16, color: Colors.white54),
+          ),
+      ],
     );
   }
 }

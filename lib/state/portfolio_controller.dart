@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 class PortfolioController extends ChangeNotifier {
   bool polish = false;
   String? skillFilter;
+  bool paletteOpen = false;
+  bool briefOpen = false;
+  bool terminalOpen = false;
+  bool matrixOn = false;
+  bool devUnlocked = false;
 
   void toggleLang() {
     polish = !polish;
@@ -17,6 +22,57 @@ class PortfolioController extends ChangeNotifier {
   void clearSkill() {
     if (skillFilter == null) return;
     skillFilter = null;
+    notifyListeners();
+  }
+
+  void setPalette(bool open) {
+    if (paletteOpen == open) return;
+    paletteOpen = open;
+    if (open) terminalOpen = false;
+    notifyListeners();
+  }
+
+  void togglePalette() => setPalette(!paletteOpen);
+
+  void setBrief(bool open) {
+    if (briefOpen == open) return;
+    briefOpen = open;
+    if (open) {
+      paletteOpen = false;
+      terminalOpen = false;
+    }
+    notifyListeners();
+  }
+
+  void setTerminal(bool open) {
+    if (terminalOpen == open) return;
+    terminalOpen = open;
+    if (open) paletteOpen = false;
+    notifyListeners();
+  }
+
+  void toggleTerminal() => setTerminal(!terminalOpen);
+
+  void unlockDevMode() {
+    devUnlocked = true;
+    matrixOn = true;
+    terminalOpen = true;
+    paletteOpen = false;
+    notifyListeners();
+  }
+
+  void setMatrix(bool on) {
+    if (matrixOn == on) return;
+    matrixOn = on;
+    notifyListeners();
+  }
+
+  void closeOverlays() {
+    if (!paletteOpen && !briefOpen && !terminalOpen && !matrixOn) return;
+    paletteOpen = false;
+    briefOpen = false;
+    terminalOpen = false;
+    matrixOn = false;
     notifyListeners();
   }
 

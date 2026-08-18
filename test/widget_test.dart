@@ -14,5 +14,6 @@ void main() {
 
     expect(find.text('Adrian Rojek'), findsWidgets);
     expect(find.text('Computer Science student'), findsOneWidget);
+    expect(find.textContaining('Search'), findsWidgets);
   });
 }

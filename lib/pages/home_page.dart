@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../sections/sections.dart';
 import '../state/portfolio_controller.dart';
 import '../theme.dart';
+import '../util/site_actions.dart';
 import '../widgets/effects.dart';
+import '../widgets/portfolio_chrome.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -47,6 +49,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _jump(String id) {
+    switch (id) {
+      case 'home':
+      case 'start':
+      case 'hero':
+        _scrollTo(_heroKey);
+        break;
+      case 'about':
+      case 'o mnie':
+        _scrollTo(_aboutKey);
+        break;
+      case 'skills':
+        _scrollTo(_skillsKey);
+        break;
+      case 'projects':
+      case 'projekty':
+        _scrollTo(_projectsKey);
+        break;
+      case 'interests':
+        _scrollTo(_interestsKey);
+        break;
+      case 'contact':
+      case 'kontakt':
+        _scrollTo(_contactKey);
+        break;
+      default:
+        _scrollTo(_projectsKey);
+    }
+  }
+
   @override
   void dispose() {
     _scroll.dispose();
@@ -69,8 +101,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CursorGlow(
-        child: Stack(
-          children: [
+        child: PortfolioChrome(
+          onJump: _jump,
+          child: Stack(
+            children: [
             const Positioned.fill(child: StarField()),
             CustomScrollView(
               controller: _scroll,
@@ -136,6 +170,7 @@ class _HomePageState extends State<HomePage> {
               ),
           ],
         ),
+        ),
       ),
     );
   }
@@ -163,7 +198,17 @@ class _AvailabilityChip extends StatelessWidget {
             decoration: const BoxDecoration(color: Color(0xFF22C55E), shape: BoxShape.circle),
           ),
           const SizedBox(width: 8),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
+              Text(
+                WarsawClock.label(),
+                style: const TextStyle(color: Colors.white54, fontSize: 10, fontFamily: 'monospace'),
+              ),
+            ],
+          ),
         ],
       ),
     );
