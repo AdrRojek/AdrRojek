@@ -305,57 +305,81 @@ class PreviewHover extends StatefulWidget {
 }
 
 class _PreviewHoverState extends State<PreviewHover> {
-  final _link = LayerLink();
-  final _portal = OverlayPortalController();
+  OverlayEntry? _entry;
 
-  void _open() => _portal.show();
-  void _close() => _portal.hide();
+  void _show() {
+    _hide();
+    final overlay = Overlay.of(context, rootOverlay: true);
+    final box = context.findRenderObject() as RenderBox?;
+    if (box == null || !box.hasSize) return;
 
-  void _toggle() {
-    if (_portal.isShowing) {
-      _close();
-    } else {
-      _open();
-    }
+    final origin = box.localToGlobal(Offset.zero);
+    final size = box.size;
+    const previewW = 320.0;
+    const previewH = 400.0;
+
+    _entry = OverlayEntry(
+      builder: (context) {
+        final screen = MediaQuery.sizeOf(context);
+        var left = widget.preferLeft
+            ? origin.dx - previewW - 16
+            : origin.dx + size.width + 16;
+        var top = origin.dy + size.height / 2 - previewH / 2;
+        left = left.clamp(12.0, (screen.width - previewW - 12).clamp(12.0, screen.width));
+        top = top.clamp(12.0, (screen.height - previewH - 12).clamp(12.0, screen.height));
+
+        return Positioned(
+          left: left,
+          top: top,
+          width: previewW,
+          height: previewH,
+          child: IgnorePointer(
+            child: Material(
+              color: const Color(0xFF111111),
+              elevation: 32,
+              shadowColor: Colors.black,
+              borderRadius: BorderRadius.circular(8),
+              clipBehavior: Clip.antiAlias,
+              child: ColoredBox(
+                color: const Color(0xFF111111),
+                child: Image.asset(widget.image, fit: BoxFit.contain),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    overlay.insert(_entry!);
+  }
+
+  void _hide() {
+    _entry?.remove();
+    _entry = null;
+  }
+
+  @override
+  void dispose() {
+    _hide();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final mobile = AppBreakpoints.isMobile(context);
-    return CompositedTransformTarget(
-      link: _link,
-      child: OverlayPortal(
-        controller: _portal,
-        overlayChildBuilder: (context) {
-          return CompositedTransformFollower(
-            link: _link,
-            showWhenUnlinked: false,
-            targetAnchor: widget.preferLeft ? Alignment.centerLeft : Alignment.centerRight,
-            followerAnchor: widget.preferLeft ? Alignment.centerRight : Alignment.centerLeft,
-            offset: Offset(widget.preferLeft ? -12 : 12, 0),
-            child: IgnorePointer(
-              child: Material(
-                color: const Color(0xFF0B0B0B),
-                elevation: 24,
-                shadowColor: Colors.black,
-                borderRadius: BorderRadius.circular(10),
-                clipBehavior: Clip.antiAlias,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 340, maxHeight: 400),
-                  child: Image.asset(widget.image, fit: BoxFit.contain),
-                ),
-              ),
-            ),
-          );
-        },
-        child: MouseRegion(
-          onEnter: mobile ? null : (_) => _open(),
-          onExit: mobile ? null : (_) => _close(),
-          child: GestureDetector(
-            onTap: mobile ? _toggle : null,
-            child: widget.child,
-          ),
-        ),
+    return MouseRegion(
+      onEnter: mobile ? null : (_) => _show(),
+      onExit: mobile ? null : (_) => _hide(),
+      child: GestureDetector(
+        onTap: mobile
+            ? () {
+                if (_entry == null) {
+                  _show();
+                } else {
+                  _hide();
+                }
+              }
+            : null,
+        child: widget.child,
       ),
     );
   }
@@ -487,6 +511,7 @@ class _SkillTileState extends State<_SkillTile> {
                   width: 42,
                   height: 42,
                   filterQuality: FilterQuality.high,
+                  errorBuilder: (_, _, _) => const Icon(Icons.broken_image, color: Colors.white, size: 36),
                 );
                 if (widget.skill.iconAsset.contains('github')) {
                   icon = ColorFiltered(
@@ -655,45 +680,52 @@ class _InterestTileState extends State<_InterestTile> {
         duration: const Duration(milliseconds: 250),
         transform: Matrix4.translationValues(0, _hovered ? -6 : 0, 0),
         margin: const EdgeInsets.only(bottom: 12),
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 170),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            image: DecorationImage(
-              image: AssetImage(widget.item.gifAsset),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                Colors.black.withValues(alpha: 0.5),
-                BlendMode.darken,
-              ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: SizedBox(
+            height: 180,
+            width: double.infinity,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  widget.item.gifAsset,
+                  fit: BoxFit.cover,
+                  gaplessPlayback: true,
+                  filterQuality: FilterQuality.medium,
+                ),
+                const ColoredBox(color: Color(0x80000000)),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(widget.item.icon, color: Colors.white, size: 26),
+                      const SizedBox(height: 8),
+                      Text(
+                        widget.item.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          shadows: [Shadow(blurRadius: 6, color: Colors.black)],
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        widget.item.description,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          shadows: [Shadow(blurRadius: 6, color: Colors.black)],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(widget.item.icon, color: Colors.white, size: 26),
-              const SizedBox(height: 8),
-              Text(
-                widget.item.title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  shadows: [Shadow(blurRadius: 6, color: Colors.black)],
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                widget.item.description,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 13,
-                  shadows: [Shadow(blurRadius: 6, color: Colors.black)],
-                ),
-              ),
-            ],
           ),
         ),
       ),

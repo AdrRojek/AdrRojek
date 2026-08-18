@@ -146,11 +146,11 @@ class SiteContent {
     SkillItem(label: 'Android Studio', iconAsset: 'assets/icons/androidstudio.png'),
     SkillItem(label: 'Laravel', iconAsset: 'assets/icons/laravel.png'),
     SkillItem(label: 'Docker', iconAsset: 'assets/icons/docker.png'),
+    SkillItem(label: 'Figma', iconAsset: 'assets/icons/figma.png'),
     SkillItem(label: 'TensorFlow', iconAsset: 'assets/icons/tensorflow.png'),
     SkillItem(label: 'Kotlin', iconAsset: 'assets/icons/kotlin.png'),
     SkillItem(label: 'Java', iconAsset: 'assets/icons/java.png'),
     SkillItem(label: 'Gradle', iconAsset: 'assets/icons/gradle.png'),
-    SkillItem(label: 'Flutter', iconAsset: 'assets/icons/flutter.png'),
   ];
 
   static const interests = [
