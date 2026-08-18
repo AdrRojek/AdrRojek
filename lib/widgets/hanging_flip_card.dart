@@ -140,7 +140,7 @@ class _HangingFlipCardState extends State<HangingFlipCard>
           ..setEntry(3, 2, 0.0012)
           ..rotateY(flipAngle + rotY)
           ..rotateX(rotX)
-          ..translateByDouble(bx * 0.3, by * 0.3, 0, 1);
+          ..translate(bx * 0.3, by * 0.3);
 
         return Column(
           mainAxisSize: MainAxisSize.min,

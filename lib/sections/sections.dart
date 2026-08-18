@@ -280,7 +280,7 @@ class _Bullet extends StatelessWidget {
               style: const TextStyle(color: AppColors.muted, height: 1.45),
             ),
           ),
-          ?trailing,
+          if (trailing != null) trailing!,
         ],
       ),
     );
