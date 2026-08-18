@@ -5,11 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/content.dart';
+import '../state/portfolio_controller.dart';
 import '../theme.dart';
 
 class ProjectCard extends StatefulWidget {
-  const ProjectCard({super.key, required this.project});
+  const ProjectCard({super.key, required this.project, this.dimmed = false});
   final ProjectItem project;
+  final bool dimmed;
 
   @override
   State<ProjectCard> createState() => _ProjectCardState();
@@ -17,65 +19,90 @@ class ProjectCard extends StatefulWidget {
 
 class _ProjectCardState extends State<ProjectCard> {
   bool _hovered = false;
+  Offset _tilt = Offset.zero;
 
   @override
   Widget build(BuildContext context) {
     final mobile = AppBreakpoints.isMobile(context);
     final showOverlay = _hovered || mobile;
+    final c = PortfolioScope.of(context);
+
+    final card = ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: AspectRatio(
+        aspectRatio: 16 / 11,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            _PreviewImages(project: widget.project),
+            AnimatedOpacity(
+              opacity: showOverlay ? 1 : 0,
+              duration: const Duration(milliseconds: 250),
+              child: ColoredBox(
+                color: Colors.black.withValues(alpha: _hovered ? 0.8 : 0.45),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          widget.project.title,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          c.t('Click to see more', 'Kliknij, aby zobaczyć więcej'),
+                          style: const TextStyle(color: AppColors.muted, fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
+      onExit: (_) => setState(() {
+        _hovered = false;
+        _tilt = Offset.zero;
+      }),
+      onHover: mobile
+          ? null
+          : (event) {
+              final box = context.findRenderObject() as RenderBox?;
+              if (box == null || !box.hasSize) return;
+              final local = box.globalToLocal(event.position);
+              final nx = (local.dx / box.size.width) * 2 - 1;
+              final ny = (local.dy / box.size.height) * 2 - 1;
+              setState(() => _tilt = Offset(nx, ny));
+            },
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => ProjectPopup.show(context, widget.project),
-        child: AnimatedScale(
-          scale: _hovered && !mobile ? 1.05 : 1,
+        onTap: widget.dimmed ? null : () => ProjectPopup.show(context, widget.project),
+        child: AnimatedOpacity(
           duration: const Duration(milliseconds: 250),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: AspectRatio(
-              aspectRatio: 16 / 11,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  _PreviewImages(project: widget.project),
-                  AnimatedOpacity(
-                    opacity: showOverlay ? 1 : 0,
-                    duration: const Duration(milliseconds: 250),
-                    child: ColoredBox(
-                      color: Colors.black.withValues(alpha: _hovered ? 0.8 : 0.45),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                widget.project.title,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                'Click to see more',
-                                style: TextStyle(
-                                  color: AppColors.muted,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+          opacity: widget.dimmed ? 0.28 : 1,
+          child: AnimatedScale(
+            scale: _hovered && !mobile && !widget.dimmed ? 1.04 : 1,
+            duration: const Duration(milliseconds: 250),
+            child: Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.0014)
+                ..rotateY(_tilt.dx * 0.18)
+                ..rotateX(-_tilt.dy * 0.14),
+              child: card,
             ),
           ),
         ),

@@ -1,7 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+import '../theme.dart';
 
 class ScrollReveal extends StatefulWidget {
   const ScrollReveal({
@@ -181,6 +184,96 @@ class _CursorGlowState extends State<CursorGlow> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TypingRoles extends StatefulWidget {
+  const TypingRoles({super.key, required this.lines});
+  final List<String> lines;
+
+  @override
+  State<TypingRoles> createState() => _TypingRolesState();
+}
+
+class _TypingRolesState extends State<TypingRoles>
+    with SingleTickerProviderStateMixin {
+  late final Ticker _ticker;
+  int _line = 0;
+  int _chars = 0;
+  bool _deleting = false;
+  Duration _hold = Duration.zero;
+  Duration _accum = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+    _ticker = createTicker(_onTick)..start();
+  }
+
+  @override
+  void dispose() {
+    _ticker.dispose();
+    super.dispose();
+  }
+
+  void _onTick(Duration elapsed) {
+    final lines = widget.lines;
+    if (lines.isEmpty) return;
+    final text = lines[_line % lines.length];
+    final step = Duration(milliseconds: _deleting ? 28 : 55);
+    final delta = elapsed - _accum;
+    if (_hold > Duration.zero) {
+      _hold -= delta;
+      _accum = elapsed;
+      if (_hold <= Duration.zero) _deleting = true;
+      return;
+    }
+    if (delta < step) return;
+    _accum = elapsed;
+    setState(() {
+      if (!_deleting) {
+        _chars = (_chars + 1).clamp(0, text.length);
+        if (_chars >= text.length) _hold = const Duration(milliseconds: 1100);
+      } else {
+        _chars = (_chars - 1).clamp(0, text.length);
+        if (_chars <= 0) {
+          _deleting = false;
+          _line = (_line + 1) % lines.length;
+        }
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final lines = widget.lines;
+    if (lines.isEmpty) return const SizedBox.shrink();
+    final text = lines[_line % lines.length];
+    final end = _chars.clamp(0, text.length);
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: text.substring(0, end),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontFamily: 'monospace',
+              letterSpacing: 0.3,
+            ),
+          ),
+          const TextSpan(
+            text: '|',
+            style: TextStyle(
+              color: AppColors.accent,
+              fontSize: 16,
+              fontFamily: 'monospace',
+            ),
+          ),
+        ],
+      ),
+      textAlign: TextAlign.center,
     );
   }
 }

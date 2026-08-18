@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/content.dart';
+import '../state/portfolio_controller.dart';
 import '../theme.dart';
 import '../widgets/effects.dart';
 import '../widgets/hanging_flip_card.dart';
@@ -44,6 +45,24 @@ class _HeroSectionState extends State<HeroSection>
         alignment: Alignment.center,
         children: [
           const HangingFlipCard(),
+          Positioned(
+            top: 88,
+            left: 24,
+            right: 24,
+            child: TypingRoles(
+              lines: [
+                PortfolioScope.of(context).t(
+                  'Mobile App Developer',
+                  'Twórca aplikacji mobilnych',
+                ),
+                PortfolioScope.of(context).t(
+                  'Computer Science student',
+                  'Student informatyki',
+                ),
+                'SwiftUI  ·  Flutter  ·  Kotlin',
+              ],
+            ),
+          ),
           Positioned(
             bottom: 28,
             child: AnimatedBuilder(
@@ -390,6 +409,7 @@ class SkillsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = PortfolioScope.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 64),
       child: Center(
@@ -397,23 +417,31 @@ class SkillsSection extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 1200),
           child: Column(
             children: [
-              const ScrollReveal(
+              ScrollReveal(
                 id: 'skills-title',
-                child: _SectionTitle('Specializations'),
+                child: _SectionTitle(c.t('Specializations', 'Specjalizacje')),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 8),
+              Text(
+                c.t(
+                  'Tap a skill to highlight matching projects.',
+                  'Kliknij umiejętność, aby podświetlić pasujące projekty.',
+                ),
+                style: const TextStyle(color: AppColors.muted, fontSize: 13),
+              ),
+              const SizedBox(height: 24),
               LayoutBuilder(
                 builder: (context, constraints) {
                   final twoCols = constraints.maxWidth > 800;
                   final cards = [
                     ScrollReveal(
                       id: 'skills-card',
-                      child: _SkillGridCard(title: '💪 Skills', items: SiteContent.skills),
+                      child: _SkillGridCard(title: c.t('💪 Skills', '💪 Umiejętności'), items: SiteContent.skills),
                     ),
                     ScrollReveal(
                       id: 'learning-card',
                       delay: const Duration(milliseconds: 120),
-                      child: _SkillGridCard(title: '📚 Learning', items: SiteContent.learning),
+                      child: _SkillGridCard(title: c.t('📚 Learning', '📚 W nauce'), items: SiteContent.learning),
                     ),
                   ];
                   if (twoCols) {
@@ -495,40 +523,61 @@ class _SkillTileState extends State<_SkillTile> {
 
   @override
   Widget build(BuildContext context) {
+    final selected = PortfolioScope.of(context).skillFilter == widget.skill.label;
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedScale(
-        scale: _hovered ? 1.1 : 1,
-        duration: const Duration(milliseconds: 200),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Builder(
-              builder: (context) {
-                Widget icon = Image.asset(
-                  widget.skill.iconAsset,
-                  width: 42,
-                  height: 42,
-                  filterQuality: FilterQuality.high,
-                  errorBuilder: (_, _, _) => const Icon(Icons.broken_image, color: Colors.white, size: 36),
-                );
-                if (widget.skill.iconAsset.contains('github')) {
-                  icon = ColorFiltered(
-                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                    child: icon,
-                  );
-                }
-                return icon;
-              },
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => PortfolioScope.of(context).toggleSkill(widget.skill.label),
+        child: AnimatedScale(
+          scale: _hovered ? 1.1 : 1,
+          duration: const Duration(milliseconds: 200),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: selected ? AppColors.accent : Colors.transparent,
+                width: 1.4,
+              ),
+              color: selected ? AppColors.accent.withValues(alpha: 0.12) : Colors.transparent,
             ),
-            const SizedBox(height: 8),
-            Text(
-              widget.skill.label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.muted, fontSize: 13),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Builder(
+                  builder: (context) {
+                    Widget icon = Image.asset(
+                      widget.skill.iconAsset,
+                      width: 42,
+                      height: 42,
+                      filterQuality: FilterQuality.high,
+                      errorBuilder: (_, _, _) =>
+                          const Icon(Icons.broken_image, color: Colors.white, size: 36),
+                    );
+                    if (widget.skill.iconAsset.contains('github')) {
+                      icon = ColorFiltered(
+                        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                        child: icon,
+                      );
+                    }
+                    return icon;
+                  },
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  widget.skill.label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: selected ? Colors.white : AppColors.muted,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -540,6 +589,7 @@ class ProjectsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = PortfolioScope.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 64),
       child: Center(
@@ -547,11 +597,23 @@ class ProjectsSection extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 1200),
           child: Column(
             children: [
-              const ScrollReveal(
+              ScrollReveal(
                 id: 'projects-title',
-                child: _SectionTitle('My Projects'),
+                child: _SectionTitle(c.t('My Projects', 'Moje projekty')),
               ),
-              const SizedBox(height: 32),
+              if (c.skillFilter != null) ...[
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: c.clearSkill,
+                  child: Text(
+                    c.t(
+                      'Showing projects for ${c.skillFilter}  ·  clear',
+                      'Projekty dla ${c.skillFilter}  ·  wyczyść',
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 24),
               LayoutBuilder(
                 builder: (context, constraints) {
                   final width = constraints.maxWidth;
@@ -568,11 +630,14 @@ class ProjectsSection extends StatelessWidget {
                     ),
                     itemBuilder: (context, index) {
                       final project = SiteContent.projects[index];
+                      final filter = c.skillFilter;
+                      final matches = filter == null ||
+                          SkillMatch.projectUses(filter, project.technologies);
                       return ScrollReveal(
                         id: 'project-${project.id}',
                         delay: Duration(milliseconds: 80 * index),
                         offset: const Offset(-80, 0),
-                        child: ProjectCard(project: project),
+                        child: ProjectCard(project: project, dimmed: !matches),
                       );
                     },
                   );
@@ -598,9 +663,14 @@ class InterestsSection extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 1200),
           child: Column(
             children: [
-              const ScrollReveal(
+              ScrollReveal(
                 id: 'interests-title',
-                child: _SectionTitle('Interests and Soft Skills'),
+                child: _SectionTitle(
+                  PortfolioScope.of(context).t(
+                    'Interests and Soft Skills',
+                    'Zainteresowania i kompetencje miękkie',
+                  ),
+                ),
               ),
               const SizedBox(height: 32),
               LayoutBuilder(
@@ -779,9 +849,9 @@ class ContactSection extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 48),
         child: Column(
           children: [
-            const Text(
-              'Contact',
-              style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w600),
+            Text(
+              PortfolioScope.of(context).t('Contact', 'Kontakt'),
+              style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 20),
             _ContactLine(
