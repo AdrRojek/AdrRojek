@@ -22,8 +22,8 @@ flutter run -d linux       # desktop
 ## Build
 
 ```bash
-# Web (GitHub Pages / adrrojekcv.com)
-flutter build web --release --base-href /
+# Web (https://adrrojek.github.io/AdrRojek/)
+flutter build web --release --base-href /AdrRojek/
 
 # Mobile
 flutter build apk
