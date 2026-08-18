@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -140,6 +139,7 @@ class InfoSection extends StatelessWidget {
           const Center(
             child: PreviewHover(
               image: 'assets/photos/dyplom.png',
+              preferLeft: true,
               child: SizedBox(
                 width: 28,
                 child: Image(
@@ -289,45 +289,72 @@ class _Bullet extends StatelessWidget {
 }
 
 class PreviewHover extends StatefulWidget {
-  const PreviewHover({super.key, required this.image, required this.child});
+  const PreviewHover({
+    super.key,
+    required this.image,
+    required this.child,
+    this.preferLeft = false,
+  });
+
   final String image;
   final Widget child;
+  final bool preferLeft;
 
   @override
   State<PreviewHover> createState() => _PreviewHoverState();
 }
 
 class _PreviewHoverState extends State<PreviewHover> {
-  bool _show = false;
+  final _link = LayerLink();
+  final _portal = OverlayPortalController();
+
+  void _open() => _portal.show();
+  void _close() => _portal.hide();
 
   void _toggle() {
-    setState(() => _show = !_show);
+    if (_portal.isShowing) {
+      _close();
+    } else {
+      _open();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final mobile = AppBreakpoints.isMobile(context);
-    return MouseRegion(
-      onEnter: mobile ? null : (_) => setState(() => _show = true),
-      onExit: mobile ? null : (_) => setState(() => _show = false),
-      child: GestureDetector(
-        onTap: mobile ? _toggle : null,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            widget.child,
-            if (_show)
-              Positioned(
-                left: 40,
-                top: -40,
-                child: Material(
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(8),
-                  clipBehavior: Clip.antiAlias,
-                  child: Image.asset(widget.image, width: 260, fit: BoxFit.cover),
+    return CompositedTransformTarget(
+      link: _link,
+      child: OverlayPortal(
+        controller: _portal,
+        overlayChildBuilder: (context) {
+          return CompositedTransformFollower(
+            link: _link,
+            showWhenUnlinked: false,
+            targetAnchor: widget.preferLeft ? Alignment.centerLeft : Alignment.centerRight,
+            followerAnchor: widget.preferLeft ? Alignment.centerRight : Alignment.centerLeft,
+            offset: Offset(widget.preferLeft ? -12 : 12, 0),
+            child: IgnorePointer(
+              child: Material(
+                color: const Color(0xFF0B0B0B),
+                elevation: 24,
+                shadowColor: Colors.black,
+                borderRadius: BorderRadius.circular(10),
+                clipBehavior: Clip.antiAlias,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 340, maxHeight: 400),
+                  child: Image.asset(widget.image, fit: BoxFit.contain),
                 ),
               ),
-          ],
+            ),
+          );
+        },
+        child: MouseRegion(
+          onEnter: mobile ? null : (_) => _open(),
+          onExit: mobile ? null : (_) => _close(),
+          child: GestureDetector(
+            onTap: mobile ? _toggle : null,
+            child: widget.child,
+          ),
         ),
       ),
     );
@@ -453,13 +480,22 @@ class _SkillTileState extends State<_SkillTile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              widget.skill.iconAsset,
-              width: 42,
-              height: 42,
-              colorFilter: widget.skill.iconAsset.contains('github')
-                  ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
-                  : null,
+            Builder(
+              builder: (context) {
+                Widget icon = Image.asset(
+                  widget.skill.iconAsset,
+                  width: 42,
+                  height: 42,
+                  filterQuality: FilterQuality.high,
+                );
+                if (widget.skill.iconAsset.contains('github')) {
+                  icon = ColorFiltered(
+                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                    child: icon,
+                  );
+                }
+                return icon;
+              },
             ),
             const SizedBox(height: 8),
             Text(
@@ -615,51 +651,46 @@ class _InterestTileState extends State<_InterestTile> {
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
-        child: AnimatedContainer(
+      child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         transform: Matrix4.translationValues(0, _hovered ? -6 : 0, 0),
         margin: const EdgeInsets.only(bottom: 12),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Stack(
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 170),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            image: DecorationImage(
+              image: AssetImage(widget.item.gifAsset),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withValues(alpha: 0.5),
+                BlendMode.darken,
+              ),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Positioned.fill(
-                child: Image.asset(
-                  widget.item.gifAsset,
-                  fit: BoxFit.cover,
+              Icon(widget.item.icon, color: Colors.white, size: 26),
+              const SizedBox(height: 8),
+              Text(
+                widget.item.title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  shadows: [Shadow(blurRadius: 6, color: Colors.black)],
                 ),
               ),
-              Positioned.fill(
-                child: ColoredBox(
-                  color: Colors.black.withValues(alpha: 0.5),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Icon(widget.item.icon, color: Colors.white, size: 26),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.item.title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        shadows: [Shadow(blurRadius: 4, color: Colors.black)],
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      widget.item.description,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        shadows: [Shadow(blurRadius: 4, color: Colors.black)],
-                      ),
-                    ),
-                  ],
+              const SizedBox(height: 6),
+              Text(
+                widget.item.description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  shadows: [Shadow(blurRadius: 6, color: Colors.black)],
                 ),
               ),
             ],

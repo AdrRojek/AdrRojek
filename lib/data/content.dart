@@ -127,30 +127,30 @@ class SiteContent {
   ];
 
   static const skills = [
-    SkillItem(label: 'CSS3', iconAsset: 'assets/icons/css3.svg'),
-    SkillItem(label: 'HTML', iconAsset: 'assets/icons/html5.svg'),
-    SkillItem(label: 'PHP', iconAsset: 'assets/icons/php.svg'),
-    SkillItem(label: 'C++', iconAsset: 'assets/icons/cpp.svg'),
-    SkillItem(label: 'C#', iconAsset: 'assets/icons/csharp.svg'),
-    SkillItem(label: 'C', iconAsset: 'assets/icons/c.svg'),
-    SkillItem(label: 'Python', iconAsset: 'assets/icons/python.svg'),
-    SkillItem(label: 'Swift', iconAsset: 'assets/icons/swift.svg'),
-    SkillItem(label: 'GitHub', iconAsset: 'assets/icons/github.svg'),
-    SkillItem(label: 'Figma', iconAsset: 'assets/icons/figma.svg'),
-    SkillItem(label: 'MySQL', iconAsset: 'assets/icons/mysql.svg'),
-    SkillItem(label: 'SQLite', iconAsset: 'assets/icons/sqlite.svg'),
+    SkillItem(label: 'CSS3', iconAsset: 'assets/icons/css3.png'),
+    SkillItem(label: 'HTML', iconAsset: 'assets/icons/html5.png'),
+    SkillItem(label: 'PHP', iconAsset: 'assets/icons/php.png'),
+    SkillItem(label: 'C++', iconAsset: 'assets/icons/cpp.png'),
+    SkillItem(label: 'C#', iconAsset: 'assets/icons/csharp.png'),
+    SkillItem(label: 'C', iconAsset: 'assets/icons/c.png'),
+    SkillItem(label: 'Python', iconAsset: 'assets/icons/python.png'),
+    SkillItem(label: 'Swift', iconAsset: 'assets/icons/swift.png'),
+    SkillItem(label: 'GitHub', iconAsset: 'assets/icons/github.png'),
+    SkillItem(label: 'Figma', iconAsset: 'assets/icons/figma.png'),
+    SkillItem(label: 'MySQL', iconAsset: 'assets/icons/mysql.png'),
+    SkillItem(label: 'SQLite', iconAsset: 'assets/icons/sqlite.png'),
   ];
 
   static const learning = [
-    SkillItem(label: 'JavaScript', iconAsset: 'assets/icons/javascript.svg'),
-    SkillItem(label: 'Android Studio', iconAsset: 'assets/icons/androidstudio.svg'),
-    SkillItem(label: 'Laravel', iconAsset: 'assets/icons/laravel.svg'),
-    SkillItem(label: 'Docker', iconAsset: 'assets/icons/docker.svg'),
-    SkillItem(label: 'TensorFlow', iconAsset: 'assets/icons/tensorflow.svg'),
-    SkillItem(label: 'Kotlin', iconAsset: 'assets/icons/kotlin.svg'),
-    SkillItem(label: 'Java', iconAsset: 'assets/icons/java.svg'),
-    SkillItem(label: 'Gradle', iconAsset: 'assets/icons/gradle.svg'),
-    SkillItem(label: 'Flutter', iconAsset: 'assets/icons/flutter.svg'),
+    SkillItem(label: 'JavaScript', iconAsset: 'assets/icons/javascript.png'),
+    SkillItem(label: 'Android Studio', iconAsset: 'assets/icons/androidstudio.png'),
+    SkillItem(label: 'Laravel', iconAsset: 'assets/icons/laravel.png'),
+    SkillItem(label: 'Docker', iconAsset: 'assets/icons/docker.png'),
+    SkillItem(label: 'TensorFlow', iconAsset: 'assets/icons/tensorflow.png'),
+    SkillItem(label: 'Kotlin', iconAsset: 'assets/icons/kotlin.png'),
+    SkillItem(label: 'Java', iconAsset: 'assets/icons/java.png'),
+    SkillItem(label: 'Gradle', iconAsset: 'assets/icons/gradle.png'),
+    SkillItem(label: 'Flutter', iconAsset: 'assets/icons/flutter.png'),
   ];
 
   static const interests = [
