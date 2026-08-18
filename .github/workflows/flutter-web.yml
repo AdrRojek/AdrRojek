@@ -1,23 +1,34 @@
-name: Build Flutter web
+name: Deploy Flutter web
 
 on:
   push:
-    branches: [website]
+    branches: [cursor/flutter-portfolio-b008]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true
       - run: flutter pub get
-      - run: flutter analyze
       - run: flutter test
-      - run: flutter build web --release --base-href /
-      - uses: actions/upload-artifact@v4
+      - run: flutter build web --release --base-href /AdrRojek/
+      - name: Prepare GitHub Pages files
+        run: |
+          touch build/web/.nojekyll
+          rm -f build/web/CNAME
+      - uses: peaceiris/actions-gh-pages@v4
         with:
-          name: web-release
-          path: build/web
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: website
+          publish_dir: build/web
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
