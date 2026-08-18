@@ -21,8 +21,53 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
+    final mobile = AppBreakpoints.isMobile(context);
+    final showOverlay = _hovered || mobile;
     final c = PortfolioScope.of(context);
-    final cover = widget.project.previewImages.first;
+
+    final card = ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: AspectRatio(
+        aspectRatio: 16 / 11,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            _PreviewImages(project: widget.project),
+            AnimatedOpacity(
+              opacity: showOverlay ? 1 : 0,
+              duration: const Duration(milliseconds: 250),
+              child: ColoredBox(
+                color: Colors.black.withValues(alpha: _hovered ? 0.8 : 0.45),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          widget.project.title,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          c.t('Click to see more', 'Kliknij, aby zobaczyć więcej'),
+                          style: const TextStyle(color: AppColors.muted, fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
@@ -30,77 +75,36 @@ class _ProjectCardState extends State<ProjectCard> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => ProjectPopup.show(context, widget.project),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: _hovered ? AppColors.accent.withValues(alpha: 0.7) : Colors.white12,
-            ),
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: Image.asset(
-                  cover,
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.medium,
-                  gaplessPlayback: true,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.project.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        height: 1.25,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      c.t(widget.project.summary, widget.project.summaryPl),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.35),
-                    ),
-                    const SizedBox(height: 10),
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: [
-                        for (final tech in widget.project.technologies.take(3))
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: AppColors.accent.withValues(alpha: 0.14),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              tech,
-                              style: const TextStyle(color: Colors.white70, fontSize: 11),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        child: AnimatedScale(
+          scale: _hovered && !mobile ? 1.04 : 1,
+          duration: const Duration(milliseconds: 250),
+          child: card,
         ),
       ),
+    );
+  }
+}
+
+class _PreviewImages extends StatelessWidget {
+  const _PreviewImages({required this.project});
+  final ProjectItem project;
+
+  @override
+  Widget build(BuildContext context) {
+    final images = project.previewImages;
+    if (images.length == 1) {
+      return Image.asset(images.first, fit: BoxFit.cover);
+    }
+    return Row(
+      children: [
+        for (var i = 0; i < images.length; i++)
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(right: i == images.length - 1 ? 0 : 2),
+              child: Image.asset(images[i], fit: BoxFit.cover, height: double.infinity),
+            ),
+          ),
+      ],
     );
   }
 }
@@ -111,13 +115,23 @@ class ProjectPopup {
       context: context,
       barrierDismissible: true,
       barrierLabel: 'Close',
-      barrierColor: Colors.black.withValues(alpha: 0.88),
-      transitionDuration: const Duration(milliseconds: 180),
+      barrierColor: Colors.black.withValues(alpha: 0.9),
+      transitionDuration: const Duration(milliseconds: 450),
       pageBuilder: (context, animation, secondary) {
         return ProjectPopupView(project: project);
       },
       transitionBuilder: (context, animation, secondary, child) {
-        return FadeTransition(opacity: animation, child: child);
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: const Cubic(0.4, 0, 0.2, 1),
+        );
+        return FadeTransition(
+          opacity: curved,
+          child: ScaleTransition(
+            scale: Tween(begin: 0.12, end: 1.0).animate(curved),
+            child: child,
+          ),
+        );
       },
     );
   }
@@ -139,9 +153,11 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
   void initState() {
     super.initState();
     if (widget.project.images.length > 1) {
-      _timer = Timer.periodic(const Duration(seconds: 4), (_) {
+      _timer = Timer.periodic(const Duration(seconds: 3), (_) {
         if (!mounted) return;
-        setState(() => _index = (_index + 1) % widget.project.images.length);
+        setState(() {
+          _index = (_index + 1) % widget.project.images.length;
+        });
       });
     }
   }
@@ -188,10 +204,7 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
                   Positioned(
                     top: 12,
                     right: 12,
-                    child: IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.close, color: Colors.white),
-                    ),
+                    child: _CloseButton(onTap: () => Navigator.pop(context)),
                   ),
                   Positioned(
                     top: 12,
@@ -210,11 +223,15 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
   Widget _slideshow() {
     return ColoredBox(
       color: Colors.black,
-      child: Image.asset(
-        widget.project.images[_index],
-        fit: BoxFit.contain,
-        gaplessPlayback: true,
-        filterQuality: FilterQuality.medium,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            widget.project.images[_index],
+            fit: BoxFit.contain,
+            gaplessPlayback: true,
+          ),
+        ],
       ),
     );
   }
@@ -238,9 +255,23 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
           Text(
             widget.project.description,
             textAlign: TextAlign.justify,
-            style: const TextStyle(color: AppColors.muted, fontSize: 15, height: 1.7),
+            style: const TextStyle(
+              color: AppColors.muted,
+              fontSize: 15,
+              height: 1.7,
+            ),
           ),
           const SizedBox(height: 24),
+          const Text(
+            'Technologies',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 12),
           Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -254,7 +285,10 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: const Color(0x4D0071E3)),
                   ),
-                  child: Text(tech, style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+                  child: Text(
+                    tech,
+                    style: const TextStyle(color: AppColors.muted, fontSize: 13),
+                  ),
                 ),
             ],
           ),
@@ -264,22 +298,88 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
   }
 }
 
-class _GithubBadge extends StatelessWidget {
+class _CloseButton extends StatefulWidget {
+  const _CloseButton({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  State<_CloseButton> createState() => _CloseButtonState();
+}
+
+class _CloseButtonState extends State<_CloseButton> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedRotation(
+          turns: _hovered ? 0.25 : 0,
+          duration: const Duration(milliseconds: 250),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: const BoxDecoration(
+              color: Color(0x1AFFFFFF),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.close, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GithubBadge extends StatefulWidget {
   const _GithubBadge({this.url});
   final String? url;
 
   @override
+  State<_GithubBadge> createState() => _GithubBadgeState();
+}
+
+class _GithubBadgeState extends State<_GithubBadge> {
+  bool _hovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    final c = PortfolioScope.of(context);
-    return IconButton(
-      tooltip: url == null
-          ? c.t('School project — no public repo', 'Projekt szkolny — brak publicznego repo')
-          : 'GitHub',
-      onPressed: url == null ? null : () => launchUrl(Uri.parse(url!)),
-      icon: FaIcon(
-        FontAwesomeIcons.github,
-        color: url == null ? Colors.white38 : Colors.white,
-        size: 22,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: widget.url == null ? null : () => launchUrl(Uri.parse(widget.url!)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AnimatedScale(
+              scale: _hovered ? 1.1 : 1,
+              duration: const Duration(milliseconds: 200),
+              child: const FaIcon(
+                FontAwesomeIcons.github,
+                color: Colors.white,
+                size: 26,
+              ),
+            ),
+            if (_hovered && widget.url == null)
+              Container(
+                margin: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                width: 220,
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.9),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Text(
+                  'This project is a school assignment and is not available.',
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

@@ -216,10 +216,16 @@ class InfoSection extends StatelessWidget {
           child: Column(
             children: [
               for (final cert in SiteContent.certificates)
-                PreviewHover(
-                  image: cert.image,
-                  landscape: true,
-                  child: _Bullet(cert.title, trailing: const Text('📜')),
+                _Bullet(
+                  cert.title,
+                  trailing: PreviewHover(
+                    image: cert.image,
+                    landscape: true,
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: Text('📜', style: TextStyle(fontSize: 16, height: 1)),
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -392,8 +398,8 @@ class _PreviewHoverState extends State<PreviewHover> {
     if (box == null || !box.hasSize) return;
     final origin = box.localToGlobal(Offset.zero);
     final size = box.size;
-    final previewW = widget.landscape ? 520.0 : 320.0;
-    final previewH = widget.landscape ? 380.0 : 400.0;
+    final previewW = widget.landscape ? 260.0 : 320.0;
+    final previewH = widget.landscape ? 190.0 : 400.0;
     _entry = OverlayEntry(
       builder: (context) {
         final screen = MediaQuery.sizeOf(context);
@@ -414,7 +420,7 @@ class _PreviewHoverState extends State<PreviewHover> {
               clipBehavior: Clip.antiAlias,
               child: Image.asset(
                 widget.image,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
                 alignment: Alignment.center,
                 filterQuality: FilterQuality.medium,
               ),
@@ -441,6 +447,7 @@ class _PreviewHoverState extends State<PreviewHover> {
   Widget build(BuildContext context) {
     final mobile = AppBreakpoints.isMobile(context);
     return MouseRegion(
+      cursor: SystemMouseCursors.zoomIn,
       onEnter: mobile ? null : (_) => _show(),
       onExit: mobile ? null : (_) => _hide(),
       child: GestureDetector(
@@ -588,9 +595,9 @@ class ProjectsSection extends StatelessWidget {
                     itemCount: SiteContent.projects.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: cols,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      childAspectRatio: cols == 1 ? 0.92 : 0.78,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      childAspectRatio: 16 / 11,
                     ),
                     itemBuilder: (context, index) {
                       return ProjectCard(project: SiteContent.projects[index]);
