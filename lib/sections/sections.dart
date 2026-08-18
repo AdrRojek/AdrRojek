@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -356,7 +357,7 @@ class SkillsSection extends StatelessWidget {
                   final cards = [
                     ScrollReveal(
                       id: 'skills-card',
-                      child: _SkillGridCard(title: '💪 Skills', items: SiteContent.skills, includeGithub: true),
+                      child: _SkillGridCard(title: '💪 Skills', items: SiteContent.skills),
                     ),
                     ScrollReveal(
                       id: 'learning-card',
@@ -395,18 +396,12 @@ class _SkillGridCard extends StatelessWidget {
   const _SkillGridCard({
     required this.title,
     required this.items,
-    this.includeGithub = false,
   });
   final String title;
   final List<SkillItem> items;
-  final bool includeGithub;
 
   @override
   Widget build(BuildContext context) {
-    final children = <Widget>[
-      for (final skill in items) _SkillTile(skill: skill),
-      if (includeGithub) const _GithubSkillTile(),
-    ];
     return GlassCard(
       child: Column(
         children: [
@@ -426,7 +421,9 @@ class _SkillGridCard extends StatelessWidget {
             mainAxisSpacing: 16,
             crossAxisSpacing: 12,
             childAspectRatio: 0.95,
-            children: children,
+            children: [
+              for (final skill in items) _SkillTile(skill: skill),
+            ],
           ),
         ],
       ),
@@ -456,11 +453,13 @@ class _SkillTileState extends State<_SkillTile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(
-              widget.skill.iconUrl,
+            SvgPicture.asset(
+              widget.skill.iconAsset,
               width: 42,
               height: 42,
-              errorBuilder: (_, _, _) => const Icon(Icons.code, color: Colors.white, size: 36),
+              colorFilter: widget.skill.iconAsset.contains('github')
+                  ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
+                  : null,
             ),
             const SizedBox(height: 8),
             Text(
@@ -471,22 +470,6 @@ class _SkillTileState extends State<_SkillTile> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _GithubSkillTile extends StatelessWidget {
-  const _GithubSkillTile();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FaIcon(FontAwesomeIcons.github, color: Colors.white, size: 40),
-        SizedBox(height: 8),
-        Text('GitHub', style: TextStyle(color: AppColors.muted, fontSize: 13)),
-      ],
     );
   }
 }
@@ -632,30 +615,55 @@ class _InterestTileState extends State<_InterestTile> {
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
+        child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         transform: Matrix4.translationValues(0, _hovered ? -6 : 0, 0),
         margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.05),
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          children: [
-            Icon(widget.item.icon, color: AppColors.accent, size: 26),
-            const SizedBox(height: 8),
-            Text(
-              widget.item.title,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              widget.item.description,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.muted, fontSize: 13),
-            ),
-          ],
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  widget.item.gifAsset,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned.fill(
+                child: ColoredBox(
+                  color: Colors.black.withValues(alpha: 0.5),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Icon(widget.item.icon, color: Colors.white, size: 26),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.item.title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        shadows: [Shadow(blurRadius: 4, color: Colors.black)],
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      widget.item.description,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        shadows: [Shadow(blurRadius: 4, color: Colors.black)],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

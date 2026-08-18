@@ -10,9 +10,9 @@ class SiteLinks {
 }
 
 class SkillItem {
-  const SkillItem({required this.label, required this.iconUrl});
+  const SkillItem({required this.label, required this.iconAsset});
   final String label;
-  final String iconUrl;
+  final String iconAsset;
 }
 
 class InterestItem {
@@ -20,10 +20,12 @@ class InterestItem {
     required this.title,
     required this.description,
     required this.icon,
+    required this.gifAsset,
   });
   final String title;
   final String description;
   final IconData icon;
+  final String gifAsset;
 }
 
 class SoftSkillItem {
@@ -125,109 +127,30 @@ class SiteContent {
   ];
 
   static const skills = [
-    SkillItem(
-      label: 'CSS3',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
-    ),
-    SkillItem(
-      label: 'HTML',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg',
-    ),
-    SkillItem(
-      label: 'PHP',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg',
-    ),
-    SkillItem(
-      label: 'C++',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg',
-    ),
-    SkillItem(
-      label: 'C#',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg',
-    ),
-    SkillItem(
-      label: 'C',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg',
-    ),
-    SkillItem(
-      label: 'Python',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
-    ),
-    SkillItem(
-      label: 'Swift',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg',
-    ),
-    SkillItem(
-      label: 'Figma',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg',
-    ),
-    SkillItem(
-      label: 'MySQL',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg',
-    ),
-    SkillItem(
-      label: 'SQLite',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg',
-    ),
+    SkillItem(label: 'CSS3', iconAsset: 'assets/icons/css3.svg'),
+    SkillItem(label: 'HTML', iconAsset: 'assets/icons/html5.svg'),
+    SkillItem(label: 'PHP', iconAsset: 'assets/icons/php.svg'),
+    SkillItem(label: 'C++', iconAsset: 'assets/icons/cpp.svg'),
+    SkillItem(label: 'C#', iconAsset: 'assets/icons/csharp.svg'),
+    SkillItem(label: 'C', iconAsset: 'assets/icons/c.svg'),
+    SkillItem(label: 'Python', iconAsset: 'assets/icons/python.svg'),
+    SkillItem(label: 'Swift', iconAsset: 'assets/icons/swift.svg'),
+    SkillItem(label: 'GitHub', iconAsset: 'assets/icons/github.svg'),
+    SkillItem(label: 'Figma', iconAsset: 'assets/icons/figma.svg'),
+    SkillItem(label: 'MySQL', iconAsset: 'assets/icons/mysql.svg'),
+    SkillItem(label: 'SQLite', iconAsset: 'assets/icons/sqlite.svg'),
   ];
 
   static const learning = [
-    SkillItem(
-      label: 'JavaScript',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
-    ),
-    SkillItem(
-      label: 'Android Studio',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/androidstudio/androidstudio-original.svg',
-    ),
-    SkillItem(
-      label: 'Laravel',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg',
-    ),
-    SkillItem(
-      label: 'Docker',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg',
-    ),
-    SkillItem(
-      label: 'TensorFlow',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg',
-    ),
-    SkillItem(
-      label: 'Kotlin',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg',
-    ),
-    SkillItem(
-      label: 'Java',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
-    ),
-    SkillItem(
-      label: 'Gradle',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gradle/gradle-original.svg',
-    ),
-    SkillItem(
-      label: 'Flutter',
-      iconUrl:
-          'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg',
-    ),
+    SkillItem(label: 'JavaScript', iconAsset: 'assets/icons/javascript.svg'),
+    SkillItem(label: 'Android Studio', iconAsset: 'assets/icons/androidstudio.svg'),
+    SkillItem(label: 'Laravel', iconAsset: 'assets/icons/laravel.svg'),
+    SkillItem(label: 'Docker', iconAsset: 'assets/icons/docker.svg'),
+    SkillItem(label: 'TensorFlow', iconAsset: 'assets/icons/tensorflow.svg'),
+    SkillItem(label: 'Kotlin', iconAsset: 'assets/icons/kotlin.svg'),
+    SkillItem(label: 'Java', iconAsset: 'assets/icons/java.svg'),
+    SkillItem(label: 'Gradle', iconAsset: 'assets/icons/gradle.svg'),
+    SkillItem(label: 'Flutter', iconAsset: 'assets/icons/flutter.svg'),
   ];
 
   static const interests = [
@@ -236,21 +159,25 @@ class SiteContent {
       description:
           'Enthusiast of motorsports, with a focus on Formula 1 and rally racing',
       icon: Icons.directions_car,
+      gifAsset: 'assets/gifs/automotive.gif',
     ),
     InterestItem(
       title: 'Music',
       description: 'I relax and recharge by listening to my favorite music',
       icon: Icons.music_note,
+      gifAsset: 'assets/gifs/music.gif',
     ),
     InterestItem(
       title: 'Cooking',
       description: 'Experimenting with new recipes and culinary techniques',
       icon: Icons.restaurant,
+      gifAsset: 'assets/gifs/cooking.gif',
     ),
     InterestItem(
       title: 'Road trips',
       description: 'Discovering scenic routes and regions',
       icon: Icons.add_road,
+      gifAsset: 'assets/gifs/roadtrips.gif',
     ),
   ];
 
