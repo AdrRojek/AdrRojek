@@ -173,22 +173,12 @@ class InfoSection extends StatelessWidget {
             c.t('Relevant experience', 'Doświadczenie IT'),
             style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 6),
-          Text(
-            c.t('Last 6 months — the roles hiring teams usually ask about.', 'Ostatnie 6 miesięcy — to, o co pytają rekruterzy.'),
-            style: const TextStyle(color: AppColors.muted, fontSize: 13),
-          ),
           const SizedBox(height: 18),
           for (final role in featured) _TimelineRow(role: role),
           const SizedBox(height: 22),
           Text(
             c.t('Other work', 'Inna praca'),
             style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            c.t('Seasonal and industrial jobs — reliable, on time, used to real workplaces.', 'Prace sezonowe i produkcja — punktualność i środowisko zespołowe.'),
-            style: const TextStyle(color: AppColors.muted, fontSize: 13),
           ),
           const SizedBox(height: 12),
           for (final role in other)
@@ -228,6 +218,7 @@ class InfoSection extends StatelessWidget {
               for (final cert in SiteContent.certificates)
                 PreviewHover(
                   image: cert.image,
+                  landscape: true,
                   child: _Bullet(cert.title, trailing: const Text('📜')),
                 ),
             ],
@@ -379,11 +370,13 @@ class PreviewHover extends StatefulWidget {
     required this.image,
     required this.child,
     this.preferLeft = false,
+    this.landscape = false,
   });
 
   final String image;
   final Widget child;
   final bool preferLeft;
+  final bool landscape;
 
   @override
   State<PreviewHover> createState() => _PreviewHoverState();
@@ -399,8 +392,8 @@ class _PreviewHoverState extends State<PreviewHover> {
     if (box == null || !box.hasSize) return;
     final origin = box.localToGlobal(Offset.zero);
     final size = box.size;
-    const previewW = 320.0;
-    const previewH = 400.0;
+    final previewW = widget.landscape ? 520.0 : 320.0;
+    final previewH = widget.landscape ? 380.0 : 400.0;
     _entry = OverlayEntry(
       builder: (context) {
         final screen = MediaQuery.sizeOf(context);
@@ -415,11 +408,16 @@ class _PreviewHoverState extends State<PreviewHover> {
           height: previewH,
           child: IgnorePointer(
             child: Material(
-              color: const Color(0xFF111111),
+              color: Colors.white,
               elevation: 32,
               borderRadius: BorderRadius.circular(8),
               clipBehavior: Clip.antiAlias,
-              child: Image.asset(widget.image, fit: BoxFit.contain),
+              child: Image.asset(
+                widget.image,
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+                filterQuality: FilterQuality.medium,
+              ),
             ),
           ),
         );
@@ -474,15 +472,7 @@ class SkillsSection extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 1180),
           child: Column(
             children: [
-              _SectionTitle(c.t('Stack', 'Stack')),
-              const SizedBox(height: 8),
-              Text(
-                c.t(
-                  'What I use on internships and school systems — no trivia filters.',
-                  'To, czego używam na praktykach i w projektach — bez zabawek.',
-                ),
-                style: const TextStyle(color: AppColors.muted, fontSize: 14),
-              ),
+              _SectionTitle(c.t('Specializations', 'Specjalizacje')),
               const SizedBox(height: 24),
               LayoutBuilder(
                 builder: (context, constraints) {
@@ -586,12 +576,7 @@ class ProjectsSection extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 1180),
           child: Column(
             children: [
-              _SectionTitle(c.t('Selected work', 'Wybrane projekty')),
-              const SizedBox(height: 8),
-              Text(
-                c.t('Tap a card for screenshots and the full write-up.', 'Kliknij kartę, żeby zobaczyć zrzuty i opis.'),
-                style: const TextStyle(color: AppColors.muted, fontSize: 14),
-              ),
+              _SectionTitle(c.t('My Projects', 'Moje projekty')),
               const SizedBox(height: 24),
               LayoutBuilder(
                 builder: (context, constraints) {
@@ -626,53 +611,171 @@ class InterestsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = PortfolioScope.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 64),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1180),
-          child: GlassCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
+            children: [
+              _SectionTitle(
+                PortfolioScope.of(context).t(
+                  'Interests and Soft Skills',
+                  'Zainteresowania i kompetencje miękkie',
+                ),
+              ),
+              const SizedBox(height: 32),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final two = constraints.maxWidth > 800;
+                  final left = GlassCard(
+                    child: Column(
+                      children: [
+                        const Text(
+                          '🎯 Interests',
+                          style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 20),
+                        for (final item in SiteContent.interests) _InterestTile(item: item),
+                      ],
+                    ),
+                  );
+                  final right = GlassCard(
+                    child: Column(
+                      children: [
+                        const Text(
+                          '🌟 Soft Skills',
+                          style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 20),
+                        for (final item in SiteContent.softSkills) _SoftSkillBar(item: item),
+                      ],
+                    ),
+                  );
+                  if (two) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: left),
+                        const SizedBox(width: 24),
+                        Expanded(child: right),
+                      ],
+                    );
+                  }
+                  return Column(children: [left, const SizedBox(height: 20), right]);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _InterestTile extends StatefulWidget {
+  const _InterestTile({required this.item});
+  final InterestItem item;
+
+  @override
+  State<_InterestTile> createState() => _InterestTileState();
+}
+
+class _InterestTileState extends State<_InterestTile> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        transform: Matrix4.translationValues(0, _hovered ? -6 : 0, 0),
+        margin: const EdgeInsets.only(bottom: 12),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: SizedBox(
+            height: 180,
+            width: double.infinity,
+            child: Stack(
+              fit: StackFit.expand,
               children: [
-                Text(
-                  c.t('Outside of code', 'Poza kodem'),
-                  style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700),
+                Image.asset(
+                  widget.item.gifAsset,
+                  fit: BoxFit.cover,
+                  gaplessPlayback: true,
+                  filterQuality: FilterQuality.medium,
                 ),
-                const SizedBox(height: 14),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final item in SiteContent.interests)
-                      Chip(
-                        avatar: Icon(item.icon, size: 16, color: Colors.white),
-                        label: Text('${item.title} — ${item.description}'),
-                        labelStyle: const TextStyle(color: Colors.white70, fontSize: 12),
-                        backgroundColor: Colors.white.withValues(alpha: 0.08),
-                        side: const BorderSide(color: Colors.white12),
+                const ColoredBox(color: Color(0x80000000)),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(widget.item.icon, color: Colors.white, size: 26),
+                      const SizedBox(height: 8),
+                      Text(
+                        widget.item.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          shadows: [Shadow(blurRadius: 6, color: Colors.black)],
+                        ),
                       ),
-                  ],
-                ),
-                const SizedBox(height: 18),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final item in SiteContent.softSkills)
-                      Chip(
-                        label: Text(item.title),
-                        labelStyle: const TextStyle(color: Colors.white, fontSize: 12),
-                        backgroundColor: AppColors.accent.withValues(alpha: 0.16),
-                        side: BorderSide(color: AppColors.accent.withValues(alpha: 0.35)),
+                      const SizedBox(height: 6),
+                      Text(
+                        widget.item.description,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          shadows: [Shadow(blurRadius: 6, color: Colors.black)],
+                        ),
                       ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _SoftSkillBar extends StatelessWidget {
+  const _SoftSkillBar({required this.item});
+  final SoftSkillItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Icon(item.icon, color: AppColors.accent, size: 16),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(item.title, style: const TextStyle(color: Colors.white)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: LinearProgressIndicator(
+              value: item.level,
+              minHeight: 8,
+              backgroundColor: Colors.white.withValues(alpha: 0.12),
+              color: AppColors.accent,
+            ),
+          ),
+        ],
       ),
     );
   }
