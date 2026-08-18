@@ -30,6 +30,8 @@ flutter build apk
 flutter build ios
 ```
 
-After `flutter build web`, deploy the contents of `build/web/` to GitHub Pages (or any static host). `web/CNAME` is set to `www.adrrojekcv.com`.
+After `flutter build web`, GitHub Pages serves the `website` branch (the compiled `build/web` output), not this source branch.
+
+Live: https://adrrojek.github.io/AdrRojek/
 
 This branch replaces the old `index.html` site. The GitHub profile README still lives on `main`.
