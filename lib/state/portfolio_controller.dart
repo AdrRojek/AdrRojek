@@ -2,77 +2,9 @@ import 'package:flutter/material.dart';
 
 class PortfolioController extends ChangeNotifier {
   bool polish = false;
-  String? skillFilter;
-  bool paletteOpen = false;
-  bool briefOpen = false;
-  bool terminalOpen = false;
-  bool matrixOn = false;
-  bool devUnlocked = false;
 
   void toggleLang() {
     polish = !polish;
-    notifyListeners();
-  }
-
-  void toggleSkill(String label) {
-    skillFilter = skillFilter == label ? null : label;
-    notifyListeners();
-  }
-
-  void clearSkill() {
-    if (skillFilter == null) return;
-    skillFilter = null;
-    notifyListeners();
-  }
-
-  void setPalette(bool open) {
-    if (paletteOpen == open) return;
-    paletteOpen = open;
-    if (open) terminalOpen = false;
-    notifyListeners();
-  }
-
-  void togglePalette() => setPalette(!paletteOpen);
-
-  void setBrief(bool open) {
-    if (briefOpen == open) return;
-    briefOpen = open;
-    if (open) {
-      paletteOpen = false;
-      terminalOpen = false;
-    }
-    notifyListeners();
-  }
-
-  void setTerminal(bool open) {
-    if (terminalOpen == open) return;
-    terminalOpen = open;
-    if (open) paletteOpen = false;
-    notifyListeners();
-  }
-
-  void toggleTerminal() => setTerminal(!terminalOpen);
-
-  void unlockDevMode() {
-    devUnlocked = true;
-    matrixOn = true;
-    terminalOpen = true;
-    paletteOpen = false;
-    notifyListeners();
-  }
-
-  void setMatrix(bool on) {
-    if (matrixOn == on) return;
-    matrixOn = on;
-    notifyListeners();
-  }
-
-  void closeOverlays() {
-    if (!paletteOpen && !briefOpen && !terminalOpen && !matrixOn) return;
-    paletteOpen = false;
-    briefOpen = false;
-    terminalOpen = false;
-    matrixOn = false;
     notifyListeners();
   }
 
@@ -90,38 +22,5 @@ class PortfolioScope extends InheritedNotifier<PortfolioController> {
     final scope = context.dependOnInheritedWidgetOfExactType<PortfolioScope>();
     assert(scope != null, 'PortfolioScope not found');
     return scope!.notifier!;
-  }
-}
-
-class SkillMatch {
-  static bool projectUses(String skill, List<String> technologies) {
-    final aliases = <String, List<String>>{
-      'swift': ['swift', 'swiftui', 'swiftdata'],
-      'kotlin': ['kotlin', 'android'],
-      'android studio': ['android', 'kotlin'],
-      'php': ['php'],
-      'laravel': ['laravel', 'php'],
-      'java': ['java'],
-      'mysql': ['mysql'],
-      'sqlite': ['sqlite'],
-      'javascript': ['javascript', 'js', 'bootstrap'],
-      'html': ['html', 'bootstrap'],
-      'css3': ['css', 'bootstrap'],
-      'github': ['git'],
-      'python': ['python'],
-      'c++': ['c++'],
-      'c#': ['c#'],
-      'docker': ['docker'],
-      'figma': ['figma'],
-    };
-    final key = skill.toLowerCase();
-    final needles = aliases[key] ?? [key];
-    return technologies.any((tech) {
-      final token = tech.toLowerCase();
-      return needles.any((n) {
-        if (n.length <= 2) return token == n;
-        return token.contains(n);
-      });
-    });
   }
 }

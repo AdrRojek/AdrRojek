@@ -4,7 +4,8 @@ class SiteLinks {
   static const github = 'https://github.com/AdrRojek';
   static const linkedin = 'https://www.linkedin.com/in/adrian-rojek-ar';
   static const email = 'adr.rojek@gmail.com';
-  static const mailto = 'mailto:adr.rojek@gmail.com';
+  static const mailto =
+      'mailto:adr.rojek@gmail.com?subject=Internship%20/%20praktyki%20%E2%80%94%20Adrian%20Rojek';
   static const phone = '+48 668 751 953';
   static const tel = 'tel:+48668751953';
 }
@@ -45,10 +46,26 @@ class CertificateItem {
   final String image;
 }
 
+class RoleItem {
+  const RoleItem({
+    required this.role,
+    required this.company,
+    required this.dates,
+    this.featured = false,
+  });
+
+  final String role;
+  final String company;
+  final String dates;
+  final bool featured;
+}
+
 class ProjectItem {
   const ProjectItem({
     required this.id,
     required this.title,
+    required this.summary,
+    required this.summaryPl,
     required this.description,
     required this.technologies,
     required this.images,
@@ -59,6 +76,8 @@ class ProjectItem {
 
   final int id;
   final String title;
+  final String summary;
+  final String summaryPl;
   final String description;
   final List<String> technologies;
   final List<String> images;
@@ -70,8 +89,14 @@ class ProjectItem {
 class SiteContent {
   static const name = 'Adrian Rojek';
   static const title = 'Computer Science student';
+  static const location = 'Rzeszów, Poland';
+  static const stack = 'Flutter  ·  SwiftUI  ·  Kotlin';
   static const about =
       'A passionate mobile app developer with experience in SwiftUI and Android Studio. Open to new challenges, I learn quickly and am eager to develop my skills. Creative and dedicated to every project, with a focus on delivering high-quality solutions.';
+  static const pitchEn =
+      'Looking for a software / mobile internship. Recent Flutter intern at DEVEJI, web developer at NEW PORTABLE DEVICES, and R&D apprentice at G2A.';
+  static const pitchPl =
+      'Szukam praktyk lub stażu w software / mobile. Ostatnio: Flutter w DEVEJI, web w NEW PORTABLE DEVICES, praktyki R&D w G2A.';
 
   static const education = [
     'University of Rzeszow (2022–)',
@@ -79,16 +104,59 @@ class SiteContent {
   ];
 
   static const experience = [
-    'Mobile App Developer (Flutter) — DEVEJI (08.2025 – 10.2025)',
-    'Web Developer — NEW PORTABLE DEVICES (05.2025 – 07.2025)',
-    'Apprentice — G2A.COM R&D Center (06.2025 – 07.2025)',
-    'Courier — Amazon (07.2024 – 09.2024)',
-    'Courier — Amazon (07.2023 – 09.2023)',
-    'Carpenter — ZAPEL PROBUD (04.2023 – 06.2023)',
-    'Quality Controller — BorgWarner Rzeszow (06.2022 – 03.2023)',
-    'Quality Controller — BorgWarner Rzeszow (07.2021 – 08.2021)',
-    'Practices — Apollo Sp. z o.o. (06.2021)',
-    'Practices — Apollo Sp. z o.o. (04.2020)',
+    RoleItem(
+      role: 'Mobile App Developer (Flutter)',
+      company: 'DEVEJI',
+      dates: '08.2025 – 10.2025',
+      featured: true,
+    ),
+    RoleItem(
+      role: 'Web Developer',
+      company: 'NEW PORTABLE DEVICES',
+      dates: '05.2025 – 07.2025',
+      featured: true,
+    ),
+    RoleItem(
+      role: 'Apprentice',
+      company: 'G2A.COM R&D Center',
+      dates: '06.2025 – 07.2025',
+      featured: true,
+    ),
+    RoleItem(
+      role: 'Courier',
+      company: 'Amazon',
+      dates: '07.2024 – 09.2024',
+    ),
+    RoleItem(
+      role: 'Courier',
+      company: 'Amazon',
+      dates: '07.2023 – 09.2023',
+    ),
+    RoleItem(
+      role: 'Carpenter',
+      company: 'ZAPEL PROBUD',
+      dates: '04.2023 – 06.2023',
+    ),
+    RoleItem(
+      role: 'Quality Controller',
+      company: 'BorgWarner Rzeszow',
+      dates: '06.2022 – 03.2023',
+    ),
+    RoleItem(
+      role: 'Quality Controller',
+      company: 'BorgWarner Rzeszow',
+      dates: '07.2021 – 08.2021',
+    ),
+    RoleItem(
+      role: 'Practices',
+      company: 'Apollo Sp. z o.o.',
+      dates: '06.2021',
+    ),
+    RoleItem(
+      role: 'Practices',
+      company: 'Apollo Sp. z o.o.',
+      dates: '04.2020',
+    ),
   ];
 
   static const languages = [
@@ -224,6 +292,8 @@ class SiteContent {
       id: 1,
       title: 'Water Reminder App',
       phoneLayout: true,
+      summary: 'iOS hydration tracker with reminders, history, and a daily 4000 ml goal.',
+      summaryPl: 'Aplikacja iOS do nawodnienia: przypomnienia, historia, cel 4000 ml dziennie.',
       description:
           'Water Tracker is an app designed to help users monitor their daily water intake, aiming for a goal of 4000 ml per day. It features an intuitive interface with a progress widget, options to add/subtract water, integration with a "boiler" (a simulated water reservoir), and reminders to stay hydrated. Users can track their history, reset data, and monitor their progress throughout the day.',
       technologies: [
@@ -250,6 +320,8 @@ class SiteContent {
       id: 2,
       title: 'Lotto Results App',
       phoneLayout: true,
+      summary: 'SwiftUI lottery tracker with saved draws and official results in-app.',
+      summaryPl: 'Tracker lotto w SwiftUI: zapisane losowania i oficjalne wyniki w aplikacji.',
       description:
           'Lotto Tracker is an app for lottery fans that lets you save your own draws (6 numbers 1–49) with timestamps and a Plus option, visually track matches in the main draw and Plus version, and instantly access official results through a built-in browser — all in an intuitive interface, perfect for planning bets and analyzing luck in real time!',
       technologies: [
@@ -277,6 +349,8 @@ class SiteContent {
       id: 3,
       title: 'FitnessApp',
       phoneLayout: true,
+      summary: 'Kotlin Android app: steps, charts, weight photos, maps, and accounts.',
+      summaryPl: 'Aplikacja Android (Kotlin): kroki, wykresy, waga, mapy i konta użytkowników.',
       description:
           'FitnessApp is a mobile app designed to help users maintain their health and fitness. It tracks daily physical activity using a step counter and displays weekly statistics through clear charts. Users can monitor their weight, add photos (from the gallery or camera), and use maps to record routes and analyze activity history. The app also includes login, registration, and profile management features, offering a personalized experience and motivation to achieve fitness goals.',
       technologies: [
@@ -307,6 +381,8 @@ class SiteContent {
     ProjectItem(
       id: 4,
       title: 'Community Forum using Oracle database',
+      summary: 'PHP forum with profiles, groups, surveys, and an Oracle database.',
+      summaryPl: 'Forum PHP: profile, grupy, ankiety i baza Oracle.',
       description:
           'The Community Forum project is an online platform that enables users to connect, share information, collaborate, and express opinions through surveys. The platform offers functionalities such as creating user profiles, publishing posts and comments, joining thematic groups, creating surveys, and managing friends. The system is designed with intuitive usability and efficient data management in mind, utilizing a relational Oracle database to store information about users, posts, groups, and surveys.',
       technologies: ['PHP', 'Oracle', 'Git'],
@@ -325,6 +401,8 @@ class SiteContent {
     ProjectItem(
       id: 5,
       title: 'Bus Timetable Information',
+      summary: 'Laravel system for admins, drivers, and passengers — routes and live schedules.',
+      summaryPl: 'System Laravel dla adminów, kierowców i pasażerów — trasy i rozkłady.',
       description:
           'Bus-Info is a modern IT system designed to streamline public transport management. It offers comprehensive tools for administrators, drivers, and passengers, simplifying route planning, task assignment, vehicle monitoring, and access to schedules. With an intuitive interface, Bus-Info provides easy access to all system features. Administrators can manage users, routes, stops, and assign routes to drivers. Drivers access their work schedules and route details, while passengers view real-time bus locations and up-to-date timetables.',
       technologies: ['PHP', 'Laravel', 'Bootstrap', 'XAMPP', 'Composer', 'Git'],
@@ -353,6 +431,8 @@ class SiteContent {
     ProjectItem(
       id: 6,
       title: 'Car Mechanic Workshop',
+      summary: 'Java + MySQL workshop manager: vehicles, repairs, mechanics, validation.',
+      summaryPl: 'System warsztatu w Java + MySQL: pojazdy, naprawy, mechanicy, walidacja.',
       description:
           'The project involves creating a comprehensive system for managing a vehicle repair shop. The system organizes information about vehicles, repairs, and mechanics, enabling efficient customer service and better management of the workshop\'s operations. The main functionalities include CRUD operations on data related to mechanics, repairs, and vehicles, as well as input data validation. The system uses a relational database (MySQL) for data storage, and the user interface is designed to be intuitive and responsive.',
       technologies: ['Java', 'MySQL', 'Git'],

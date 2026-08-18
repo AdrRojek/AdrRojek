@@ -41,7 +41,7 @@ class _HangingFlipCardState extends State<HangingFlipCard>
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
-    _ticker = createTicker(_onTick)..start();
+    _ticker = createTicker(_onTick);
   }
 
   @override
@@ -61,6 +61,7 @@ class _HangingFlipCardState extends State<HangingFlipCard>
     );
     _offset += _velocity;
     if (_velocity.distance < 0.05 && _offset.distance < 0.05) {
+      _ticker.stop();
       if (_offset != Offset.zero) {
         setState(() => _offset = Offset.zero);
       }
@@ -115,6 +116,8 @@ class _HangingFlipCardState extends State<HangingFlipCard>
     _dragging = false;
     if (travel < 10) {
       _toggleFlip();
+    } else if (!_ticker.isActive) {
+      _ticker.start();
     }
     setState(() {});
   }
@@ -122,8 +125,8 @@ class _HangingFlipCardState extends State<HangingFlipCard>
   @override
   Widget build(BuildContext context) {
     final mobile = AppBreakpoints.isMobile(context);
-    final width = mobile ? 280.0 : 360.0;
-    final height = mobile ? 420.0 : 500.0;
+    final width = mobile ? 240.0 : 300.0;
+    final height = mobile ? 360.0 : 430.0;
 
     return AnimatedBuilder(
       animation: _flip,
@@ -184,7 +187,7 @@ class _HangingFlipCardState extends State<HangingFlipCard>
                         const Positioned(
                           top: 14,
                           right: 14,
-                          child: _FlipHint(),
+                          child: Icon(Icons.flip, color: Colors.white70, size: 20),
                         ),
                     ],
                   ),
@@ -194,50 +197,6 @@ class _HangingFlipCardState extends State<HangingFlipCard>
           ],
         );
       },
-    );
-  }
-}
-
-class _FlipHint extends StatefulWidget {
-  const _FlipHint();
-
-  @override
-  State<_FlipHint> createState() => _FlipHintState();
-}
-
-class _FlipHintState extends State<_FlipHint>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Opacity(
-          opacity: 0.8 + 0.2 * math.sin(_controller.value * math.pi),
-          child: Transform.rotate(
-            angle: _controller.value * 2 * math.pi,
-            child: child,
-          ),
-        );
-      },
-      child: const Icon(Icons.sync, color: Colors.white, size: 22),
     );
   }
 }
@@ -252,8 +211,8 @@ class _FrontFace extends StatelessWidget {
           ClipOval(
             child: Image.asset(
               'assets/photos/profilowe.jpeg',
-              width: 180,
-              height: 180,
+              width: 150,
+              height: 150,
               fit: BoxFit.cover,
             ),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../data/content.dart';
 import '../state/portfolio_controller.dart';
@@ -10,80 +9,146 @@ import '../widgets/effects.dart';
 import '../widgets/hanging_flip_card.dart';
 import '../widgets/project_widgets.dart';
 
-class HeroSection extends StatefulWidget {
-  const HeroSection({super.key, required this.onScrollDown});
-  final VoidCallback onScrollDown;
-
-  @override
-  State<HeroSection> createState() => _HeroSectionState();
-}
-
-class _HeroSectionState extends State<HeroSection>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _bounce;
-
-  @override
-  void initState() {
-    super.initState();
-    _bounce = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1400),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _bounce.dispose();
-    super.dispose();
-  }
+class HeroSection extends StatelessWidget {
+  const HeroSection({super.key, required this.onSeeWork});
+  final VoidCallback onSeeWork;
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.sizeOf(context).height;
-    return SizedBox(
-      height: height,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          const HangingFlipCard(),
-          Positioned(
-            top: 88,
-            left: 24,
-            right: 24,
-            child: TypingRoles(
-              lines: [
-                PortfolioScope.of(context).t(
-                  'Mobile App Developer',
-                  'Twórca aplikacji mobilnych',
+    final mobile = AppBreakpoints.isMobile(context);
+    final copy = _HeroCopy(onSeeWork: onSeeWork);
+
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, mobile ? 88 : 96, 20, 32),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1180),
+          child: mobile
+              ? Column(
+                  children: [
+                    copy,
+                    const SizedBox(height: 28),
+                    const RepaintBoundary(child: HangingFlipCard()),
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(child: copy),
+                    const SizedBox(width: 24),
+                    const RepaintBoundary(child: HangingFlipCard()),
+                  ],
                 ),
-                PortfolioScope.of(context).t(
-                  'Computer Science student',
-                  'Student informatyki',
-                ),
-                'SwiftUI  ·  Flutter  ·  Kotlin',
-              ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HeroCopy extends StatelessWidget {
+  const _HeroCopy({required this.onSeeWork});
+  final VoidCallback onSeeWork;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = PortfolioScope.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            _Pill(
+              icon: Icons.circle,
+              iconColor: const Color(0xFF22C55E),
+              text: c.t('Open to internships', 'Otwarty na praktyki'),
             ),
+            _Pill(text: SiteContent.location),
+            _Pill(text: c.t('English C1 · German B1', 'Angielski C1 · Niemiecki B1')),
+          ],
+        ),
+        const SizedBox(height: 18),
+        const Text(
+          SiteContent.name,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 42,
+            fontWeight: FontWeight.w800,
+            height: 1.05,
           ),
-          Positioned(
-            bottom: 28,
-            child: AnimatedBuilder(
-              animation: _bounce,
-              builder: (context, child) {
-                return Transform.translate(
-                  offset: Offset(0, -10 * _bounce.value),
-                  child: child,
-                );
-              },
-              child: IconButton(
-                onPressed: widget.onScrollDown,
-                icon: const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: Colors.white,
-                  size: 36,
-                ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          '${c.t(SiteContent.title, 'Student informatyki')}  ·  ${SiteContent.stack}',
+          style: const TextStyle(color: Colors.white70, fontSize: 18, height: 1.35),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          c.t(SiteContent.pitchEn, SiteContent.pitchPl),
+          style: const TextStyle(color: AppColors.muted, fontSize: 16, height: 1.5),
+        ),
+        const SizedBox(height: 22),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            FilledButton.icon(
+              onPressed: () => SiteActions.copy(
+                context,
+                SiteLinks.email,
+                c.t('Email copied', 'Skopiowano e-mail'),
               ),
+              icon: const Icon(Icons.copy, size: 16),
+              label: Text(c.t('Copy email', 'Kopiuj e-mail')),
             ),
-          ),
+            FilledButton.tonalIcon(
+              onPressed: () => SiteActions.open(SiteLinks.mailto),
+              icon: const Icon(Icons.mail_outline, size: 16),
+              label: Text(c.t('Write email', 'Napisz e-mail')),
+            ),
+            OutlinedButton.icon(
+              onPressed: () => SiteActions.open(SiteLinks.linkedin),
+              icon: const FaIcon(FontAwesomeIcons.linkedin, size: 14),
+              label: const Text('LinkedIn'),
+              style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+            ),
+            OutlinedButton.icon(
+              onPressed: onSeeWork,
+              icon: const Icon(Icons.work_outline, size: 16),
+              label: Text(c.t('See work', 'Zobacz projekty')),
+              style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _Pill extends StatelessWidget {
+  const _Pill({required this.text, this.icon, this.iconColor});
+  final String text;
+  final IconData? icon;
+  final Color? iconColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white24),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 10, color: iconColor ?? Colors.white70),
+            const SizedBox(width: 6),
+          ],
+          Text(text, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -95,161 +160,173 @@ class InfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = PortfolioScope.of(context);
+    final featured = SiteContent.experience.where((e) => e.featured).toList();
+    final other = SiteContent.experience.where((e) => !e.featured).toList();
     final mobile = AppBreakpoints.isMobile(context);
-    final education = _InfoCard(
-      title: '🎓 Education',
+
+    final timeline = GlassCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final item in SiteContent.education) _Bullet(item),
-        ],
-      ),
-    );
-    final experience = _InfoCard(
-      title: '💼 Experience',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (final item in SiteContent.experience) _Bullet(item),
-        ],
-      ),
-    );
-    final languages = _InfoCard(
-      title: '🌍 Languages',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (final item in SiteContent.languages) _Bullet(item),
-        ],
-      ),
-    );
-    final certificates = _InfoCard(
-      title: '🥇 Certificates',
-      child: Column(
-        children: [
-          for (final cert in SiteContent.certificates)
-            PreviewHover(
-              image: cert.image,
-              child: _Bullet(cert.title, trailing: const Text('📜')),
-            ),
-        ],
-      ),
-    );
-    final exams = _InfoCard(
-      title: '🛠️ Professional Exams',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('EE.08', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Text(
+            c.t('Relevant experience', 'Doświadczenie IT'),
+            style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: 6),
-          for (final line in SiteContent.examEe08)
-            Padding(
-              padding: const EdgeInsets.only(left: 10, bottom: 4),
-              child: Text(line, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
-            ),
-          const SizedBox(height: 10),
-          const Text('EE.09', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 6),
-          for (final line in SiteContent.examEe09)
-            Padding(
-              padding: const EdgeInsets.only(left: 10, bottom: 4),
-              child: Text(line, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
-            ),
+          Text(
+            c.t('Last 6 months — the roles hiring teams usually ask about.', 'Ostatnie 6 miesięcy — to, o co pytają rekruterzy.'),
+            style: const TextStyle(color: AppColors.muted, fontSize: 13),
+          ),
+          const SizedBox(height: 18),
+          for (final role in featured) _TimelineRow(role: role),
+          const SizedBox(height: 22),
+          Text(
+            c.t('Other work', 'Inna praca'),
+            style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            c.t('Seasonal and industrial jobs — reliable, on time, used to real workplaces.', 'Prace sezonowe i produkcja — punktualność i środowisko zespołowe.'),
+            style: const TextStyle(color: AppColors.muted, fontSize: 13),
+          ),
           const SizedBox(height: 12),
-          const Center(
-            child: PreviewHover(
-              image: 'assets/photos/dyplom.png',
-              preferLeft: true,
-              child: SizedBox(
-                width: 28,
-                child: Image(
-                  image: AssetImage('assets/photos/dyplom.png'),
-                ),
+          for (final role in other)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                '${role.role} — ${role.company}  ·  ${role.dates}',
+                style: const TextStyle(color: AppColors.muted, height: 1.4),
               ),
             ),
-          ),
         ],
       ),
     );
 
-    if (mobile) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 48),
-        child: Column(
-          children: [
-            ScrollReveal(id: 'edu', offset: const Offset(0, 80), child: education),
-            const SizedBox(height: 16),
-            ScrollReveal(id: 'exp', offset: const Offset(0, 80), child: experience),
-            const SizedBox(height: 16),
-            ScrollReveal(id: 'lang', offset: const Offset(0, 80), child: languages),
-            const SizedBox(height: 16),
-            ScrollReveal(id: 'cert', offset: const Offset(0, 80), child: certificates),
-            const SizedBox(height: 16),
-            ScrollReveal(id: 'exam', offset: const Offset(0, 80), child: exams),
-          ],
+    final side = Column(
+      children: [
+        _InfoCard(
+          title: c.t('Education', 'Wykształcenie'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [for (final item in SiteContent.education) _Bullet(item)],
+          ),
         ),
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 64),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
-          child: Row(
+        const SizedBox(height: 16),
+        _InfoCard(
+          title: c.t('Languages', 'Języki'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [for (final item in SiteContent.languages) _Bullet(item)],
+          ),
+        ),
+        const SizedBox(height: 16),
+        _InfoCard(
+          title: c.t('Certificates', 'Certyfikaty'),
+          child: Column(
+            children: [
+              for (final cert in SiteContent.certificates)
+                PreviewHover(
+                  image: cert.image,
+                  child: _Bullet(cert.title, trailing: const Text('📜')),
+                ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        _InfoCard(
+          title: c.t('Professional exams', 'Egzaminy zawodowe'),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    ScrollReveal(
-                      id: 'edu',
-                      offset: const Offset(-240, 0),
-                      rotation: -0.6,
-                      child: education,
-                    ),
-                    const SizedBox(height: 16),
-                    ScrollReveal(
-                      id: 'cert',
-                      offset: const Offset(-240, 0),
-                      rotation: -0.6,
-                      child: certificates,
-                    ),
-                  ],
+              const Text('EE.08 · EE.09', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Text(
+                c.t(
+                  'Systems, networks, security · web apps, databases, deployment.',
+                  'Systemy, sieci, bezpieczeństwo · aplikacje web, bazy, wdrożenia.',
                 ),
+                style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.4),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                flex: 3,
-                child: ScrollReveal(
-                  id: 'exp',
-                  offset: const Offset(0, 50),
-                  child: experience,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  children: [
-                    ScrollReveal(
-                      id: 'lang',
-                      offset: const Offset(240, 0),
-                      rotation: 0.6,
-                      child: languages,
-                    ),
-                    const SizedBox(height: 16),
-                    ScrollReveal(
-                      id: 'exam',
-                      offset: const Offset(240, 0),
-                      rotation: 0.6,
-                      child: exams,
-                    ),
-                  ],
+              const SizedBox(height: 12),
+              const Center(
+                child: PreviewHover(
+                  image: 'assets/photos/dyplom.png',
+                  preferLeft: true,
+                  child: SizedBox(
+                    width: 28,
+                    child: Image(image: AssetImage('assets/photos/dyplom.png')),
+                  ),
                 ),
               ),
             ],
           ),
         ),
+      ],
+    );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1180),
+          child: mobile
+              ? Column(
+                  children: [
+                    ScrollReveal(id: 'exp', child: timeline),
+                    const SizedBox(height: 16),
+                    ScrollReveal(id: 'side', child: side),
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(flex: 5, child: ScrollReveal(id: 'exp', child: timeline)),
+                    const SizedBox(width: 20),
+                    Expanded(flex: 4, child: ScrollReveal(id: 'side', child: side)),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TimelineRow extends StatelessWidget {
+  const _TimelineRow({required this.role});
+  final RoleItem role;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 10,
+            height: 10,
+            margin: const EdgeInsets.only(top: 6),
+            decoration: const BoxDecoration(color: AppColors.accent, shape: BoxShape.circle),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  role.role,
+                  style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  '${role.company}  ·  ${role.dates}',
+                  style: const TextStyle(color: AppColors.muted, fontSize: 13),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -266,15 +343,8 @@ class _InfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 16),
+          Text(title, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 12),
           child,
         ],
       ),
@@ -290,17 +360,12 @@ class _Bullet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('•  ', style: TextStyle(color: AppColors.accent, fontSize: 16)),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(color: AppColors.muted, height: 1.45),
-            ),
-          ),
+          Expanded(child: Text(text, style: const TextStyle(color: AppColors.muted, height: 1.4))),
           if (trailing != null) trailing!,
         ],
       ),
@@ -332,22 +397,17 @@ class _PreviewHoverState extends State<PreviewHover> {
     final overlay = Overlay.of(context, rootOverlay: true);
     final box = context.findRenderObject() as RenderBox?;
     if (box == null || !box.hasSize) return;
-
     final origin = box.localToGlobal(Offset.zero);
     final size = box.size;
     const previewW = 320.0;
     const previewH = 400.0;
-
     _entry = OverlayEntry(
       builder: (context) {
         final screen = MediaQuery.sizeOf(context);
-        var left = widget.preferLeft
-            ? origin.dx - previewW - 16
-            : origin.dx + size.width + 16;
+        var left = widget.preferLeft ? origin.dx - previewW - 16 : origin.dx + size.width + 16;
         var top = origin.dy + size.height / 2 - previewH / 2;
         left = left.clamp(12.0, (screen.width - previewW - 12).clamp(12.0, screen.width));
         top = top.clamp(12.0, (screen.height - previewH - 12).clamp(12.0, screen.height));
-
         return Positioned(
           left: left,
           top: top,
@@ -357,13 +417,9 @@ class _PreviewHoverState extends State<PreviewHover> {
             child: Material(
               color: const Color(0xFF111111),
               elevation: 32,
-              shadowColor: Colors.black,
               borderRadius: BorderRadius.circular(8),
               clipBehavior: Clip.antiAlias,
-              child: ColoredBox(
-                color: const Color(0xFF111111),
-                child: Image.asset(widget.image, fit: BoxFit.contain),
-              ),
+              child: Image.asset(widget.image, fit: BoxFit.contain),
             ),
           ),
         );
@@ -412,56 +468,38 @@ class SkillsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = PortfolioScope.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 64),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1180),
           child: Column(
             children: [
-              ScrollReveal(
-                id: 'skills-title',
-                child: _SectionTitle(c.t('Specializations', 'Specjalizacje')),
-              ),
+              _SectionTitle(c.t('Stack', 'Stack')),
               const SizedBox(height: 8),
               Text(
                 c.t(
-                  'Tap a skill to highlight matching projects.',
-                  'Kliknij umiejętność, aby podświetlić pasujące projekty.',
+                  'What I use on internships and school systems — no trivia filters.',
+                  'To, czego używam na praktykach i w projektach — bez zabawek.',
                 ),
-                style: const TextStyle(color: AppColors.muted, fontSize: 13),
+                style: const TextStyle(color: AppColors.muted, fontSize: 14),
               ),
               const SizedBox(height: 24),
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final twoCols = constraints.maxWidth > 800;
-                  final cards = [
-                    ScrollReveal(
-                      id: 'skills-card',
-                      child: _SkillGridCard(title: c.t('💪 Skills', '💪 Umiejętności'), items: SiteContent.skills),
-                    ),
-                    ScrollReveal(
-                      id: 'learning-card',
-                      delay: const Duration(milliseconds: 120),
-                      child: _SkillGridCard(title: c.t('📚 Learning', '📚 W nauce'), items: SiteContent.learning),
-                    ),
-                  ];
-                  if (twoCols) {
+                  final two = constraints.maxWidth > 800;
+                  final left = _SkillGridCard(title: c.t('Skills', 'Umiejętności'), items: SiteContent.skills);
+                  final right = _SkillGridCard(title: c.t('Learning', 'W nauce'), items: SiteContent.learning);
+                  if (two) {
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child: cards[0]),
-                        const SizedBox(width: 24),
-                        Expanded(child: cards[1]),
+                        Expanded(child: left),
+                        const SizedBox(width: 20),
+                        Expanded(child: right),
                       ],
                     );
                   }
-                  return Column(
-                    children: [
-                      cards[0],
-                      const SizedBox(height: 20),
-                      cards[1],
-                    ],
-                  );
+                  return Column(children: [left, const SizedBox(height: 16), right]);
                 },
               ),
             ],
@@ -473,10 +511,7 @@ class SkillsSection extends StatelessWidget {
 }
 
 class _SkillGridCard extends StatelessWidget {
-  const _SkillGridCard({
-    required this.title,
-    required this.items,
-  });
+  const _SkillGridCard({required this.title, required this.items});
   final String title;
   final List<SkillItem> items;
 
@@ -485,22 +520,15 @@ class _SkillGridCard extends StatelessWidget {
     return GlassCard(
       child: Column(
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 20),
+          Text(title, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 16),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 3,
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 12,
-            childAspectRatio: 0.95,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 10,
+            childAspectRatio: 1,
             children: [
               for (final skill in items) _SkillTile(skill: skill),
             ],
@@ -511,76 +539,36 @@ class _SkillGridCard extends StatelessWidget {
   }
 }
 
-class _SkillTile extends StatefulWidget {
+class _SkillTile extends StatelessWidget {
   const _SkillTile({required this.skill});
   final SkillItem skill;
 
   @override
-  State<_SkillTile> createState() => _SkillTileState();
-}
-
-class _SkillTileState extends State<_SkillTile> {
-  bool _hovered = false;
-
-  @override
   Widget build(BuildContext context) {
-    final selected = PortfolioScope.of(context).skillFilter == widget.skill.label;
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => PortfolioScope.of(context).toggleSkill(widget.skill.label),
-        child: AnimatedScale(
-          scale: _hovered ? 1.1 : 1,
-          duration: const Duration(milliseconds: 200),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: selected ? AppColors.accent : Colors.transparent,
-                width: 1.4,
-              ),
-              color: selected ? AppColors.accent.withValues(alpha: 0.12) : Colors.transparent,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Builder(
-                  builder: (context) {
-                    Widget icon = Image.asset(
-                      widget.skill.iconAsset,
-                      width: 42,
-                      height: 42,
-                      filterQuality: FilterQuality.high,
-                      errorBuilder: (_, _, _) =>
-                          const Icon(Icons.broken_image, color: Colors.white, size: 36),
-                    );
-                    if (widget.skill.iconAsset.contains('github')) {
-                      icon = ColorFiltered(
-                        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                        child: icon,
-                      );
-                    }
-                    return icon;
-                  },
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  widget.skill.label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: selected ? Colors.white : AppColors.muted,
-                    fontSize: 13,
-                  ),
-                ),
-              ],
-            ),
-          ),
+    Widget icon = Image.asset(
+      skill.iconAsset,
+      width: 36,
+      height: 36,
+      filterQuality: FilterQuality.medium,
+      errorBuilder: (_, _, _) => const Icon(Icons.broken_image, color: Colors.white, size: 32),
+    );
+    if (skill.iconAsset.contains('github')) {
+      icon = ColorFiltered(
+        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+        child: icon,
+      );
+    }
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        icon,
+        const SizedBox(height: 8),
+        Text(
+          skill.label,
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: AppColors.muted, fontSize: 12),
         ),
-      ),
+      ],
     );
   }
 }
@@ -592,28 +580,18 @@ class ProjectsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = PortfolioScope.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 64),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1180),
           child: Column(
             children: [
-              ScrollReveal(
-                id: 'projects-title',
-                child: _SectionTitle(c.t('My Projects', 'Moje projekty')),
+              _SectionTitle(c.t('Selected work', 'Wybrane projekty')),
+              const SizedBox(height: 8),
+              Text(
+                c.t('Tap a card for screenshots and the full write-up.', 'Kliknij kartę, żeby zobaczyć zrzuty i opis.'),
+                style: const TextStyle(color: AppColors.muted, fontSize: 14),
               ),
-              if (c.skillFilter != null) ...[
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: c.clearSkill,
-                  child: Text(
-                    c.t(
-                      'Showing projects for ${c.skillFilter}  ·  clear',
-                      'Projekty dla ${c.skillFilter}  ·  wyczyść',
-                    ),
-                  ),
-                ),
-              ],
               const SizedBox(height: 24),
               LayoutBuilder(
                 builder: (context, constraints) {
@@ -625,21 +603,12 @@ class ProjectsSection extends StatelessWidget {
                     itemCount: SiteContent.projects.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: cols,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                      childAspectRatio: 16 / 11,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      childAspectRatio: cols == 1 ? 0.92 : 0.78,
                     ),
                     itemBuilder: (context, index) {
-                      final project = SiteContent.projects[index];
-                      final filter = c.skillFilter;
-                      final matches = filter == null ||
-                          SkillMatch.projectUses(filter, project.technologies);
-                      return ScrollReveal(
-                        id: 'project-${project.id}',
-                        delay: Duration(milliseconds: 80 * index),
-                        offset: const Offset(-80, 0),
-                        child: ProjectCard(project: project, dimmed: !matches),
-                      );
+                      return ProjectCard(project: SiteContent.projects[index]);
                     },
                   );
                 },
@@ -657,183 +626,53 @@ class InterestsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = PortfolioScope.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 64),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
-          child: Column(
-            children: [
-              ScrollReveal(
-                id: 'interests-title',
-                child: _SectionTitle(
-                  PortfolioScope.of(context).t(
-                    'Interests and Soft Skills',
-                    'Zainteresowania i kompetencje miękkie',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 32),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final two = constraints.maxWidth > 800;
-                  final left = ScrollReveal(
-                    id: 'interests',
-                    child: GlassCard(
-                      child: Column(
-                        children: [
-                          const Text(
-                            '🎯 Interests',
-                            style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(height: 20),
-                          for (final item in SiteContent.interests)
-                            _InterestTile(item: item),
-                        ],
-                      ),
-                    ),
-                  );
-                  final right = ScrollReveal(
-                    id: 'soft',
-                    delay: const Duration(milliseconds: 120),
-                    child: GlassCard(
-                      child: Column(
-                        children: [
-                          const Text(
-                            '🌟 Soft Skills',
-                            style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(height: 20),
-                          for (final item in SiteContent.softSkills)
-                            _SoftSkillBar(item: item),
-                        ],
-                      ),
-                    ),
-                  );
-                  if (two) {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: left),
-                        const SizedBox(width: 24),
-                        Expanded(child: right),
-                      ],
-                    );
-                  }
-                  return Column(children: [left, const SizedBox(height: 20), right]);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _InterestTile extends StatefulWidget {
-  const _InterestTile({required this.item});
-  final InterestItem item;
-
-  @override
-  State<_InterestTile> createState() => _InterestTileState();
-}
-
-class _InterestTileState extends State<_InterestTile> {
-  bool _hovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        transform: Matrix4.translationValues(0, _hovered ? -6 : 0, 0),
-        margin: const EdgeInsets.only(bottom: 12),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: SizedBox(
-            height: 180,
-            width: double.infinity,
-            child: Stack(
-              fit: StackFit.expand,
+          constraints: const BoxConstraints(maxWidth: 1180),
+          child: GlassCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  widget.item.gifAsset,
-                  fit: BoxFit.cover,
-                  gaplessPlayback: true,
-                  filterQuality: FilterQuality.medium,
+                Text(
+                  c.t('Outside of code', 'Poza kodem'),
+                  style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700),
                 ),
-                const ColoredBox(color: Color(0x80000000)),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(widget.item.icon, color: Colors.white, size: 26),
-                      const SizedBox(height: 8),
-                      Text(
-                        widget.item.title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          shadows: [Shadow(blurRadius: 6, color: Colors.black)],
-                        ),
+                const SizedBox(height: 14),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final item in SiteContent.interests)
+                      Chip(
+                        avatar: Icon(item.icon, size: 16, color: Colors.white),
+                        label: Text('${item.title} — ${item.description}'),
+                        labelStyle: const TextStyle(color: Colors.white70, fontSize: 12),
+                        backgroundColor: Colors.white.withValues(alpha: 0.08),
+                        side: const BorderSide(color: Colors.white12),
                       ),
-                      const SizedBox(height: 6),
-                      Text(
-                        widget.item.description,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          shadows: [Shadow(blurRadius: 6, color: Colors.black)],
-                        ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final item in SiteContent.softSkills)
+                      Chip(
+                        label: Text(item.title),
+                        labelStyle: const TextStyle(color: Colors.white, fontSize: 12),
+                        backgroundColor: AppColors.accent.withValues(alpha: 0.16),
+                        side: BorderSide(color: AppColors.accent.withValues(alpha: 0.35)),
                       ),
-                    ],
-                  ),
+                  ],
                 ),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _SoftSkillBar extends StatelessWidget {
-  const _SoftSkillBar({required this.item});
-  final SoftSkillItem item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Icon(item.icon, color: AppColors.accent, size: 16),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(item.title, style: const TextStyle(color: Colors.white)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: item.level,
-              minHeight: 8,
-              backgroundColor: Colors.white.withValues(alpha: 0.12),
-              color: AppColors.accent,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -844,92 +683,63 @@ class ContactSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = PortfolioScope.of(context);
     return ColoredBox(
       color: AppColors.footer,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 48),
+        padding: const EdgeInsets.fromLTRB(20, 48, 20, 96),
         child: Column(
           children: [
             Text(
-              PortfolioScope.of(context).t('Contact', 'Kontakt'),
-              style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w600),
+              c.t('Let’s talk internships', 'Porozmawiajmy o praktykach'),
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 20),
-            _ContactLine(
-              label: 'Email',
-              value: SiteLinks.email,
-              url: SiteLinks.mailto,
-              copyValue: SiteLinks.email,
+            const SizedBox(height: 10),
+            Text(
+              c.t(
+                'Rzeszów · usually reply the same day.',
+                'Rzeszów · zwykle odpisuję tego samego dnia.',
+              ),
+              style: const TextStyle(color: AppColors.muted),
             ),
-            const SizedBox(height: 8),
-            _ContactLine(
-              label: 'Phone',
-              value: SiteLinks.phone,
-              url: SiteLinks.tel,
-              copyValue: SiteLinks.phone,
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            const SizedBox(height: 22),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 10,
+              runSpacing: 10,
               children: [
-                IconButton(
-                  onPressed: () => launchUrl(Uri.parse(SiteLinks.linkedin)),
-                  icon: const FaIcon(FontAwesomeIcons.linkedin, color: Colors.white),
+                FilledButton.icon(
+                  onPressed: () => SiteActions.copy(
+                    context,
+                    SiteLinks.email,
+                    c.t('Email copied', 'Skopiowano e-mail'),
+                  ),
+                  icon: const Icon(Icons.copy, size: 16),
+                  label: Text(SiteLinks.email),
                 ),
-                IconButton(
-                  onPressed: () => launchUrl(Uri.parse(SiteLinks.github)),
-                  icon: const FaIcon(FontAwesomeIcons.github, color: Colors.white),
+                FilledButton.tonalIcon(
+                  onPressed: () => SiteActions.open(SiteLinks.tel),
+                  icon: const Icon(Icons.phone, size: 16),
+                  label: Text(SiteLinks.phone),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => SiteActions.open(SiteLinks.linkedin),
+                  icon: const FaIcon(FontAwesomeIcons.linkedin, size: 14),
+                  label: const Text('LinkedIn'),
+                  style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => SiteActions.open(SiteLinks.github),
+                  icon: const FaIcon(FontAwesomeIcons.github, size: 14),
+                  label: const Text('GitHub'),
+                  style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
                 ),
               ],
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _ContactLine extends StatelessWidget {
-  const _ContactLine({
-    required this.label,
-    required this.value,
-    required this.url,
-    this.copyValue,
-  });
-  final String label;
-  final String value;
-  final String url;
-  final String? copyValue;
-
-  @override
-  Widget build(BuildContext context) {
-    final c = PortfolioScope.of(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        InkWell(
-          onTap: () => launchUrl(Uri.parse(url)),
-          child: Text.rich(
-            TextSpan(
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-              children: [
-                TextSpan(text: '$label: '),
-                TextSpan(text: value, style: const TextStyle(decoration: TextDecoration.underline)),
-              ],
-            ),
-          ),
-        ),
-        if (copyValue != null)
-          IconButton(
-            tooltip: c.t('Copy', 'Kopiuj'),
-            onPressed: () => SiteActions.copy(
-              context,
-              copyValue!,
-              c.t('Copied', 'Skopiowano'),
-            ),
-            icon: const Icon(Icons.copy, size: 16, color: Colors.white54),
-          ),
-      ],
     );
   }
 }
@@ -945,8 +755,8 @@ class _SectionTitle extends StatelessWidget {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: Colors.white,
-        fontSize: AppBreakpoints.isMobile(context) ? 28 : 36,
-        fontWeight: FontWeight.w600,
+        fontSize: AppBreakpoints.isMobile(context) ? 28 : 34,
+        fontWeight: FontWeight.w700,
       ),
     );
   }
