@@ -168,6 +168,16 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
     super.dispose();
   }
 
+  void _step(int delta) {
+    if (widget.project.images.length <= 1) return;
+    _timer?.cancel();
+    _timer = null;
+    setState(() {
+      final count = widget.project.images.length;
+      _index = (_index + delta + count) % count;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final mobile = AppBreakpoints.isMobile(context);
@@ -221,16 +231,48 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
   }
 
   Widget _slideshow() {
+    final images = widget.project.images;
+    final many = images.length > 1;
     return ColoredBox(
       color: Colors.black,
       child: Stack(
         fit: StackFit.expand,
         children: [
           Image.asset(
-            widget.project.images[_index],
+            images[_index],
             fit: BoxFit.contain,
             gaplessPlayback: true,
           ),
+          if (many) ...[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _SlideArrow(
+                icon: Icons.chevron_left_rounded,
+                onTap: () => _step(-1),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: _SlideArrow(
+                icon: Icons.chevron_right_rounded,
+                onTap: () => _step(1),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 12,
+              child: Text(
+                '${_index + 1} / ${images.length}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -293,6 +335,32 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _SlideArrow extends StatelessWidget {
+  const _SlideArrow({required this.icon, required this.onTap});
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Material(
+        color: Colors.black.withValues(alpha: 0.45),
+        shape: const CircleBorder(),
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: onTap,
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: Icon(icon, color: Colors.white, size: 32),
+          ),
+        ),
       ),
     );
   }
