@@ -130,7 +130,7 @@ class _TopBar extends StatelessWidget {
               const SizedBox(width: 8),
               Flexible(
                 child: Text(
-                  c.t('Open to internships', 'Otwarty na praktyki'),
+                  c.t('Open to internships and jobs', 'Otwarty na praktyki i pracę'),
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600),
                 ),

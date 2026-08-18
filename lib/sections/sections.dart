@@ -62,7 +62,7 @@ class _HeroCopy extends StatelessWidget {
             _Pill(
               icon: Icons.circle,
               iconColor: const Color(0xFF22C55E),
-              text: c.t('Open to internships', 'Otwarty na praktyki'),
+              text: c.t('Open to internships and jobs', 'Otwarty na praktyki i pracę'),
             ),
             _Pill(text: SiteContent.location),
             _Pill(text: c.t('English C1 · German B1', 'Angielski C1 · Niemiecki B1')),
@@ -794,7 +794,7 @@ class ContactSection extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              c.t('Let’s talk internships', 'Porozmawiajmy o praktykach'),
+              c.t('Let’s talk', 'Porozmawiajmy'),
               textAlign: TextAlign.center,
               style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w700),
             ),

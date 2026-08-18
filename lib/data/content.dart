@@ -5,7 +5,7 @@ class SiteLinks {
   static const linkedin = 'https://www.linkedin.com/in/adrian-rojek-ar';
   static const email = 'adr.rojek@gmail.com';
   static const mailto =
-      'mailto:adr.rojek@gmail.com?subject=Internship%20/%20praktyki%20%E2%80%94%20Adrian%20Rojek';
+      'mailto:adr.rojek@gmail.com?subject=Job%20/%20internship%20/%20praktyki%20%E2%80%94%20Adrian%20Rojek';
   static const phone = '+48 668 751 953';
   static const tel = 'tel:+48668751953';
 }
@@ -94,9 +94,9 @@ class SiteContent {
   static const about =
       'A passionate mobile app developer with experience in SwiftUI and Android Studio. Open to new challenges, I learn quickly and am eager to develop my skills. Creative and dedicated to every project, with a focus on delivering high-quality solutions.';
   static const pitchEn =
-      'Looking for a software / mobile internship. Recent Flutter intern at DEVEJI, web developer at NEW PORTABLE DEVICES, and R&D apprentice at G2A.';
+      'Looking for a software / mobile internship or junior role. Recent Flutter intern at DEVEJI, web developer at NEW PORTABLE DEVICES, and R&D apprentice at G2A.';
   static const pitchPl =
-      'Szukam praktyk lub stażu w software / mobile. Ostatnio: Flutter w DEVEJI, web w NEW PORTABLE DEVICES, praktyki R&D w G2A.';
+      'Szukam praktyk, stażu lub pracy w software / mobile. Ostatnio: Flutter w DEVEJI, web w NEW PORTABLE DEVICES, praktyki R&D w G2A.';
 
   static const education = [
     'University of Rzeszow (2022–)',
