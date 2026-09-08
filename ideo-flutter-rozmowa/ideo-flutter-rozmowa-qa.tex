@@ -1,0 +1,550 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{polski}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+
+\geometry{margin=2.2cm}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!60!black}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Ideo -- Mobile Developer (Flutter)}
+\fancyhead[R]{\small Adrian Rojek -- Q\&A}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\pyt}[1]{\par\medskip\noindent\textbf{P:} #1\par}
+\newcommand{\odp}[1]{\noindent\textbf{O:} #1\par}
+
+\title{Przygotowanie do rozmowy\\Ideo Software -- Mobile Developer (Flutter)}
+\author{Adrian Rojek\\Spotkanie: 11.09.2026, godz.\ 10:00\\ul.\ Nad Przyrwą 13, Rzeszów\\Uczestnicy: Jan Mazur, Bohdan Sushchak}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+%======================================================================
+\section{Werdykt: czy będzie live coding?}
+%======================================================================
+
+\textbf{Raczej nie pełny live coding na tym spotkaniu} -- niskie/średnie ryzyko krótkiego zadania ,,na sucho''.
+
+\begin{itemize}[leftmargin=*]
+  \item Spotkanie \textbf{max 45 min}, stacjonarnie, z liderem wdrożeń i mobile developerem -- klasyczny pierwszy etap: kultura + CV + pytania techniczne.
+  \item W 45 minutach zwykle: intro/firma $\sim$10 min, projekty/CV $\sim$15--20, Flutter/Firebase/REST $\sim$10--15, Twoje pytania $\sim$5. Mało miejsca na spokojne kodowanie w IDE.
+  \item Software house'y w PL na pierwszym spotkaniu częściej robią rozmowę techniczną / ,,jak byś to zrobił'', a zadanie kodowe/take-home zostawiają na później.
+  \item Oferta celuje w doświadczenie projektowe (store, Firebase, UI, native), nie w algorytmy.
+\end{itemize}
+
+\textbf{Na wszelki wypadek przygotuj:} krótkie zadanie ustne (widget tree, \texttt{FutureBuilder} vs Cubit, JSON$\to$model, \texttt{ListView.builder}, REST), opis architektury Fruit Tracker / DEVEJI. Następna runda może mieć live coding lub zadanie domowe.
+
+%======================================================================
+\section{Pitch 30 sekund}
+%======================================================================
+
+\pyt{Opowiedz coś o sobie / kim jesteś jako developer?}
+\odp{Jestem studentem informatyki na Uniwersytecie Rzeszowskim (II stopień). Specjalizuję się w mobile -- SwiftUI na iOS oraz Flutter cross-platform. W DEVEJI robiłem aplikacje Flutter z Firebase i publikacją w App Store i Google Play. Prywatnie mam apkę Flutter do śledzenia owoców/warzyw z ML i SQLite, a publicznie m.in.\ Water Reminder i Fitness Tracker w SwiftUI oraz MacSpaceCleaner pokazujący świadome podejście do architektury.}
+
+\pyt{Dlaczego Ideo / dlaczego ta oferta?}
+\odp{Szukacie Flutterowca z natywnym zapleczem, Firebase, REST i aplikacjami w sklepach -- to dokładnie mój stack. Chcę wejść w software house z realnymi klientami z wielu branż, uczyć się od doświadczonego zespołu i rozwijać jakość UI oraz architektury. Rzeszów + hybryda też mi pasuje.}
+
+%======================================================================
+\section{Soft / HR / praca w software house}
+%======================================================================
+
+\pyt{Jak wyglądała Twoja współpraca w zespole w DEVEJI?}
+\odp{Pracowałem nad aplikacjami Flutter iOS/Android, backend Firebase, wdrożenia do sklepów. Współpracowałem przy wymaganiach, implementacji UI, integracji API i poprawkach po feedbacku. Uczę się komunikować ryzyka wcześnie (np.\ limity platform, review store).}
+
+\pyt{Jak radzisz sobie z niejasnymi wymaganiami klienta?}
+\odp{Dopytuję o happy path i edge case'y, proponuję najprostsze MVP, potwierdzam założenia na piśmie/ticketach, robię małe iteracje zamiast wielkiego big-bang. Jeśli coś jest niejasne w designie -- pytam designera/PM zanim zgadnę.}
+
+\pyt{Co robisz, gdy utkniesz na bugach?}
+\odp{Reprodukuje minimalnie, sprawdzam logi (Flutter DevTools, Crashlytics), bisect zmian, czytam dokumentację/plugin issues, izoluję warstwę (UI vs state vs sieć). Jeśli blokuję sprint -- eskaluję wcześniej z kontekstem i planem B.}
+
+\pyt{Preferujesz remote, hybrydę czy biuro?}
+\odp{Hybryda według potrzeb -- jak w ofercie. Na start chętnie bywam w biurze (onboarding, pairing), potem elastycznie pod projekt.}
+
+\pyt{Jakie masz oczekiwania wobec onboardingu?}
+\odp{Dostęp do repo, standardów code review, stacku stanu (BloC/Cubit/Provider), procesu release i kontaktu do mentora. Chcę szybko dostarczać małe PR-y i uczyć się konwencji zespołu.}
+
+\pyt{Gdzie widzisz się za rok?}
+\odp{Jako samodzielny Flutter developer w Ideo: pewnie prowadzę feature'y end-to-end, znam natywne mosty, dbam o jakość UI i performance, pomagam juniorom jeśli będzie okazja.}
+
+\pyt{Ile zarabiałeś / jakie masz oczekiwania finansowe?}
+\odp{Przygotuj widełki rynkowe junior/mid Flutter PL (B2B/UoP). Powiedz, że jesteś elastyczny względem formy (UoP/B2B) i zakresu obowiązków; dopytaj o widełki Ideo jeśli nie chcesz strzelać pierwszy.}
+
+\pyt{Czy masz aplikacje w sklepach?}
+\odp{Tak -- w DEVEJI uczestniczyłem w publikacji na App Store i Google Play. Mam też własne projekty iOS (m.in.\ Water Reminder, Fitness Tracker). Fruit Tracker (Flutter) mogę omówić architektonicznie; status publikacji doprecyzuj zgodnie z prawdą.}
+
+\pyt{Czy możesz pracować też przy innych technologiach mobilnych?}
+\odp{Tak -- oferta to przewiduje. Mam SwiftUI/iOS, znam Kotlin na poziomie podstawowym, Electron/Node przy projekcie kurierskim, web przy NEW PORTABLE DEVICES. Flutter będzie core, ale nie boję się kontekstów natywnych i backendowych.}
+
+\pyt{Jak łączysz studia z pracą?}
+\odp{Magisterka na UR od 02.2026; wcześniej łączyłem studia z DEVEJI/G2A. Priorytetyzuję deliverables, komunikuję urlopy sesyjne z wyprzedzeniem.}
+
+%======================================================================
+\section{Flutter i Dart -- fundamenty}
+%======================================================================
+
+\pyt{Czym jest Flutter i jak działa pod spodem?}
+\odp{UI toolkit od Google: piszesz w Dart, silnik (Impeller/Skia) rysuje UI. Jedna baza kodu na iOS/Android (oraz web/desktop). Widgety to niemutowalne konfiguracje drzewa UI; stan trzymasz osobno.}
+
+\pyt{StatelessWidget vs StatefulWidget?}
+\odp{\texttt{StatelessWidget} -- UI zależny tylko od konstruktorów/rodzica. \texttt{StatefulWidget} -- lokalny mutowalny stan w \texttt{State}, \texttt{setState} trigguje rebuild. Do większej logiki lepiej Cubit/BloC/Provider niż rozbudowany \texttt{StatefulWidget}.}
+
+\pyt{Co to jest BuildContext?}
+\odp{Uchwyt do lokalizacji widgetu w drzewie -- InheritedWidget (\texttt{Theme}, \texttt{MediaQuery}, Provider), nawigacja, \texttt{showDialog}. Nie używaj \texttt{context} po \texttt{async} bez sprawdzenia \texttt{mounted}/\texttt{context.mounted}.}
+
+\pyt{Do czego służą Keys?}
+\odp{Pomagają frameworkowi identyfikować widgety przy reorderze listy, zachowaniu stanu (\texttt{ValueKey}, \texttt{ObjectKey}, \texttt{UniqueKey}, \texttt{GlobalKey}). Bez kluczy Flutter może źle zmapować elementy listy.}
+
+\pyt{const konstruktor -- po co?}
+\odp{Pozwala współdzielić niezmienne widgety i ograniczać zbędne rebuildy. Tam gdzie się da -- \texttt{const}.}
+
+\pyt{Jak działa async/await w Dart?}
+\odp{\texttt{Future} reprezentuje wynik asynchroniczny; \texttt{async}/\texttt{await} to cukier nad event loopem. Ciężkie CPU lepiej przenieść do \texttt{Isolate} (\texttt{compute}), bo Dart UI to jeden wątek.}
+
+\pyt{Stream vs Future?}
+\odp{\texttt{Future} -- jedno zdarzenie. \texttt{Stream} -- sekwencja zdarzeń (Firestore, websocket, tickery). BloC opiera się o streamy event$\to$state.}
+
+\pyt{Null safety w Dart?}
+\odp{Typy domyślnie non-nullable; \texttt{?} oznacza nullable; \texttt{!} to assert non-null (ostrożnie); \texttt{?}., \texttt{??}, \texttt{late} według potrzeby. Unikam \texttt{!} bez gwarancji.}
+
+\pyt{Różnica między hot reload a hot restart?}
+\odp{Hot reload wstrzykuje nowy kod zachowując stan (szybka iteracja UI). Hot restart resetuje stan aplikacji. Pełny restart procesu przy zmianach natywnych/pluginów.}
+
+\pyt{Co to InheritedWidget?}
+\odp{Mechanizm przekazywania danych w dół drzewa bez prop-drilling. Provider/Riverpod budują na tym. \texttt{dependOnInheritedWidgetOfExactType} rejestruje zależność i rebuild przy zmianie.}
+
+\pyt{Jak debugujesz performance UI?}
+\odp{Flutter DevTools: rebuild counts, timeline, jank. Unikam zbędnych rebuildów, ciężkiej pracy w \texttt{build}, używam \texttt{ListView.builder}, cache obrazów, \texttt{RepaintBoundary} tam gdzie ma sens.}
+
+\pyt{ListView vs ListView.builder?}
+\odp{\texttt{ListView} buduje dzieci od razu -- źle dla długich list. \texttt{builder}/\texttt{separated} lazy-loadują widoczne elementy.}
+
+\pyt{Co to Widget, Element, RenderObject?}
+\odp{Widget -- konfiguracja. Element -- instancja w drzewie zarządzająca cyklem życia. RenderObject -- layout/paint. Zrozumienie pomaga przy optymalizacji i custom renderach.}
+
+\pyt{Material vs Cupertino?}
+\odp{Material -- Android/Google design. Cupertino -- iOS look. Często Material + platform adaptive (\texttt{Theme}, \texttt{Platform.isIOS}) albo własne design system klienta.}
+
+\pyt{Jak wersjonujesz zależności w pubspec?}
+\odp{SemVer, \texttt{\^{}} dla kompatybilnych, \texttt{pubspec.lock} commitowany w aplikacjach. Po upgrade -- testy regresji i changelog breaking changes.}
+
+\pyt{Co to package vs plugin?}
+\odp{Package -- czysty Dart. Plugin -- z kodem natywnym (Android/iOS) przez platform channels. Federated plugins mają osobne implementacje per platformę.}
+
+%======================================================================
+\section{Zarządzanie stanem (Provider, Cubit, BloC)}
+%======================================================================
+
+\pyt{Jakie znasz podejścia do state managementu?}
+\odp{setState (lokalnie), Provider/ChangeNotifier, Cubit/BloC, Riverpod, GetX (ostrożnie), Redux-like. W ofercie Ideo: Cubit, Provider, BloC -- te trzy znam praktycznie (Provider w Fruit Tracker; Cubit/BloC z kursów i praktyki).}
+
+\pyt{Provider -- jak działa?}
+\odp{\texttt{ChangeNotifier} + \texttt{ChangeNotifierProvider} + \texttt{Consumer}/\texttt{context.watch}. Prosty, dobry na średnie apki. Łatwo przesadzić z god-object notiferem -- lepiej dzielić odpowiedzialności.}
+
+\pyt{Cubit vs BloC?}
+\odp{Cubit: wywołujesz metody, emitujesz stany -- mniej boilerplate. BloC: eventy $\to$ mapowanie $\to$ stany, lepsze gdy chcesz jawny log eventów, złożone flow, łatwiejsze testowanie event-driven. W małym feature często Cubit wystarczy.}
+
+\pyt{Kiedy wybrałbyś BloC zamiast Provider?}
+\odp{Złożona logika biznesowa, wiele źródeł eventów, potrzeba jasnych stanów UI (loading/error/data), testowalność, konwencja zespołu. Provider OK dla prostego stanu UI i DI.}
+
+\pyt{Jak testujesz Cubit/BloC?}
+\odp{\texttt{bloc\_test}: podajesz eventy/wywołania, oczekujesz sekwencji stanów. Mockujesz repozytoria. Osobno testujesz reducery/mapowanie.}
+
+\pyt{Jak unikasz rebuildowania całego drzewa?}
+\odp{\texttt{context.select}, \texttt{BlocSelector}, dzielenie providerów, wynoszenie stałych widgetów, nie słuchanie całego modelu gdy potrzebne jest jedno pole.}
+
+\pyt{Gdzie trzymasz side-effecty (nawigacja, snackbary)?}
+\odp{Nie w \texttt{build}. Listener (\texttt{BlocListener}), callbacki po Future, albo warstwa efektów. Unikam nawigacji bezpośrednio z Cubita bez abstrakcji.}
+
+\pyt{Jak wyglądał stan w Twoim Fruit Trackerze?}
+\odp{Provider do stanu spożycia, ulubionych, historii i offline shopping planner. Dane lokalnie w SQLite. Przy rozroście rozważałbym Cubit/BloC per feature + repozytorium nad SQLite.}
+
+%======================================================================
+\section{REST API i komunikacja klient--serwer}
+%======================================================================
+
+\pyt{Jak wołasz REST z Fluttera?}
+\odp{Pakiet \texttt{http} lub \texttt{dio} (interceptory, timeouty, cancel). Warstwa API client $\to$ repository $\to$ Cubit/BloC. Modele z \texttt{fromJson}/\texttt{toJson} (json\_serializable / freezed).}
+
+\pyt{Jak obsługujesz błędy sieciowe?}
+\odp{Timeouty, mapowanie statusów HTTP na wyjątki domenowe, retry z backoffem dla idempotentnych GET, stany error w UI, logowanie Crashlytics. Offline: cache/kolejka.}
+
+\pyt{Co z autoryzacją?}
+\odp{Bearer token w interceptorze, secure storage (Keychain/Keystore via \texttt{flutter\_secure\_storage}), refresh token flow, wylogowanie przy 401. Nigdy tokenów w plain SharedPreferences na produkcję jeśli da się uniknąć.}
+
+\pyt{REST vs GraphQL?}
+\odp{REST -- zasoby, cache HTTP, prościej. GraphQL -- precyzyjne query, jeden endpoint, więcej złożoności klienta. W Ideo oferta mówi REST -- to znam praktycznie.}
+
+\pyt{Jak wersjonujesz API po stronie klienta?}
+\odp{Base URL + version path/header, feature flags, graceful degradation gdy pole zniknie, nie crashować na nieznanych polach (\texttt{ignoreUnknown}).}
+
+\pyt{Pagination -- jak?}
+\odp{Offset/limit lub cursor. W UI: infinite scroll + loading footer, deduplikacja, cancel poprzedniego requestu przy szybkim scrolu.}
+
+\pyt{Co to idempotentność i dlaczego ważna w mobile?}
+\odp{Powtórzony request nie psuje stanu (np.\ płatność). Przy słabej sieci mobile często retry -- bez idempotencji łatwo o duplikaty.}
+
+%======================================================================
+\section{Firebase}
+%======================================================================
+
+\pyt{Z jakich usług Firebase korzystałeś?}
+\odp{W DEVEJI: backend Firebase pod aplikacje mobilne (Auth, baza, powiadomienia/crash według projektu). Potrafię ustawić konfigurację iOS/Android, reguły bezpieczeństwa i integrację z FlutterFire.}
+
+\pyt{Firestore vs Realtime Database?}
+\odp{Firestore -- dokumenty/kolekcje, lepsze query złożone, skalowanie. RTDB -- drzewo JSON, niskie opóźnienia sync. Dziś częściej Firestore.}
+
+\pyt{Jak zabezpieczasz dane w Firestore?}
+\odp{Security Rules po \texttt{auth.uid}, walidacja pól, unikanie client-side-only security. Minimalny privilege, testy rules.}
+
+\pyt{Firebase Auth -- przepływ?}
+\odp{Email/password, Google/Apple Sign-In, anonymous$\to$link. Słuchasz \texttt{authStateChanges}, mapujesz na stan aplikacji, tokeny odświeżane przez SDK.}
+
+\pyt{FCM -- push?}
+\odp{Token urządzenia, tematy/segmenty, handlers foreground/background, uprawnienia iOS (APNs). Deep link z payloadu do właściwego ekranu.}
+
+\pyt{Crashlytics i Analytics -- po co?}
+\odp{Crashlytics: stacktrace, non-fatals, kontekst użytkownika. Analytics/Performance: funnele, wolne ekrany. Bez obserwowalności trudno utrzymać jakość po release.}
+
+\pyt{Offline we Firebase?}
+\odp{Firestore ma persistence cache; trzeba projektować UX na stale data i konflikty. Przy pełnym offline-first często SQLite + sync (jak w Fruit Trackerze lokalnie).}
+
+%======================================================================
+\section{UI, design i jakość wizualna}
+%======================================================================
+
+\pyt{Jak dbasz o pixel-perfect względem designu?}
+\odp{Sprawdzam spacing/typography/kolory ze specyfikacji (Figma), używam theme (\texttt{TextTheme}, \texttt{ColorScheme}), komponenty wielokrotnego użytku, porównuję na urządzeniach o różnej gęstości.}
+
+\pyt{Jak robisz responsywność?}
+\odp{\texttt{LayoutBuilder}, \texttt{MediaQuery}, flexible/expanded, czasem \texttt{adaptive} breakpoints. Unikam hardcodowanych wysokości na ślepo.}
+
+\pyt{Animacje we Flutterze?}
+\odp{Implicit (\texttt{AnimatedContainer}), explicit (\texttt{AnimationController}), Hero, Rive/Lottie. Animacja ma wspierać hierarchię, nie hałasować.}
+
+\pyt{Dostępność?}
+\odp{Semantics, kontrast, duże fonty (textScaler), cele tap $\ge$ 48dp, VoiceOver/TalkBack. To bywa wymagane u klientów korporacyjnych.}
+
+\pyt{Skąd bierzesz ikony/assetty?}
+\odp{Design system klienta, \texttt{flutter\_svg}, asset bundle, generatory. Dbam o @2x/@3x lub wektory.}
+
+%======================================================================
+\section{Natywne Android / iOS i mosty}
+%======================================================================
+
+\pyt{Kiedy piszesz kod natywny przy Flutterze?}
+\odp{Gdy brakuje pluginu, trzeba głębokiej integracji (HealthKit-like, specjalne SDK bankowe, background modes) albo optymalizacji. MethodChannel / EventChannel / Pigeon.}
+
+\pyt{Co to MethodChannel?}
+\odp{Most Flutter$\leftrightarrow$natywny: wysyłasz nazwę metody + argumenty, po stronie Swift/Kotlin obsługujesz i zwracasz wynik. Typowanie warto generować (Pigeon).}
+
+\pyt{Masz doświadczenie natywne iOS?}
+\odp{Tak -- SwiftUI: Water Reminder (SwiftData, lokalne powiadomienia), Fitness Tracker (HealthKit, Charts), Lotto. Znam Xcode, signing, capabilities.}
+
+\pyt{Android natywnie?}
+\odp{Podstawy Kotlina i Android Studio; w praktyce głównie Flutter + konfiguracja Gradle/manifest/permissions. Chętnie dogram natywne mosty w projekcie.}
+
+\pyt{Różnice iOS vs Android, o których musisz pamiętać?}
+\odp{Uprawnienia i privacy strings, push (APNs vs FCM), back gesture/navigation, lifecycle, store review guidelines, rozmiary ekranów/OEM Android.}
+
+\pyt{Jak debugujesz problem tylko na iOS?}
+\odp{Reprodukcja na symulatorze/urządzeniu, logi Xcode, porównanie z Androidem, sprawdzenie Info.plist/capabilities, wersji OS, pluginów z issue trackerem.}
+
+%======================================================================
+\section{Publikacja App Store / Google Play}
+%======================================================================
+
+\pyt{Jak wygląda release Fluttera do sklepów?}
+\odp{Bump version/build, signing (Keystore / certificates), \texttt{flutter build appbundle/ipa}, metadata, privacy labels, testy na real devices, staged rollout. CI (Codemagic/GitHub Actions) przyspiesza.}
+
+\pyt{Częste powody odrzucenia App Store?}
+\odp{Brakujące privacy disclosures, niedziałający login, placeholder content, naruszenia guidelines płatności, crash na starcie, brak konta demo dla reviewera.}
+
+\pyt{AAB vs APK?}
+\odp{Play wymaga AAB -- Google generuje zoptymalizowane APK per urządzenie. APK czasem do sideload/testów.}
+
+\pyt{Jak wersjonujesz buildy?}
+\odp{\texttt{version: x.y.z+build} w pubspec -- name + number. Number musi rosnąć monotonicznie w sklepach.}
+
+\pyt{Co to TestFlight / internal testing?}
+\odp{TestFlight -- beta iOS. Play: internal/closed/open testing. Zawsze waliduję krytyczne ścieżki przed produkcją.}
+
+%======================================================================
+\section{Architektura, czysty kod, git}
+%======================================================================
+
+\pyt{Jaką architekturę stosujesz we Flutterze?}
+\odp{Feature-first: presentation (UI + Cubit) / domain / data (API, DB). Dependency injection (get\_it/riverpod). Unikam logiki biznesowej w widgetach.}
+
+\pyt{Co byś poprawił w swoich wczesnych apkach Swift?}
+\odp{Water Reminder i Fitness Tracker mają dużo logiki w \texttt{ContentView} -- wydzieliłbym ViewModele, serwisy (notifications/HealthKit), testy jednostkowe streaków/MET. To świadoma lekcja modularności.}
+
+\pyt{Git workflow?}
+\odp{Feature branche, małe PR-y, sensowne commity, code review, unikam commitowania sekretów (\texttt{.env}, keystore). Preferuję rebase/squash według konwencji zespołu.}
+
+\pyt{Czy piszesz testy?}
+\odp{Unit dla logiki/Cubitów, goldeny/widget testy dla krytycznego UI, integration na smoke path. W projektach uczelnianych bywało ich mało -- w komercyjnych traktuję testy jako część Definition of Done.}
+
+\pyt{SOLID w mobile -- przykład?}
+\odp{Repository odwraca zależność UI od Dio/Firebase. Strategy dla różnych login providerów. Małe widgety z jedną odpowiedzialnością zamiast 1000-LOC ekranu.}
+
+%======================================================================
+\section{Pytania o Twoje projekty}
+%======================================================================
+
+\subsection{DEVEJI -- Flutter komercyjnie}
+
+\pyt{Co robiłeś w DEVEJI?}
+\odp{Mobile App Developer (Flutter), VIII--X 2025: cross-platform iOS/Android, Firebase, deployment do App Store i Google Play. To moje główne komercyjne doświadczenie Flutter pod wymagania Ideo.}
+
+\pyt{Jakie wyzwania techniczne tam były?}
+\odp{Dopasuj do faktów: integracja Firebase, różnice platform, przygotowanie buildów, poprawki po QA/review, dbałość o UI zgodne z projektem. Nie zmyślaj szczegółów klienta objętych NDA -- mów o kategoriach zadań.}
+
+\subsection{Fruit \& Vegetable Tracker (Flutter, prywatne)}
+
+\pyt{Opowiedz o Fruit Trackerze.}
+\odp{Cross-platform Flutter: monitoring spożycia owoców/warzyw, skanowanie produktów modelem ML, analiza odżywcza, historia, ulubione, offline planner zakupów. Stan: Provider. Dane: SQLite lokalnie.}
+
+\pyt{Dlaczego SQLite a nie tylko Firebase?}
+\odp{Offline-first i prywatność danych żywieniowych na urządzeniu. Szybkie lokalne query historii. Sync z chmurą można dodać później jako warstwę.}
+
+\pyt{Jak działa skanowanie ML?}
+\odp{Model klasyfikujący produkt (on-device). Pipeline: kamera/obraz $\to$ inferencja $\to$ mapowanie na produkt/wartości odżywcze $\to$ zapis historii. Edge case'y: słabe oświetlenie, niepewność modelu -- UX z potwierdzeniem użytkownika.}
+
+\pyt{Co było najtrudniejsze?}
+\odp{Połączenie UX skanowania z wiarygodnością ML i spójnym stanem offline. Plus dopracowanie UI detali graficznych.}
+
+\subsection{Water Reminder (SwiftUI)}
+
+\pyt{Co robi Water Reminder?}
+\odp{iOS tracker nawodnienia: cel 4000~ml, szybkie dodawanie, streak, powiadomienia lokalne z akcjami, model ,,bojlera'', historia (SwiftData), animacje GIF.}
+
+\pyt{SwiftData czy Core Data?}
+\odp{W kodzie jest \textbf{SwiftData}. Jeśli ktoś zapyta o README -- wyjaśniam precyzyjnie: persistence przez SwiftData (\texttt{WaterProgress}, \texttt{BoilerModel}, \texttt{DailyCountModel}).}
+
+\pyt{Jak działają powiadomienia?}
+\odp{Harmonogram w ciągu dnia, kategorie akcji (wypij / opóźnij), reset o północy. \texttt{UNUserNotificationCenterDelegate} w AppDelegate.}
+
+\pyt{Co poprawisz architektonicznie?}
+\odp{Wydzielić serwis powiadomień, ViewModel, nie trzymać wszystkiego w jednym \texttt{ContentView}. Dodać widget jeśli obiecamy go w opisie.}
+
+\subsection{Fitness Tracker (SwiftUI)}
+
+\pyt{Co robi Fitness Tracker?}
+\odp{Kroki z HealthKit, szacunek dystansu/kalorii (MET), treningi bieżni, waga + wykresy (Swift Charts), profil użytkownika. SwiftData do persistence.}
+
+\pyt{Jak liczysz kalorie?}
+\odp{Wzór MET: $(\mathrm{MET}\times 3.5\times \mathrm{waga}\times \mathrm{minuty})/200$. Osobne MET dla chodu/biegu wg prędkości. To estymacja, nie medyczny measurement.}
+
+\pyt{Czy jest MapKit / zdjęcia postępów?}
+\odp{W aktualnym kodzie publicznym focus jest na HealthKit + Charts + profil. Jeśli ktoś porówna z marketingowym opisem -- mówię uczciwie, co jest zaimplementowane, a co było w planach.}
+
+\subsection{MacSpaceCleaner}
+
+\pyt{Co to MacSpaceCleaner i czemu o tym mówisz na rozmowie Flutter?}
+\odp{Desktop (.NET~9 / Avalonia) do odzyskiwania miejsca na macOS: skan wolumenów, kategorie śmieci, heurystyki score, opcjonalne AI, twarde reguły bezpieczeństwa ścieżek. Pokazuje, że myślę warstwami (Core vs UI), o safety i UX potwierdzeń -- to transferowalne do mobile.}
+
+\pyt{Jak dbasz o bezpieczeństwo usuwania?}
+\odp{\texttt{PathSafety.CanDelete} blokuje krytyczne ścieżki systemowe; delete deepest-first; wizard potwierdzeń; Reveal in Finder. Bez sudo threat model.}
+
+\subsection{Courier Task Management (Electron, prywatne)}
+
+\pyt{Opowiedz o systemie kurierskim.}
+\odp{Desktop Electron + Node + MySQL: planowanie zadań, tracking przesyłek, tickety, PDF raporty, panele ról (admin/manager/kurier/magazyn). Pokazuje pracę z rolami i procesami biznesowymi.}
+
+\subsection{Bus Timetable (Laravel)}
+
+\pyt{Co to za projekt?}
+\odp{Laravel 11 + MySQL: zarządzanie trasami/przystankami/czasami, role admin/kierowca, wykresy. To CRUD z politykami dostępu -- \textbf{bez} realnego GPS realtime mimo że bywało tak opisane. Uczciwość > marketing.}
+
+\pyt{Czego się nauczyłeś negatywnie?}
+\odp{Nie commitować \texttt{.env} z sekretami. Secrets w vault/CI, \texttt{.env.example} w repo.}
+
+\subsection{Inne}
+
+\pyt{Lotto Results App?}
+\odp{SwiftUI + SwiftData, zapis kuponów, WebView wyników, eksperyment scrapingu (SwiftSoup) -- niedokończony względem selektorów. Główny flow: ręczny zapis + porównanie.}
+
+\pyt{Automatic Hotspot Disconnector?}
+\odp{Mały Python/macOS daemon: przy locku ekranu wyłącza Wi-Fi jeśli hotspot; LaunchAgent. Pokazuje automatyzację systemu, nie jest core mobile portfolio.}
+
+%======================================================================
+\section{Pułapki i uczciwe odpowiedzi ,,co bym poprawił''}
+%======================================================================
+
+\pyt{Widzimy, że publiczny GitHub to głównie Swift, a oferta to Flutter -- jak to wyjaśnisz?}
+\odp{Komercyjny Flutter i prywatny Fruit Tracker nie są publiczne (NDA/prywatność). Publicznie pokazuję natywne iOS i inne projekty. Na rozmowie mogę przejść po architekturze Flutter, Firebase, Provider/Cubit i procesie store z DEVEJI.}
+
+\pyt{Brak testów w repo?}
+\odp{W projektach osobistych/uczelnianych bywało słabo -- wiem, że to dług. W komercyjnym Flutterze stawiam na testy Cubitów i smoke ścieżek. Mogę pokazać jak bym przetestował streak w Water Reminderze.}
+
+\pyt{Czy nie jesteś za junior pod to stanowisko?}
+\odp{Mam komercyjny Flutter + store + Firebase, własne apki z ML/SQLite i mocne iOS. Szybko się uczę, mam szeroki kontekst. Szukam miejsca gdzie urośnie mid na realnych projektach Ideo.}
+
+%======================================================================
+\section{Pytania behawioralne (STAR -- szkielety)}
+%======================================================================
+
+\pyt{Opowiedz o trudnym bugie, który naprawiłeś.}
+\odp{S: problem na jednej platformie (np.\ push/permissions/signing). T: znaleźć root cause. A: minimalna reprodukcja, logi natywne, porównanie Android/iOS, fix + regresja. R: stabilny release, checklista na przyszłość. \textit{Wypełnij konkretnym przykładem z DEVEJI.}}
+
+\pyt{Konflikt w zespole / inna opinia techniczna?}
+\odp{Słucham argumentów (perf, time-to-market, maintenance), proponuję spike/POC na czasboxed 0.5--1 dnia, decyzję zapisujemy. Nie blokuję ego.}
+
+\pyt{Deadline vs jakość?}
+\odp{Wycinam scope (MVP), nie jakość fundamentów (crash, security). Komunikuję trade-offy wcześnie. Hotfix tylko z planem spłaty.}
+
+\pyt{Z czego jesteś najbardziej dumny?}
+\odp{Wybierz 1: publikacja store w DEVEJI / Fruit Tracker ML+offline / MacSpaceCleaner safety architecture / Water Reminder dopracowany UX powiadomień.}
+
+%======================================================================
+\section{Mini zadania kodowe / whiteboard (na wszelki wypadek)}
+%======================================================================
+
+\pyt{Napisz model Dart z JSON.}
+\odp{\texttt{class User \{ final String id; final String name; User(\{required this.id, required this.name\}); factory User.fromJson(Map<String,dynamic> j)=>User(id:j['id'], name:j['name']); \}}}
+
+\pyt{Jak zrobisz listę z API?}
+\odp{Cubit: emit loading $\to$ repo.fetch() $\to$ emit success/error. UI: \texttt{BlocBuilder} + \texttt{ListView.builder}. Pull-to-refresh wywołuje event.}
+
+\pyt{FutureBuilder vs Cubit -- kiedy co?}
+\odp{\texttt{FutureBuilder} OK dla prostego jednorazowego fetch w lokalnym widgetcie. Przy cache, retry, wielu ekranach, testach -- Cubit/BloC.}
+
+\pyt{Jak zrobisz debounce search?}
+\odp{Na zmianę tekstu: timer 300ms / Rx debounce / transform eventów w BloC (\texttt{debounce}). Cancel poprzedniego HTTP.}
+
+\pyt{Jak przekażesz dane między ekranami?}
+\odp{Argumenty routera, inherited/provider scope, result z \texttt{Navigator.pop}. Unikam singletonów-globali bez DI.}
+
+\pyt{Napisz na tablicy różnicę setState vs notifyListeners vs emit.}
+\odp{\texttt{setState} -- lokalny State. \texttt{notifyListeners} -- ChangeNotifier/Provider. \texttt{emit} -- Cubit nowy stan immutable, UI słucha streamu.}
+
+\pyt{Co wypisze kod z race na context po await?}
+\odp{Ryzyko użycia context po unmount -- crash/warning. Fix: \texttt{if (!context.mounted) return;} przed nawigacją/snackbarem.}
+
+\pyt{Zadanie: cache obrazków.}
+\odp{\texttt{cached\_network\_image} lub własny: memory + disk LRU, placeholder/error widget, poprawne key URL.}
+
+%======================================================================
+\section{Android / iOS -- pytania pogłębiające}
+%======================================================================
+
+\pyt{Co to AppDelegate / MainActivity w kontekście Fluttera?}
+\odp{Punkty wejścia natywne hostujące FlutterEngine. Tu rejestrujesz pluginy, kanały, powiadomienia, deep linki.}
+
+\pyt{ProGuard / R8 / obfuscation?}
+\odp{Na Androidzie minifikacja w release; trzeba keep rules dla refleksji/JSON. Na iOS bitcode już historyczne -- ważniejsze stripping i App Size.}
+
+\pyt{Background fetch / restrictions?}
+\odp{OS mocno ogranicza tło. Trzeba właściwych modes/permissions i realistycznych oczekiwań biznesu. Często push + przy najbliższym foreground sync.}
+
+\pyt{Deep links / Universal Links / App Links?}
+\odp{Konfiguracja associated domains / Digital Asset Links, routowanie w Flutter (\texttt{go\_router}), testy z cold/warm start.}
+
+%======================================================================
+\section{Bazy lokalne i offline}
+%======================================================================
+
+\pyt{SharedPreferences vs Hive vs SQLite vs Drift/Isar?}
+\odp{Prefs -- małe key-value. Hive/Isar -- szybkie NoSQL na urządzeniu. SQLite/Drift -- relacyjne, query, dobre do historii spożycia (Fruit Tracker).}
+
+\pyt{Migracje schematu?}
+\odp{Wersjonowanie DB, migracje w górę, backup przed migracją, test na świeżej i starej instalacji. Nigdy nie dropować produkcji bez ścieżki.}
+
+\pyt{Jak projektujesz offline-first?}
+\odp{Lokalne źródło prawdy, kolejka mutacji, sync z resolucją konfliktów (last-write-wins lub merge), UX wskaźnik sync.}
+
+%======================================================================
+\section{Bezpieczeństwo mobile}
+%======================================================================
+
+\pyt{Jak chronisz sekrety w aplikacji?}
+\odp{Brak tajnych kluczy API w binarkach jeśli da się uniknąć -- backend proxy. Certificate pinning rozważnie. Secure storage na tokeny. Obfuscation to tylko utrudnienie, nie security boundary.}
+
+\pyt{OWASP Mobile -- przykłady?}
+\odp{Niezabezpieczone storage, słaba TLS, niezaufane WebView, debug residual w release, nadmierne uprawnienia.}
+
+\pyt{ATS / cleartext traffic?}
+\odp{iOS ATS blokuje HTTP; Android cleartext domyślnie off w nowszych. Tylko świadome wyjątki.}
+
+%======================================================================
+\section{Wydajność i stabilność}
+%======================================================================
+
+\pyt{Skąd biorą się janki UI?}
+\odp{Ciężka praca na UI isolate, zbędne rebuildy, ogromne obrazy bez cache, synchroniczne IO, shader compilation (Impeller poprawia).}
+
+\pyt{Jak zmniejszysz rozmiar apki?}
+\odp{Split ABI/AAB, kompresja assetów, usuwanie dead code, deferred components rzadziej, analiza \texttt{flutter build} size.}
+
+\pyt{Memory leaks we Flutterze?}
+\odp{Niezwolnione controllery/streamy, GlobalKey nadużycia, cache bez limitu, listenery. Dispose w \texttt{State.dispose} / close Cubit.}
+
+%======================================================================
+\section{Proces, Agile, współpraca z designem}
+%======================================================================
+
+\pyt{Jak czytasz taska w Jira?}
+\odp{Cel, AC, design, edge cases, zależności API, estymacja, ryzyka. Dopytam zanim wejdę w kod na 2 dni w złą stronę.}
+
+\pyt{Code review -- czego oczekujesz?}
+\odp{Feedback o architekturze, edge cases, nazewnictwie, testach. Sam reviewuję pod kątem czytelności i regresji, nie gustu formatowania jeśli jest linter.}
+
+\pyt{Definition of Done?}
+\odp{AC spełnione, testy, brak crash na happy path, UI zgodne, obsługa błędów, wersje i18n jeśli wymagane, dokumentacja jeśli API publiczne.}
+
+%======================================================================
+\section{Pytania o Ideo i technologię firmy}
+%======================================================================
+
+\pyt{Co wiesz o Ideo?}
+\odp{Software house $\sim$250 osób, Rzeszów (+ Warszawa), dedykowane systemy: intranet, workflow, e-learning, loyalty, e-commerce, B2B. Stack m.in.\ .NET, PHP/Laravel, TS/Node, Vue/React, Swift, Flutter. Kariera: kariera.ideo.pl.}
+
+\pyt{Dlaczego Flutter u Was, nie tylko natywnie?}
+\odp{\textit{Pytanie do nich} -- spodziewana odpowiedź: time-to-market, wspólny kod, zespół mobilny w rozbudowie, klienci multi-platform.}
+
+%======================================================================
+\section{Twoje pytania do Ideo (zadaj 3--5)}
+%======================================================================
+
+\begin{enumerate}[leftmargin=*]
+  \item Jaki state management jest standardem w zespole mobilnym (BloC vs Cubit vs Provider)?
+  \item Jak wygląda code review i CI/CD release do sklepów?
+  \item Nad jakimi typami klientów/projektów pracowałby zespół Flutter teraz?
+  \item Czy junior/mid dostaje mentora i jak mierzony jest okreś próbny?
+  \item Jaki udział pracy natywnej Swift/Kotlin vs czysty Flutter?
+  \item Hybryda: ile dni w biurze na Nad Przyrwą na starcie?
+  \item Czy są testy automatyczne / golden tests w projektach?
+  \item Jakie są kolejne etapy rekrutacji po dzisiejszym spotkaniu?
+\end{enumerate}
+
+%======================================================================
+\section{Checklista dzień przed / rano}
+%======================================================================
+
+\begin{itemize}[leftmargin=*]
+  \item CV i portfolio zgodne z tym, co mówisz (SwiftData nie Core Data; bez zmyślania MapKit jeśli nie ma w kodzie).
+  \item 2--3 zdania o DEVEJI, Fruit Tracker, Water Reminder, MacSpaceCleaner.
+  \item Przypomnij Cubit vs BloC vs Provider na 1 minutę.
+  \item Firebase Auth + Firestore rules w 1 minutę.
+  \item Pytania do nich wypisane.
+  \item Dojazd ul.\ Nad Przyrwą 13, 10:00, $\le$45 min.
+  \item Laptop opcjonalnie -- raczej dyskusja, nie live IDE; ale miej repo/readme pod ręką.
+\end{itemize}
+
+\vspace{1em}
+\noindent\textit{Powodzenia na rozmowie 11.09.2026 -- mów konkretami z projektów, uczciwie o lukach, z energią wokół Fluttera + native.}
+
+\end{document}
