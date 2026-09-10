@@ -1,0 +1,315 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{polski}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+
+\geometry{margin=2.2cm}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!60!black}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Ideo -- Flutter}
+\fancyhead[R]{\small Adrian -- proste Q\&A}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\pyt}[1]{\par\medskip\noindent\textbf{Pytanie:} #1\par}
+\newcommand{\odp}[1]{\noindent\textbf{Odpowiedź:} #1\par}
+
+\title{Rozmowa w Ideo -- Flutter\\[0.4em]\large Proste pytania i odpowiedzi}
+\author{Adrian Rojek\\11.09.2026, godz.\ 10:00\\ul.\ Nad Przyrwą 13}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Czy będą kazać kodować na żywo?}
+
+\textbf{Raczej nie.} Spotkanie trwa max 45 minut. Będą 2 osoby techniczne. Więcej czasu zajmie gadanie o Tobie, projektach i firmie niż siedzenie przy laptopie.
+
+Przygotuj się na:
+\begin{itemize}
+  \item pytania o Fluttera, Firebase, REST, stan aplikacji,
+  \item opowiadanie o swoich apkach,
+  \item ewentualnie krótkie ,,jak byś to zrobił'' na tablicy / ustnie.
+\end{itemize}
+Jak będzie druga runda -- dopiero wtedy częściej bywa zadanie albo live coding.
+
+\section{Powiedz o sobie w 30 sekund}
+
+\pyt{Opowiedz coś o sobie.}
+\odp{Jestem studentem informatyki w Rzeszowie. Robię aplikacje mobilne -- głównie Flutter i SwiftUI. W DEVEJI robiłem Fluttera z Firebase i wrzucałem apki do App Store i Google Play. Mam też własną apkę Flutter (owoce/warzywa, skan ML, SQLite) oraz apki iOS typu Water Reminder i Fitness Tracker.}
+
+\pyt{Dlaczego Ideo?}
+\odp{Szukacie Fluttera, Firebase, REST, ładnego UI i kogoś kto ogarnia też natywne iOS/Android. To pasuje do tego, co już robiłem. Chcę robić realne projekty dla klientów w software house i uczyć się od zespołu. Rzeszów i hybryda mi pasują.}
+
+\section{Pytania miękkie / o pracę}
+
+\pyt{Jak wyglądała praca w DEVEJI?}
+\odp{Robiłem ekrany we Flutterze, łączyłem z Firebase, poprawiałem bugi, przygotowywałem buildy do sklepów. Jak coś było niejasne albo ryzykowne (np.\ review w App Store) -- mówię wcześniej, nie na ostatnią chwilę.}
+
+\pyt{Co robisz, gdy wymagania są niejasne?}
+\odp{Dopytuję. Ustalam najprostsze MVP. Wolę potwierdzić założenie niż zgadywać przez dwa dni.}
+
+\pyt{Co gdy utkniesz na błędzie?}
+\odp{Odtwarzam problem na minimum. Patrzą logi. Odcinam warstwy: UI / stan / sieć. Jak blokuję innych -- mówię szybko i proponuję plan B.}
+
+\pyt{Remote, hybryda czy biuro?}
+\odp{Hybryda. Na start chętnie bywam w biurze, potem według projektu.}
+
+\pyt{Masz apki w sklepach?}
+\odp{Tak -- przy DEVEJI brałem udział w publikacji iOS i Androida. Mam też własne projekty iOS. O statusie Fruit Trackera mów tylko zgodnie z prawdą.}
+
+\pyt{Dasz radę też przy innych technologiach?}
+\odp{Tak. Flutter będzie główny, ale znam SwiftUI, trochę Kotlina, robiłem też Electron/Node i proste strony. Oferta Ideo właśnie to przewiduje.}
+
+\pyt{Studia + praca?}
+\odp{Robię magistra. Potrafię łączyć -- sesję i wolne komunikuję z wyprzedzeniem.}
+
+\section{Flutter i Dart -- prosto}
+
+\pyt{Co to Flutter?}
+\odp{Narzędzie do robienia aplikacji mobilnych. Piszesz w Dart. Jedna baza kodu na Androida i iOS. Ekrany składasz z widgetów.}
+
+\pyt{Stateless vs Stateful?}
+\odp{Stateless -- ekran bez własnego zmieniającego się stanu. Stateful -- ma lokalny stan i \texttt{setState}. Do większej logiki lepiej Provider/Cubit/BloC.}
+
+\pyt{Co to BuildContext?}
+\odp{To ,,adres'' widgetu w drzewie. Dzięki niemu bierzesz motyw, nawigację, Provider. Po \texttt{await} sprawdzaj \texttt{context.mounted}, zanim użyjesz contextu.}
+
+\pyt{Po co Keys?}
+\odp{Żeby Flutter dobrze rozpoznawał elementy listy przy zmianach kolejności i nie mieszał stanów.}
+
+\pyt{Po co const?}
+\odp{Mniej zbędnego przebudowywania UI. Gdzie się da -- dawaj \texttt{const}.}
+
+\pyt{async / await?}
+\odp{Na rzeczy które trwają: sieć, baza. UI działa dalej. Ciężkie liczenie lepiej w osobnym isolate (\texttt{compute}).}
+
+\pyt{Future vs Stream?}
+\odp{Future = jeden wynik. Stream = wiele wyników w czasie (np.\ dane z bazy na żywo).}
+
+\pyt{Null safety?}
+\odp{Zmienna domyślnie nie może być null. Jak może -- dajesz \texttt{?}. \texttt{!} używaj tylko gdy naprawdę wiesz, że nie ma nulla.}
+
+\pyt{Hot reload vs hot restart?}
+\odp{Reload -- szybka zmiana UI ze stanem. Restart -- od zera. Pełny restart aplikacji przy zmianach natywnych.}
+
+\pyt{ListView vs ListView.builder?}
+\odp{Zwykły ListView buduje wszystko naraz -- źle przy długiej liście. Builder buduje tylko to, co widać.}
+
+\pyt{Material vs Cupertino?}
+\odp{Material = styl Androida/Google. Cupertino = styl iOS. Często robimy według designu klienta.}
+
+\section{Stan aplikacji: Provider, Cubit, BloC}
+
+\pyt{Jakie znasz sposoby na stan?}
+\odp{setState lokalnie. Provider. Cubit. BloC. W ofercie Ideo są Cubit, Provider i BloC -- o tych mów śmiało. W Fruit Trackerze używałem Providera.}
+
+\pyt{Provider -- co to?}
+\odp{Trzymasz stan w klasie (np.\ ChangeNotifier) i UI go słucha. Proste i dobre na średnie apki. Nie rób jednego wielkiego obiektu na wszystko.}
+
+\pyt{Cubit vs BloC?}
+\odp{Cubit: wołasz metodę i emitujesz nowy stan -- mniej kodu. BloC: wysyłasz eventy, dostajesz stany -- jaśniejszy przepływ przy trudniejszej logice. Mały feature = często Cubit. Duży, skomplikowany = BloC.}
+
+\pyt{Kiedy BloC zamiast Providera?}
+\odp{Gdy logika jest grubsza, chcesz stany loading/error/data, łatwe testy i czytelny przepływ. Provider wystarczy na prostszy stan UI.}
+
+\pyt{Jak uniknąć przebudowy całego ekranu?}
+\odp{Słuchaj tylko potrzebnego kawałka stanu. Dziel providery/cubity. Stałe części UI dawaj jako \texttt{const}.}
+
+\pyt{Gdzie robić nawigację i snackbary?}
+\odp{Nie w metodzie \texttt{build}. Lepiej w listenerze po zmianie stanu albo po skończonym Future.}
+
+\section{REST -- rozmowa z serwerem}
+
+\pyt{Jak wołasz API we Flutterze?}
+\odp{Pakiet \texttt{http} albo \texttt{dio}. Warstwy: API client $\to$ repository $\to$ Cubit/BloC $\to$ UI. Dane z JSON mapujesz na modele.}
+
+\pyt{Błędy sieci?}
+\odp{Timeout. Pokazujesz błąd w UI. Przy GET możesz spróbować ponowić. Logujesz crash/non-fatal. Offline: cache albo komunikat.}
+
+\pyt{Logowanie / token?}
+\odp{Token w nagłówku. Trzymasz w secure storage, nie w zwykłych preferencjach na produkcji. Przy 401 -- odśwież token albo wyloguj.}
+
+\pyt{Paginacja?}
+\odp{Dociągasz kolejne strony przy scrollu. Pokazujesz loader na dole. Nie dubluj tych samych elementów.}
+
+\section{Firebase}
+
+\pyt{Czego używałeś z Firebase?}
+\odp{W DEVEJI Firebase był backendem pod apki mobilne (Auth, baza, ewentualnie push/crash -- mów według faktów z projektu). Umiem spiąć Fluttera z Firebase na iOS i Androidzie.}
+
+\pyt{Firestore vs Realtime Database?}
+\odp{Firestore = dokumenty i kolekcje (częściej dziś). Realtime = drzewo JSON, szybkie sync. Do nowych rzeczy zwykle Firestore.}
+
+\pyt{Jak chronisz dane?}
+\odp{Security Rules. Użytkownik widzi tylko swoje rzeczy po \texttt{auth.uid}. Nie ufaj samym regułom po stronie apki.}
+
+\pyt{Auth -- jak działa w apce?}
+\odp{Logowanie (mail/Google/Apple). Słuchasz czy user jest zalogowany. Na tej podstawie pokazujesz login albo home.}
+
+\pyt{Push (FCM)?}
+\odp{Token telefonu, zgody na iOS, obsługa powiadomienia gdy apka jest otwarta/w tle, przejście do właściwego ekranu.}
+
+\pyt{Crashlytics?}
+\odp{Widzisz crashe z produkcji. Bez tego trudno naprawiać problemy użytkowników.}
+
+\section{UI i design}
+
+\pyt{Jak dbasz o zgodność z projektem graficznym?}
+\odp{Sprawdzam odstępy, fonty, kolory z Figmy. Używam theme. Porównuję na telefonie, nie tylko w emulatorze.}
+
+\pyt{Różne rozmiary ekranów?}
+\odp{Flexible/Expanded, LayoutBuilder, unikanie sztywnych wysokości na ślepo.}
+
+\pyt{Animacje?}
+\odp{Proste AnimatedContainer, Hero, czasem Lottie. Animacja ma pomagać, nie rozpraszać.}
+
+\section{Natywne Android / iOS}
+
+\pyt{Kiedy piszesz kod natywny przy Flutterze?}
+\odp{Gdy brakuje gotowego pluginu albo trzeba głęboko wejść w system (specjalne SDK, HealthKit-like, tło). Most: MethodChannel.}
+
+\pyt{Masz doświadczenie natywne?}
+\odp{Tak, iOS/SwiftUI: Water Reminder, Fitness Tracker, Lotto. Android natywnie znam podstawowo -- w praktyce głównie Flutter + konfiguracja projektu.}
+
+\pyt{Różnice iOS vs Android?}
+\odp{Uprawnienia, push, nawigacja wstecz, zasady sklepów, różne telefony z Androidem.}
+
+\section{Wrzucanie do sklepów}
+
+\pyt{Jak wypuszczasz apkę?}
+\odp{Podbijasz wersję, podpisujesz, budujesz AAB/IPA, uzupełniasz opisy i privacy, testujesz na prawdziwym telefonie, wrzucasz do review / staged rollout.}
+
+\pyt{Dlaczego App Store odrzuca?}
+\odp{Crash na starcie, brakujące privacy, niedziałający login, brak konta demo dla reviewera, łamanie zasad płatności.}
+
+\pyt{AAB vs APK?}
+\odp{Play chce AAB. Z niego Google robi APK pod konkretne telefony.}
+
+\section{Architektura i git}
+
+\pyt{Jak dzielisz kod we Flutterze?}
+\odp{UI osobno, logika (Cubit) osobno, dane (API/baza) osobno. Widget nie powinien robić wszystkiego.}
+
+\pyt{Co poprawisz w swoich starych apkach Swift?}
+\odp{Za dużo logiki w jednym pliku ContentView. Wydzieliłbym ViewModel i serwisy. Dodałbym testy do ważnych reguł (np.\ streak).}
+
+\pyt{Git?}
+\odp{Branch na feature, małe PR-y, czytelne commity. Nie wrzucam haseł i \texttt{.env} do repo.}
+
+\pyt{Testy?}
+\odp{W prywatnych projektach bywało słabo -- wiem, że to minus. W pracy chcę testować logikę Cubitów i główne ścieżki. Umiesz powiedzieć jak przetestować prostą rzecz.}
+
+\section{Twoje projekty -- co mówić}
+
+\subsection{DEVEJI}
+\pyt{Co robiłeś?}
+\odp{Flutter iOS/Android, Firebase, publikacja w sklepach (VIII--X 2025). To Twój najmocniejszy punkt pod Ideo. Bez NDA: mów kategoriami zadań, nie tajnymi szczegółami klienta.}
+
+\subsection{Fruit Tracker (Flutter, prywatne)}
+\pyt{Co to?}
+\odp{Apka do liczenia owoców i warzyw. Skan ML, historia, ulubione, lista zakupów offline. Stan: Provider. Dane: SQLite na telefonie.}
+
+\pyt{Czemu SQLite a nie tylko chmura?}
+\odp{Ma działać offline i trzymać dane lokalnie. Chmurę można dodać później.}
+
+\pyt{ML -- jak to działa w skrócie?}
+\odp{Zdjęcie $\to$ model zgaduje produkt $\to$ user potwierdza $\to$ zapis do historii. Przy słabym świetle model może się mylić, dlatego potwierdzenie.}
+
+\subsection{Water Reminder}
+\pyt{Co to?}
+\odp{Apka iOS do picia wody. Cel 4000 ml, szybkie dodawanie, streak, powiadomienia, historia. Persistence: \textbf{SwiftData} (nie Core Data).}
+
+\pyt{Co byś poprawił?}
+\odp{Rozbić jeden duży ContentView na mniejsze części i osobną logikę.}
+
+\subsection{Fitness Tracker}
+\pyt{Co to?}
+\odp{Kroki z HealthKit, przybliżone kalorie (MET), waga, wykresy, profil. Mów tylko o tym, co naprawdę jest w kodzie -- bez zmyślania MapKit/zdjęć jeśli ich nie ma.}
+
+\subsection{MacSpaceCleaner}
+\pyt{Po co o tym na rozmowie Flutter?}
+\odp{Pokazuje, że myślisz o architekturze i bezpieczeństwie: osobna warstwa Core/UI, reguły co wolno usuwać, potwierdzenia. To przenosi się na mobile.}
+
+\subsection{Courier (Electron)}
+\odp{System dla firmy kurierskiej: role, zadania, tracking, PDF. Pokazuje pracę z procesem biznesowym, nie tylko ładnym UI.}
+
+\subsection{Bus (Laravel)}
+\odp{Trasy i rozkłady, role admin/kierowca. To CRUD -- \textbf{bez} prawdziwego GPS na żywo. Lepiej powiedzieć prawdę niż marketing.}
+
+\section{Trudne pytania -- uczciwe odpowiedzi}
+
+\pyt{Na GitHubie widać głównie Swift, a oferta to Flutter?}
+\odp{Komercyjny Flutter i Fruit Tracker są prywatne. Publicznie pokazuję iOS i inne rzeczy. Na rozmowie mogę przejść po Flutterze, Firebase, Provider/Cubit i procesie sklepu z DEVEJI.}
+
+\pyt{Mało testów w repo?}
+\odp{Tak, w projektach uczelnianych/osobistych to słaby punkt. Wiem o tym i w komercyjnym kodzie chcę to robić lepiej.}
+
+\pyt{Nie za junior?}
+\odp{Mam komercyjny Flutter + sklepy + Firebase, własną apkę z ML/SQLite i mocne iOS. Szybko się uczę. Szukam miejsca, gdzie urosnę na realnych projektach.}
+
+\section{Pytania behawioralne -- szkielet}
+
+\pyt{Trudny bug?}
+\odp{Sytuacja $\to$ co było do zrobienia $\to$ co zrobiłeś (reprodukcja, logi, fix) $\to$ efekt. Wypełnij prawdziwym przykładem z DEVEJI.}
+
+\pyt{Deadline vs jakość?}
+\odp{Tniesz zakres, nie fundamenty (crash, bezpieczeństwo). Trade-off mówisz wcześnie.}
+
+\pyt{Z czego jesteś dumny?}
+\odp{Wybierz jedno: publikacja w sklepie / Fruit Tracker / dopracowane powiadomienia w Water Reminder / architektura MacSpaceCleaner.}
+
+\section{Gdyby jednak dali małe zadanie}
+
+\pyt{Model z JSON?}
+\odp{Klasa z polami + \texttt{fromJson}.}
+
+\pyt{Lista z API?}
+\odp{Stan loading $\to$ pobranie $\to$ success/error. UI: ListView.builder.}
+
+\pyt{FutureBuilder czy Cubit?}
+\odp{FutureBuilder na prostą, jednorazową rzecz. Cubit gdy stan wraca na wielu ekranach, chcesz retry i testy.}
+
+\pyt{Szukajka z opóźnieniem?}
+\odp{Poczekaj $\sim$300 ms po wpisaniu zanim wyślesz request. Anuluj poprzednie zapytanie.}
+
+\pyt{Context po await?}
+\odp{Sprawdź \texttt{context.mounted}. Inaczej możesz dostać błąd po wyjściu z ekranu.}
+
+\section{Pytania, które Ty zadajesz Im}
+
+\begin{enumerate}
+  \item Jaki stan używacie na co dzień: BloC, Cubit czy Provider?
+  \item Jak wygląda code review i wrzucanie do sklepów?
+  \item Nad czym teraz pracuje zespół Flutter?
+  \item Jak wygląda okres próbny / mentoring?
+  \item Ile jest natywnego Swift/Kotlin obok Fluttera?
+  \item Ile dni w biurze na start?
+  \item Jakie są kolejne etapy rekrutacji?
+\end{enumerate}
+
+\section{Checklista przed rozmową}
+
+\begin{itemize}
+  \item 2--3 zdania o DEVEJI, Fruit Tracker, Water Reminder.
+  \item Cubit vs BloC vs Provider -- umiesz powiedzieć własnymi słowami.
+  \item Firebase Auth + Firestore -- krótko.
+  \item Nie ściemniaj względem kodu (SwiftData, brak MapKit jeśli go nie ma).
+  \item 3 pytania do nich.
+  \item Adres: Nad Przyrwą 13, 10:00, ok.\ 45 minut.
+\end{itemize}
+
+\vspace{1em}
+\noindent\textit{Mów prosto, konkretami z projektów. Jak czegoś nie wiesz -- powiedz jak byś to sprawdził. Powodzenia.}
+
+\end{document}
