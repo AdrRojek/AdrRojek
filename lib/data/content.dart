@@ -41,9 +41,9 @@ class SoftSkillItem {
 }
 
 class CertificateItem {
-  const CertificateItem({required this.title, required this.image});
+  const CertificateItem({required this.title, this.image});
   final String title;
-  final String image;
+  final String? image;
 }
 
 class RoleItem {
@@ -51,12 +51,14 @@ class RoleItem {
     required this.role,
     required this.company,
     required this.dates,
+    this.bullets = const [],
     this.featured = false,
   });
 
   final String role;
   final String company;
   final String dates;
+  final List<String> bullets;
   final bool featured;
 }
 
@@ -88,19 +90,26 @@ class ProjectItem {
 
 class SiteContent {
   static const name = 'Adrian Rojek';
-  static const title = 'Computer Science student';
-  static const location = 'Rzeszów, Poland';
-  static const stack = 'Flutter  ·  SwiftUI  ·  Kotlin';
+  static const title = 'Junior Mobile Developer';
+  static const titlePl = 'Junior Mobile Developer';
+  static const location = 'Boguchwała / remote · Rzeszów, Poland';
+  static const stack = 'Flutter  ·  SwiftUI  ·  Kotlin  ·  Python';
   static const about =
-      'A passionate mobile app developer with experience in SwiftUI and Android Studio. Open to new challenges, I learn quickly and am eager to develop my skills. Creative and dedicated to every project, with a focus on delivering high-quality solutions.';
+      'Building mobile & cross-platform apps (SwiftUI, Flutter/Bloc + Firebase) and Python + LLM tools (RAG / fine-tuning). Shipped B2B apps at DEVEJI to Google Play & App Store. Open to junior roles, internships and apprenticeships.';
   static const pitchEn =
-      'Looking for a software / mobile internship or junior role. Recent Flutter intern at DEVEJI, web developer at NEW PORTABLE DEVICES, and R&D apprentice at G2A.';
+      'M.Sc. CS student (B.Eng. done). Flutter (Bloc) + Firebase, SwiftUI, Kotlin, and Python + LLM (RAG / fine-tuning). Shipped B2B apps at DEVEJI to the stores; G2A R&D internship with Python. Looking for junior / internship roles.';
   static const pitchPl =
-      'Szukam praktyk, stażu lub pracy w software / mobile. Ostatnio: Flutter w DEVEJI, web w NEW PORTABLE DEVICES, praktyki R&D w G2A.';
+      'Student mgr informatyki (inż. ukończony). Flutter (Bloc) + Firebase, SwiftUI, Kotlin oraz Python + LLM (RAG / fine-tuning). W DEVEJI publikowałem B2B w Google Play / App Store; praktyki R&D w G2A (Python). Szukam juniora, stażu lub praktyk.';
+
+  static const aiAtWorkEn =
+      'Cursor · ChatGPT — scaffolding, code review and faster debugging. I always verify and own the code before merge.';
+  static const aiAtWorkPl =
+      'Cursor · ChatGPT — scaffolding, code review i szybsze debugowanie. Zawsze weryfikuję i rozumiem kod przed merge.';
 
   static const education = [
-    'University of Rzeszow (2022–)',
-    'Electronics Schools Complex in Rzeszów (2018–2022)',
+    'M.Sc. Computer Science — University of Rzeszów (02.2026 – present)',
+    'B.Eng. Computer Science (Internet Applications) — University of Rzeszów (10.2022 – 02.2026)',
+    'IT Technician — Electronics Schools Complex, Rzeszów (09.2018 – 04.2022)',
   ];
 
   static const experience = [
@@ -109,18 +118,31 @@ class SiteContent {
       company: 'DEVEJI',
       dates: '08.2025 – 10.2025',
       featured: true,
+      bullets: [
+        'B2B iOS/Android apps in Flutter + Dart (Bloc) and related product sites',
+        'Firebase (Firestore, Auth, Cloud Functions), API integrations',
+        'Published to Google Play & App Store; shared CI/CD ownership',
+      ],
     ),
     RoleItem(
       role: 'Web Developer',
       company: 'NEW PORTABLE DEVICES',
       dates: '05.2025 – 07.2025',
       featured: true,
+      bullets: [
+        'Responsive company/product sites, SEO and performance',
+        'Content updates and feature work in a small team',
+      ],
     ),
     RoleItem(
-      role: 'Apprentice',
+      role: 'R&D Apprentice',
       company: 'G2A.COM R&D Center',
       dates: '06.2025 – 07.2025',
       featured: true,
+      bullets: [
+        'Testing (Python, PowerShell, Bash), error analysis, documentation',
+        'Supported production updates and system monitoring',
+      ],
     ),
     RoleItem(
       role: 'Courier',
@@ -161,13 +183,16 @@ class SiteContent {
 
   static const languages = [
     'Polish — Native',
-    'English — C1',
+    'English — C2 (EF SET 82/100 · R C2 · L C2 · W C1 · S C2)',
     'German — B1',
   ];
 
   static const certificates = [
     CertificateItem(
-      title: 'Mastering SwiftUI & SwiftUI for iOS development',
+      title: 'EF SET English C2 (2026) — 82/100',
+    ),
+    CertificateItem(
+      title: 'Mastering SwiftUI & SwiftData for iOS development',
       image: 'assets/photos/certificate1.jpg',
     ),
     CertificateItem(
@@ -195,29 +220,29 @@ class SiteContent {
   ];
 
   static const skills = [
-    SkillItem(label: 'CSS3', iconAsset: 'assets/icons/css3.png'),
-    SkillItem(label: 'HTML', iconAsset: 'assets/icons/html5.png'),
+    SkillItem(label: 'Flutter', iconAsset: 'assets/icons/flutter.png'),
+    SkillItem(label: 'Swift', iconAsset: 'assets/icons/swift.png'),
+    SkillItem(label: 'Kotlin', iconAsset: 'assets/icons/kotlin.png'),
+    SkillItem(label: 'Python', iconAsset: 'assets/icons/python.png'),
+    SkillItem(label: 'Java', iconAsset: 'assets/icons/java.png'),
     SkillItem(label: 'PHP', iconAsset: 'assets/icons/php.png'),
+    SkillItem(label: 'Laravel', iconAsset: 'assets/icons/laravel.png'),
     SkillItem(label: 'C++', iconAsset: 'assets/icons/cpp.png'),
     SkillItem(label: 'C#', iconAsset: 'assets/icons/csharp.png'),
     SkillItem(label: 'C', iconAsset: 'assets/icons/c.png'),
-    SkillItem(label: 'Python', iconAsset: 'assets/icons/python.png'),
-    SkillItem(label: 'Swift', iconAsset: 'assets/icons/swift.png'),
-    SkillItem(label: 'GitHub', iconAsset: 'assets/icons/github.png'),
-    SkillItem(label: 'Figma', iconAsset: 'assets/icons/figma.png'),
     SkillItem(label: 'MySQL', iconAsset: 'assets/icons/mysql.png'),
     SkillItem(label: 'SQLite', iconAsset: 'assets/icons/sqlite.png'),
+    SkillItem(label: 'GitHub', iconAsset: 'assets/icons/github.png'),
+    SkillItem(label: 'Android Studio', iconAsset: 'assets/icons/androidstudio.png'),
   ];
 
   static const learning = [
-    SkillItem(label: 'JavaScript', iconAsset: 'assets/icons/javascript.png'),
-    SkillItem(label: 'Android Studio', iconAsset: 'assets/icons/androidstudio.png'),
-    SkillItem(label: 'Laravel', iconAsset: 'assets/icons/laravel.png'),
-    SkillItem(label: 'Docker', iconAsset: 'assets/icons/docker.png'),
-    SkillItem(label: 'Figma', iconAsset: 'assets/icons/figma.png'),
     SkillItem(label: 'TensorFlow', iconAsset: 'assets/icons/tensorflow.png'),
-    SkillItem(label: 'Kotlin', iconAsset: 'assets/icons/kotlin.png'),
-    SkillItem(label: 'Java', iconAsset: 'assets/icons/java.png'),
+    SkillItem(label: 'Docker', iconAsset: 'assets/icons/docker.png'),
+    SkillItem(label: 'JavaScript', iconAsset: 'assets/icons/javascript.png'),
+    SkillItem(label: 'HTML', iconAsset: 'assets/icons/html5.png'),
+    SkillItem(label: 'CSS3', iconAsset: 'assets/icons/css3.png'),
+    SkillItem(label: 'Figma', iconAsset: 'assets/icons/figma.png'),
     SkillItem(label: 'Gradle', iconAsset: 'assets/icons/gradle.png'),
   ];
 
@@ -251,39 +276,34 @@ class SiteContent {
 
   static const softSkills = [
     SoftSkillItem(
+      title: 'Fast learning',
+      icon: Icons.menu_book,
+      level: 0.95,
+    ),
+    SoftSkillItem(
       title: 'Teamwork',
       icon: Icons.groups,
       level: 0.95,
     ),
     SoftSkillItem(
-      title: 'Communication',
-      icon: Icons.forum,
-      level: 0.90,
-    ),
-    SoftSkillItem(
-      title: 'Time Management',
-      icon: Icons.checklist,
-      level: 0.85,
-    ),
-    SoftSkillItem(
-      title: 'Creativity',
-      icon: Icons.lightbulb_outline,
+      title: 'Attention to detail',
+      icon: Icons.center_focus_strong,
       level: 0.92,
     ),
     SoftSkillItem(
-      title: 'Problem-Solving and Critical Thinking',
+      title: 'Punctuality',
+      icon: Icons.schedule,
+      level: 0.93,
+    ),
+    SoftSkillItem(
+      title: 'Problem-Solving',
       icon: Icons.extension,
       level: 0.92,
     ),
     SoftSkillItem(
-      title: 'Fast learning',
-      icon: Icons.menu_book,
-      level: 0.92,
-    ),
-    SoftSkillItem(
-      title: 'Patience',
-      icon: Icons.schedule,
-      level: 0.92,
+      title: 'Communication',
+      icon: Icons.forum,
+      level: 0.90,
     ),
   ];
 
@@ -295,13 +315,12 @@ class SiteContent {
       summary: 'iOS hydration tracker with reminders, history, and a daily 4000 ml goal.',
       summaryPl: 'Aplikacja iOS do nawodnienia: przypomnienia, historia, cel 4000 ml dziennie.',
       description:
-          'Water Tracker is an app designed to help users monitor their daily water intake, aiming for a goal of 4000 ml per day. It features an intuitive interface with a progress widget, options to add/subtract water, integration with a "boiler" (a simulated water reservoir), and reminders to stay hydrated. Users can track their history, reset data, and monitor their progress throughout the day.',
+          'Water Tracker helps users monitor daily water intake toward a 4000 ml goal. Progress widget, add/subtract logging, local reminders, history, and smooth animations — solid native iOS UI + persistence habits.',
       technologies: [
         'SwiftUI',
-        'SwiftData',
+        'Core Data',
         'UserNotifications',
         'SwiftUIGIF',
-        'Core Data',
         'iOS Native Components',
       ],
       previewImages: [
@@ -318,41 +337,67 @@ class SiteContent {
     ),
     ProjectItem(
       id: 2,
-      title: 'Lotto Results App',
-      phoneLayout: true,
-      summary: 'SwiftUI lottery tracker with saved draws and official results in-app.',
-      summaryPl: 'Tracker lotto w SwiftUI: zapisane losowania i oficjalne wyniki w aplikacji.',
+      title: 'DocQA — RAG Chatbot',
+      summary: 'Python RAG chatbot over your PDFs/Markdown with source citations.',
+      summaryPl: 'Chatbot RAG w Pythonie nad PDF/Markdown z cytowaniem źródeł.',
       description:
-          'Lotto Tracker is an app for lottery fans that lets you save your own draws (6 numbers 1–49) with timestamps and a Plus option, visually track matches in the main draw and Plus version, and instantly access official results through a built-in browser — all in an intuitive interface, perfect for planning bets and analyzing luck in real time!',
+          'Q&A over your own documents: chunking, embeddings, vector retrieval (FAISS), and answers with source citations. FastAPI backend; LangChain orchestration; OpenAI (or compatible) embeddings/LLM.',
       technologies: [
-        'SwiftUI',
-        'SwiftData',
-        'WebKit',
-        'Foundation',
-        'Model-View-ViewModel (MVVM)',
-        'iOS Native Components',
+        'Python',
+        'LangChain',
+        'OpenAI API',
+        'FAISS',
+        'FastAPI',
+        'LLM / RAG',
       ],
-      previewImages: [
-        'assets/photos/Lotto1.png',
-        'assets/photos/Lotto4.png',
-        'assets/photos/Lotto3.png',
-      ],
-      images: [
-        'assets/photos/Lotto1.png',
-        'assets/photos/Lotto2.png',
-        'assets/photos/Lotto3.png',
-        'assets/photos/Lotto4.png',
-      ],
-      githubUrl: 'https://github.com/AdrRojek/Lotto-Results-App',
+      previewImages: [],
+      images: [],
+      githubUrl: 'https://github.com/AdrRojek/DocQA-RAG',
     ),
     ProjectItem(
       id: 3,
+      title: 'Intent Classifier (fine-tune)',
+      summary: 'Fine-tuned DistilBERT for ticket intent classification + ONNX export.',
+      summaryPl: 'Fine-tuning DistilBERT do klasyfikacji intencji ticketów + eksport ONNX.',
+      description:
+          'Fine-tuning a small transformer (DistilBERT) for support-ticket intent classification. Evaluation with F1 metrics, ONNX export for lighter inference, and a simple CLI for batch prediction.',
+      technologies: [
+        'Python',
+        'Hugging Face',
+        'Transformers',
+        'PyTorch',
+        'scikit-learn',
+        'ONNX',
+      ],
+      previewImages: [],
+      images: [],
+      githubUrl: 'https://github.com/AdrRojek/IntentClassifier-LLM',
+    ),
+    ProjectItem(
+      id: 4,
+      title: 'Prompt Playground',
+      summary: 'Streamlit sandbox to compare prompts, temperature, and LLM responses.',
+      summaryPl: 'Sandbox Streamlit: prompły, temperatura i porównanie odpowiedzi LLM.',
+      description:
+          'Sandbox for testing system/user prompts against OpenAI or a local LLM. Adjust temperature, compare responses side-by-side, and keep a session history log for iteration.',
+      technologies: [
+        'Python',
+        'Streamlit',
+        'OpenAI API',
+        'Local LLM',
+      ],
+      previewImages: [],
+      images: [],
+      githubUrl: 'https://github.com/AdrRojek/PromptPlayground',
+    ),
+    ProjectItem(
+      id: 5,
       title: 'FitnessApp',
       phoneLayout: true,
-      summary: 'Kotlin Android app: steps, charts, weight photos, maps, and accounts.',
-      summaryPl: 'Aplikacja Android (Kotlin): kroki, wykresy, waga, mapy i konta użytkowników.',
+      summary: 'Mobile fitness app: steps, charts, weight photos, maps, and accounts.',
+      summaryPl: 'Aplikacja fitness: kroki, wykresy, waga, mapy i konta użytkowników.',
       description:
-          'FitnessApp is a mobile app designed to help users maintain their health and fitness. It tracks daily physical activity using a step counter and displays weekly statistics through clear charts. Users can monitor their weight, add photos (from the gallery or camera), and use maps to record routes and analyze activity history. The app also includes login, registration, and profile management features, offering a personalized experience and motivation to achieve fitness goals.',
+          'FitnessApp helps users maintain health and fitness. Step counter, weekly charts, weight tracking with photos, maps for routes, plus login/registration and profile management.',
       technologies: [
         'Kotlin',
         'Android SDK',
@@ -360,7 +405,6 @@ class SiteContent {
         'MPAndroidChart',
         'SensorManager',
         'SharedPreferences',
-        'File API',
       ],
       previewImages: [
         'assets/photos/fitnessapp3.jpg',
@@ -379,33 +423,90 @@ class SiteContent {
       ],
     ),
     ProjectItem(
-      id: 4,
-      title: 'Community Forum using Oracle database',
-      summary: 'PHP forum with profiles, groups, surveys, and an Oracle database.',
-      summaryPl: 'Forum PHP: profile, grupy, ankiety i baza Oracle.',
+      id: 6,
+      title: 'Fruit & Vegetable Tracker',
+      summary: 'Flutter offline nutrition tracker with on-device ML product scanning.',
+      summaryPl: 'Flutter: offline tracker spożycia ze skanowaniem produktów (ML).',
       description:
-          'The Community Forum project is an online platform that enables users to connect, share information, collaborate, and express opinions through surveys. The platform offers functionalities such as creating user profiles, publishing posts and comments, joining thematic groups, creating surveys, and managing friends. The system is designed with intuitive usability and efficient data management in mind, utilizing a relational Oracle database to store information about users, posts, groups, and surveys.',
-      technologies: ['PHP', 'Oracle', 'Git'],
-      previewImages: ['assets/photos/Oracle4.png'],
-      images: [
-        'assets/photos/Oracle1.png',
-        'assets/photos/Oracle2.png',
-        'assets/photos/Oracle3.png',
-        'assets/photos/Oracle4.png',
-        'assets/photos/Oracle5.png',
-        'assets/photos/Oracle6.png',
-        'assets/photos/Oracle7.png',
+          'Cross-platform offline tracker for daily fruit & vegetable intake. ML-based product scanning, nutritional analysis, history, favorites, and a shopping planner — all stored locally in SQLite (no cloud).',
+      technologies: [
+        'Flutter',
+        'Provider',
+        'SQLite',
+        'On-device ML',
       ],
-      githubUrl: 'https://github.com/AdrRojek/Community-Forum',
+      previewImages: [],
+      images: [],
     ),
     ProjectItem(
-      id: 5,
+      id: 7,
+      title: 'Courier Ops Desktop',
+      summary: 'Electron desktop tool for courier ops: roles, shipments, tickets, PDFs.',
+      summaryPl: 'Desktop Electron: role, przesyłki, tickety i raporty PDF.',
+      description:
+          'Desktop app for courier company operations — role-based panels (admin/manager/courier/warehouse), shipment statuses, tickets, and PDF report generation (Electron + Node.js + MySQL).',
+      technologies: [
+        'Electron',
+        'Node.js',
+        'MySQL',
+        'Bootstrap',
+        'PDFKit',
+      ],
+      previewImages: [],
+      images: [],
+    ),
+    ProjectItem(
+      id: 8,
+      title: 'MacSpaceCleaner',
+      summary: 'macOS disk cleaner: scan, rank junk, delete only after confirmation.',
+      summaryPl: 'Czystka dysku na macOS: skan, ranking, usuwanie po potwierdzeniu.',
+      description:
+          'Desktop utility that scans system and external volumes for reclaimable space, ranks junk with heuristics, and deletes only after explicit user confirmation — safety-first UX.',
+      technologies: [
+        'C#',
+        '.NET 9',
+        'Avalonia',
+      ],
+      previewImages: [],
+      images: [],
+      githubUrl: 'https://github.com/AdrRojek/MacSpaceCleaner',
+    ),
+    ProjectItem(
+      id: 9,
+      title: 'Lotto Results App',
+      phoneLayout: true,
+      summary: 'SwiftUI lottery tracker with saved draws and official results in-app.',
+      summaryPl: 'Tracker lotto w SwiftUI: zapisane losowania i oficjalne wyniki w aplikacji.',
+      description:
+          'Lotto Tracker lets you save your own draws (6 numbers 1–49) with timestamps and a Plus option, visually track matches, and open official results in a built-in browser.',
+      technologies: [
+        'SwiftUI',
+        'SwiftData',
+        'WebKit',
+        'MVVM',
+        'iOS Native Components',
+      ],
+      previewImages: [
+        'assets/photos/Lotto1.png',
+        'assets/photos/Lotto4.png',
+        'assets/photos/Lotto3.png',
+      ],
+      images: [
+        'assets/photos/Lotto1.png',
+        'assets/photos/Lotto2.png',
+        'assets/photos/Lotto3.png',
+        'assets/photos/Lotto4.png',
+      ],
+      githubUrl: 'https://github.com/AdrRojek/Lotto-Results-App',
+    ),
+    ProjectItem(
+      id: 10,
       title: 'Bus Timetable Information',
-      summary: 'Laravel system for admins, drivers, and passengers — routes and live schedules.',
+      summary: 'Laravel system for admins, drivers, and passengers — routes and schedules.',
       summaryPl: 'System Laravel dla adminów, kierowców i pasażerów — trasy i rozkłady.',
       description:
-          'Bus-Info is a modern IT system designed to streamline public transport management. It offers comprehensive tools for administrators, drivers, and passengers, simplifying route planning, task assignment, vehicle monitoring, and access to schedules. With an intuitive interface, Bus-Info provides easy access to all system features. Administrators can manage users, routes, stops, and assign routes to drivers. Drivers access their work schedules and route details, while passengers view real-time bus locations and up-to-date timetables.',
-      technologies: ['PHP', 'Laravel', 'Bootstrap', 'XAMPP', 'Composer', 'Git'],
+          'Bus-Info streamlines public transport management: route planning, assignments, schedules, and role-based access for admins, drivers, and passengers.',
+      technologies: ['PHP', 'Laravel', 'MySQL', 'Bootstrap', 'Git'],
       previewImages: ['assets/photos/larawel16.png'],
       images: [
         'assets/photos/larawel1.png',
@@ -429,12 +530,32 @@ class SiteContent {
           'https://github.com/AdrRojek/Bus-Timetable-Information-System',
     ),
     ProjectItem(
-      id: 6,
+      id: 11,
+      title: 'Community Forum using Oracle database',
+      summary: 'PHP forum with profiles, groups, surveys, and an Oracle database.',
+      summaryPl: 'Forum PHP: profile, grupy, ankiety i baza Oracle.',
+      description:
+          'Online community forum: profiles, posts, comments, thematic groups, surveys, and friends — backed by a relational Oracle database.',
+      technologies: ['PHP', 'Oracle', 'Git'],
+      previewImages: ['assets/photos/Oracle4.png'],
+      images: [
+        'assets/photos/Oracle1.png',
+        'assets/photos/Oracle2.png',
+        'assets/photos/Oracle3.png',
+        'assets/photos/Oracle4.png',
+        'assets/photos/Oracle5.png',
+        'assets/photos/Oracle6.png',
+        'assets/photos/Oracle7.png',
+      ],
+      githubUrl: 'https://github.com/AdrRojek/Community-Forum',
+    ),
+    ProjectItem(
+      id: 12,
       title: 'Car Mechanic Workshop',
       summary: 'Java + MySQL workshop manager: vehicles, repairs, mechanics, validation.',
       summaryPl: 'System warsztatu w Java + MySQL: pojazdy, naprawy, mechanicy, walidacja.',
       description:
-          'The project involves creating a comprehensive system for managing a vehicle repair shop. The system organizes information about vehicles, repairs, and mechanics, enabling efficient customer service and better management of the workshop\'s operations. The main functionalities include CRUD operations on data related to mechanics, repairs, and vehicles, as well as input data validation. The system uses a relational database (MySQL) for data storage, and the user interface is designed to be intuitive and responsive.',
+          'Workshop management system with CRUD for vehicles, repairs, and mechanics, input validation, and a MySQL backend.',
       technologies: ['Java', 'MySQL', 'Git'],
       previewImages: ['assets/photos/zmp1.png'],
       images: [

@@ -92,6 +92,9 @@ class _PreviewImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final images = project.previewImages;
+    if (images.isEmpty) {
+      return _ProjectPlaceholder(project: project);
+    }
     if (images.length == 1) {
       return Image.asset(images.first, fit: BoxFit.cover);
     }
@@ -105,6 +108,48 @@ class _PreviewImages extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+class _ProjectPlaceholder extends StatelessWidget {
+  const _ProjectPlaceholder({required this.project});
+  final ProjectItem project;
+
+  @override
+  Widget build(BuildContext context) {
+    final techs = project.technologies.take(4).join('  ·  ');
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF0F2740), Color(0xFF1A3A5C), Color(0xFF0B1C2E)],
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              project.title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              techs,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Color(0xFF7DD3FC), fontSize: 13, height: 1.35),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -232,6 +277,9 @@ class _ProjectPopupViewState extends State<ProjectPopupView> {
 
   Widget _slideshow() {
     final images = widget.project.images;
+    if (images.isEmpty) {
+      return _ProjectPlaceholder(project: widget.project);
+    }
     final many = images.length > 1;
     return ColoredBox(
       color: Colors.black,

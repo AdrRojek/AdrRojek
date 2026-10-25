@@ -65,7 +65,7 @@ class _HeroCopy extends StatelessWidget {
               text: c.t('Open to internships and jobs', 'Otwarty na praktyki i pracę'),
             ),
             _Pill(text: SiteContent.location),
-            _Pill(text: c.t('English C1 · German B1', 'Angielski C1 · Niemiecki B1')),
+            _Pill(text: c.t('English C2 · German B1', 'Angielski C2 · Niemiecki B1')),
           ],
         ),
         const SizedBox(height: 18),
@@ -80,7 +80,7 @@ class _HeroCopy extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          '${c.t(SiteContent.title, 'Student informatyki')}  ·  ${SiteContent.stack}',
+          '${c.t(SiteContent.title, SiteContent.titlePl)}  ·  ${SiteContent.stack}',
           style: const TextStyle(color: Colors.white70, fontSize: 18, height: 1.35),
         ),
         const SizedBox(height: 16),
@@ -218,16 +218,26 @@ class InfoSection extends StatelessWidget {
               for (final cert in SiteContent.certificates)
                 _Bullet(
                   cert.title,
-                  trailing: PreviewHover(
-                    image: cert.image,
-                    landscape: true,
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 8),
-                      child: Text('📜', style: TextStyle(fontSize: 16, height: 1)),
-                    ),
-                  ),
+                  trailing: cert.image == null
+                      ? null
+                      : PreviewHover(
+                          image: cert.image!,
+                          landscape: true,
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 8),
+                            child: Text('📜', style: TextStyle(fontSize: 16, height: 1)),
+                          ),
+                        ),
                 ),
             ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        _InfoCard(
+          title: c.t('AI at work', 'AI w pracy'),
+          child: Text(
+            c.t(SiteContent.aiAtWorkEn, SiteContent.aiAtWorkPl),
+            style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.45),
           ),
         ),
         const SizedBox(height: 16),
@@ -320,6 +330,25 @@ class _TimelineRow extends StatelessWidget {
                   '${role.company}  ·  ${role.dates}',
                   style: const TextStyle(color: AppColors.muted, fontSize: 13),
                 ),
+                if (role.bullets.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  for (final bullet in role.bullets)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('•  ', style: TextStyle(color: AppColors.accent, fontSize: 13)),
+                          Expanded(
+                            child: Text(
+                              bullet,
+                              style: const TextStyle(color: AppColors.muted, fontSize: 13, height: 1.35),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
               ],
             ),
           ),
