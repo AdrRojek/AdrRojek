@@ -336,6 +336,96 @@ class SiteContent {
       githubUrl: 'https://github.com/AdrRojek/WaterReminder',
     ),
     ProjectItem(
+      id: 13,
+      title: 'PulseCraft AI',
+      phoneLayout: true,
+      summary:
+          'On-device Flutter coaching for squat, deadlift & bench — pose, bar path, VBT cues.',
+      summaryPl:
+          'Flutter on-device: coaching przysiadu, martwego ciągu i wyciskania — poza, tor sztangi, VBT.',
+      description:
+          'PulseCraft turns a phone camera into a live strength-lab coach: ML Kit pose estimation, bar-path visualization, sticking-point cues, velocity-based feedback, session scoring, and rule-based weekly plan adaptation. Live inference stays on-device (ML Kit + TFLite FormScore); optional FastAPI/WebSocket backend for archive and XAI.',
+      technologies: [
+        'Flutter',
+        'Bloc',
+        'ML Kit Pose',
+        'TFLite',
+        'Camera',
+        'FastAPI',
+      ],
+      previewImages: [
+        'assets/photos/pulsecraft1.jpg',
+        'assets/photos/pulsecraft2.jpg',
+        'assets/photos/pulsecraft3.jpg',
+      ],
+      images: [
+        'assets/photos/pulsecraft1.jpg',
+        'assets/photos/pulsecraft2.jpg',
+        'assets/photos/pulsecraft3.jpg',
+      ],
+      githubUrl: 'https://github.com/AdrRojek/PulseCraft-Ai',
+    ),
+    ProjectItem(
+      id: 14,
+      title: 'Water Reminder Flutter',
+      phoneLayout: true,
+      summary:
+          'Cross-platform Flutter port: goals, streaks, night reschedule, EN/PL, Android/iOS/macOS.',
+      summaryPl:
+          'Flutter (Android/iOS/macOS): cel, streaki, nocny reschedule, EN/PL.',
+      description:
+          'Expanded Flutter port of the Swift Water Reminder. Daily 4000 ml goal, boiler + creatine, streaks with monthly amnesty, history, rewards, and a night 2:00 reschedule that rebuilds remaining intake into equal 250 ml gaps until 21:00. Riverpod architecture with EN/PL l10n.',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'Riverpod',
+        'SharedPreferences',
+        'Local notifications',
+        'l10n',
+      ],
+      previewImages: [
+        'assets/photos/waterflutter1.jpg',
+        'assets/photos/waterflutter2.jpg',
+        'assets/photos/waterflutter3.jpg',
+      ],
+      images: [
+        'assets/photos/waterflutter1.jpg',
+        'assets/photos/waterflutter2.jpg',
+        'assets/photos/waterflutter3.jpg',
+      ],
+      githubUrl: 'https://github.com/AdrRojek/WaterReminderFlutter',
+    ),
+    ProjectItem(
+      id: 15,
+      title: 'Fitness Tracker (iOS)',
+      phoneLayout: true,
+      summary:
+          'SwiftUI + HealthKit tracker: steps, workouts, weight charts, and goals.',
+      summaryPl:
+          'SwiftUI + HealthKit: kroki, treningi, wykresy wagi i cele.',
+      description:
+          'iOS fitness tracker with HealthKit steps/distance/calories, treadmill workout logging, weight history with Charts, and a personalized profile (goals, height, gender). Built with SwiftUI and SwiftData.',
+      technologies: [
+        'SwiftUI',
+        'SwiftData',
+        'HealthKit',
+        'Charts',
+        'iOS',
+      ],
+      previewImages: [
+        'assets/photos/fitnesstracker1.png',
+        'assets/photos/fitnesstracker2.png',
+        'assets/photos/fitnesstracker3.png',
+      ],
+      images: [
+        'assets/photos/fitnesstracker1.png',
+        'assets/photos/fitnesstracker2.png',
+        'assets/photos/fitnesstracker3.png',
+        'assets/photos/fitnesstracker4.png',
+      ],
+      githubUrl: 'https://github.com/AdrRojek/FitnessTracker',
+    ),
+    ProjectItem(
       id: 2,
       title: 'DocQA — RAG Chatbot',
       summary: 'Python RAG chatbot over your PDFs/Markdown with source citations.',
@@ -392,12 +482,12 @@ class SiteContent {
     ),
     ProjectItem(
       id: 5,
-      title: 'FitnessApp',
+      title: 'FitnessApp (Android)',
       phoneLayout: true,
-      summary: 'Mobile fitness app: steps, charts, weight photos, maps, and accounts.',
-      summaryPl: 'Aplikacja fitness: kroki, wykresy, waga, mapy i konta użytkowników.',
+      summary: 'Kotlin Android fitness app: steps, charts, weight photos, maps, accounts.',
+      summaryPl: 'Aplikacja Android (Kotlin): kroki, wykresy, waga, mapy i konta.',
       description:
-          'FitnessApp helps users maintain health and fitness. Step counter, weekly charts, weight tracking with photos, maps for routes, plus login/registration and profile management.',
+          'Android fitness app with step counter, weekly charts, weight tracking with photos, maps for routes, plus login/registration and profile management.',
       technologies: [
         'Kotlin',
         'Android SDK',
@@ -467,8 +557,12 @@ class SiteContent {
         '.NET 9',
         'Avalonia',
       ],
-      previewImages: [],
-      images: [],
+      previewImages: [
+        'assets/photos/macspacecleaner1.png',
+      ],
+      images: [
+        'assets/photos/macspacecleaner1.png',
+      ],
       githubUrl: 'https://github.com/AdrRojek/MacSpaceCleaner',
     ),
     ProjectItem(
